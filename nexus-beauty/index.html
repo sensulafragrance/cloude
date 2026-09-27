@@ -1,0 +1,912 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Nexus Beauty</title>
+<meta name="description" content="Original skincare, sun care, hair care, fragrance and makeup delivered across Pakistan. Batch and expiry on every order. Cash on delivery.">
+<meta name="theme-color" content="#8c2350">
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+:root{
+  color-scheme:light;
+  --ink:#241826;--ink-2:#5c4d5e;--ink-3:#8a7c8b;
+  --paper:#ffffff;--blush:#f8f1f2;--blush-2:#efe3e6;--line:#e9e1e4;
+  --berry:#8c2350;--berry-dk:#6d1a3e;--berry-lt:#f6e3eb;--pink:#e9b8cb;
+  --sage:#466b58;--sage-lt:#e5efe9;--gold:#b7862b;--gold-lt:#f6ecd8;
+  --f-display:"Plus Jakarta Sans","Figtree","Segoe UI",system-ui,sans-serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:12px;--wrap:1200px;--gutter:clamp(16px,4vw,32px);
+  --shadow:0 14px 34px -14px rgba(36,24,38,.28);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:120px}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{transition:none!important;animation:none!important}}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+img,svg{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button,input,select{font:inherit;color:inherit}
+button{cursor:pointer}
+:focus-visible{outline:2px solid var(--berry);outline-offset:2px;border-radius:4px}
+[hidden]{display:none!important}
+h1,h2,h3,h4{font-family:var(--f-display);font-weight:700;letter-spacing:-.025em;line-height:1.1;margin:0;text-wrap:balance}
+p{margin:0}
+ul{margin:0;padding:0;list-style:none}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+.skip{position:absolute;left:-999px;top:8px;background:var(--ink);color:#fff;padding:8px 14px;z-index:100;border-radius:6px}
+.skip:focus{left:8px}
+.wrap{max-width:var(--wrap);margin-inline:auto;padding-inline:var(--gutter)}
+.section{padding-block:clamp(48px,7vw,88px)}
+.section--tint{background:var(--blush)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--berry)}
+.h2{font-size:clamp(28px,3.6vw,42px)}
+.lede{color:var(--ink-2);font-size:17px;max-width:58ch}
+.sec-head{display:flex;justify-content:space-between;align-items:flex-end;gap:16px 32px;flex-wrap:wrap;margin-bottom:28px}
+.sec-head>div{display:grid;gap:8px}
+.link{font-weight:700;font-size:15px;border-bottom:1.5px solid currentColor;padding-bottom:1px;white-space:nowrap}
+.link:hover{color:var(--berry)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+
+/* Buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1.5px solid transparent;border-radius:999px;padding:13px 24px;font-weight:700;font-size:15px;line-height:1;white-space:nowrap;background:none;transition:background .2s,color .2s,border-color .2s}
+.btn--p{background:var(--berry);color:#fff}.btn--p:hover{background:var(--berry-dk)}
+.btn--d{background:var(--ink);color:#fff}.btn--d:hover{background:#000}
+.btn--g{border-color:var(--ink);color:var(--ink)}.btn--g:hover{background:var(--ink);color:#fff}
+.btn--w{background:#fff;color:var(--ink)}.btn--w:hover{background:var(--berry-lt)}
+.btn--lg{padding:16px 28px;font-size:16px}
+.btn--block{width:100%}
+
+/* Announcement */
+.announce{background:var(--ink);color:#f3e9ee;font-size:13px;text-align:center;padding:8px var(--gutter);min-height:36px}
+.announce b{color:#fff}
+
+/* Header */
+.header{position:sticky;top:env(safe-area-inset-top,0px);z-index:40;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.header__bar{display:flex;align-items:center;gap:20px;height:72px}
+.logo{display:flex;align-items:center;gap:10px;flex:none}
+.logo svg{width:44px;height:auto;color:var(--ink)}
+.logo__word{display:grid;line-height:1}
+.logo__word b{font-family:var(--f-display);font-weight:800;font-size:24px;letter-spacing:-.035em}
+.logo__word small{font-size:9.5px;font-weight:700;letter-spacing:.42em;color:var(--berry);margin-top:3px}
+.nav{display:flex;gap:4px;margin-left:auto}
+.nav>a,.nav>div>button{font-size:14px;font-weight:600;padding:9px 12px;border-radius:999px;border:0;background:none;display:inline-flex;align-items:center;gap:6px}
+.nav>a:hover,.nav>div>button:hover,.nav>div>button[aria-expanded="true"]{background:var(--blush)}
+.mega-wrap{position:static}
+.mega{position:absolute;left:0;right:0;top:100%;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow);padding-block:24px}
+.mega .wrap{display:grid;grid-template-columns:repeat(4,1fr);gap:4px 24px}
+.mega a{padding:8px 0;font-weight:500;color:var(--ink-2);border-bottom:1px solid var(--line);display:flex;justify-content:space-between}
+.mega a:hover{color:var(--berry)}
+.mega a small{color:var(--ink-3);font-size:12px}
+.actions{display:flex;align-items:center;gap:2px}
+.icon-btn{position:relative;display:inline-grid;place-items:center;width:42px;height:42px;border-radius:50%;border:0;background:none;color:var(--ink)}
+.icon-btn:hover{background:var(--blush)}
+.icon-btn svg{width:21px;height:21px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.count{position:absolute;top:2px;right:0;min-width:18px;height:18px;padding-inline:5px;border-radius:999px;background:var(--berry);color:#fff;font-size:11px;font-weight:700;display:grid;place-items:center;font-variant-numeric:tabular-nums}
+.menu-btn{display:none}
+@media (max-width:900px){.nav{display:none}.menu-btn{display:inline-grid}.header__bar{height:64px;gap:8px}.actions{margin-left:auto}.logo svg{width:38px}.logo__word b{font-size:21px}}
+
+/* Search panel */
+.searchpanel{position:absolute;left:0;right:0;top:100%;background:#fff;border-bottom:1px solid var(--line);box-shadow:var(--shadow);padding-block:18px 22px}
+.searchpanel .wrap{display:grid;gap:14px}
+.sfield{position:relative}
+.sfield input{width:100%;border:1.5px solid var(--line);background:var(--blush);border-radius:999px;padding:14px 18px 14px 48px;font-size:16px}
+.sfield input:focus{border-color:var(--berry);background:#fff;outline:none}
+.sfield svg{position:absolute;left:18px;top:50%;transform:translateY(-50%);width:19px;height:19px;fill:none;stroke:var(--ink-3);stroke-width:2;stroke-linecap:round}
+.popular{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px}
+.popular span{color:var(--ink-3)}
+.popular button{border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:6px 13px;font-weight:500}
+.popular button:hover{border-color:var(--berry)}
+.results{display:grid;gap:0;max-height:min(50vh,420px);overflow:auto}
+.results a{display:grid;grid-template-columns:44px 1fr auto;gap:12px;align-items:center;padding:10px 4px;border-bottom:1px solid var(--line)}
+.results a:hover{background:var(--blush)}
+.results .thumb{width:44px;height:44px;border-radius:8px;background:var(--bg);display:grid;place-items:center}
+.results .thumb svg{width:50%;color:var(--tone)}
+.results b{font-size:14px;display:block;line-height:1.3}
+.results small{color:var(--ink-3);font-size:12px}
+.results .p{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.results p{color:var(--ink-2);font-size:14px;padding:8px 4px}
+
+/* Mobile menu */
+.mnav{position:fixed;inset:0 auto 0 0;width:min(340px,88vw);background:#fff;z-index:70;transform:translateX(-100%);transition:transform .25s;padding:calc(env(safe-area-inset-top,0px) + 16px) 22px 22px;overflow:auto;display:grid;align-content:start;gap:8px}
+.mnav.is-open{transform:none}
+.mnav__head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+.mnav a{padding:11px 0;border-bottom:1px solid var(--line);font-weight:600;display:flex;justify-content:space-between}
+.mnav p{margin-top:14px}
+
+/* Hero */
+.hero{background:linear-gradient(115deg,var(--blush) 0%,#fbf7f8 55%,var(--berry-lt) 100%);overflow:hidden}
+.hero__grid{display:grid;grid-template-columns:1.05fr .95fr;gap:40px;align-items:center;padding-block:clamp(40px,6vw,76px)}
+.hero h1{font-size:clamp(42px,6vw,76px);letter-spacing:-.035em;line-height:1.02;margin-block:14px 18px}
+.hero h1 em{font-style:normal;color:var(--berry)}
+.hero__ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:28px}
+.checks{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:24px;font-size:14px;color:var(--ink-2)}
+.checks li{display:flex;align-items:center;gap:7px}
+.checks svg{width:17px;height:17px;fill:none;stroke:var(--sage);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.hero__art{position:relative;aspect-ratio:1/1;max-width:100%}
+.hero__art .disc{position:absolute;inset:6%;border-radius:50%;background:radial-gradient(circle at 35% 30%,#fff 0%,var(--berry-lt) 60%,#e9cfd9 100%)}
+.hero__art .p{position:absolute}
+.hero__art .p svg{width:100%;height:auto;filter:drop-shadow(0 18px 18px rgba(36,24,38,.18))}
+.hero__art .p1{width:28%;left:15%;bottom:14%;color:#c98ba4}
+.hero__art .p2{width:25%;left:40%;bottom:18%;color:#7d5a8c}
+.hero__art .p3{width:30%;right:8%;bottom:12%;color:#d8b28a}
+.hero__art .batch{position:absolute;left:0;top:12%;transform:rotate(-4deg);box-shadow:var(--shadow)}
+.hero__note{position:absolute;right:0;bottom:5%;background:#fff;border-radius:var(--r);padding:12px 16px;box-shadow:var(--shadow);font-size:13px;line-height:1.35}
+.hero__note b{display:block;font-family:var(--f-display);font-size:17px;color:var(--berry)}
+@media (max-width:860px){.hero__grid{grid-template-columns:1fr}.hero__art{max-width:420px;width:100%;margin-inline:auto}}
+@media (max-width:480px){.hero__art .batch{font-size:11px;top:2%}}
+
+/* Batch stamp (brand signature) */
+.batch{font-family:var(--f-mono);font-size:12.5px;line-height:1.55;background:#fff;border:1.5px dashed var(--ink);border-radius:6px;padding:10px 13px;display:inline-grid;gap:1px;font-variant-numeric:tabular-nums}
+.batch b{font-family:var(--f-body);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--sage)}
+
+/* Trust */
+.trust{background:var(--berry-dk);color:#fff}
+.trust ul{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;padding-block:18px}
+.trust li{display:flex;align-items:center;gap:12px;font-size:14px;line-height:1.35}
+.trust li b{display:block}
+.trust li span{color:#f0d3de;font-size:13px}
+.trust svg{width:26px;height:26px;flex:none;fill:none;stroke:var(--pink);stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+@media (max-width:860px){.trust ul{grid-template-columns:repeat(2,1fr)}}
+
+/* Collections */
+.cols{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}
+.col{display:grid;gap:10px;align-content:start;text-align:center;font-weight:700;font-size:15px}
+.col__img{aspect-ratio:1;border-radius:50%;background:var(--tile);display:grid;place-items:center;transition:transform .25s;max-width:100%;width:100%}
+.col__img svg{width:40%;color:var(--tone)}
+.col:hover .col__img{transform:translateY(-4px)}
+.col small{display:block;font-weight:400;color:var(--ink-3);font-size:13px}
+@media (max-width:1000px){.cols{grid-template-columns:repeat(4,1fr)}}
+@media (max-width:560px){.cols{grid-template-columns:repeat(3,1fr);gap:16px 10px}.col{font-size:13px}.col small{font-size:11px}}
+
+/* Tabs */
+.tabs{display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;margin-bottom:12px;padding-bottom:2px}
+.tabs::-webkit-scrollbar{display:none}
+.chip{flex:none;border:1.5px solid var(--line);background:#fff;border-radius:999px;padding:8px 16px;font-size:14px;font-weight:600}
+.chip:hover{border-color:var(--ink)}
+.chip[aria-selected="true"],.chip[aria-pressed="true"]{background:var(--ink);border-color:var(--ink);color:#fff}
+.tab-note{font-size:14px;color:var(--ink-2);margin-bottom:22px}
+
+/* Product cards */
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
+@media (max-width:1000px){.grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.card{position:relative;display:flex;flex-direction:column;gap:9px}
+.card__media{position:relative;aspect-ratio:4/5;border-radius:var(--r);background:var(--bg);display:grid;place-items:center;overflow:hidden;max-width:100%}
+.card__media svg{width:42%;color:var(--tone);filter:drop-shadow(0 12px 12px rgba(36,24,38,.14));transition:transform .35s}
+.card:hover .card__media svg{transform:scale(1.05) rotate(-2deg)}
+.badges{position:absolute;top:10px;left:10px;display:flex;flex-wrap:wrap;gap:5px;max-width:calc(100% - 56px)}
+.pill{display:inline-block;font-size:10.5px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 8px;border-radius:999px;background:#fff;color:var(--ink)}
+.pill--new{background:var(--ink);color:#fff}
+.pill--derm{background:#e7eef6;color:#2c5a85}
+.pill--pk{background:var(--sage-lt);color:var(--sage)}
+.pill--mini{background:#fff4d6;color:#7a5a06}
+.pill--own{background:var(--berry);color:#fff}
+.wish{position:absolute;top:8px;right:8px;width:36px;height:36px;border-radius:50%;background:#fff;border:0;display:grid;place-items:center;z-index:2}
+.wish svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linejoin:round}
+.wish[aria-pressed="true"]{color:var(--berry)}
+.wish[aria-pressed="true"] svg{fill:currentColor}
+.card__brand{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);font-weight:700}
+.card__title{font-family:var(--f-body);font-size:15.5px;font-weight:700;letter-spacing:0;line-height:1.35}
+.card__why{font-size:13px;color:var(--ink-2);line-height:1.4}
+.card__meta{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:auto}
+.price{font-weight:700;font-size:16px;font-variant-numeric:tabular-nums}
+.price del{color:var(--ink-3);font-weight:400;font-size:14px;margin-left:6px}
+.size{font-size:13px;color:var(--ink-3)}
+.card .btn{padding:11px 16px;font-size:14px}
+
+/* Concerns */
+.concerns{display:flex;flex-wrap:wrap;gap:10px}
+.concerns button{display:flex;align-items:center;gap:8px;border:1.5px solid var(--blush-2);background:#fff;border-radius:999px;padding:10px 18px;font-size:15px;font-weight:600}
+.concerns button:hover{border-color:var(--berry);color:var(--berry)}
+.concerns svg{width:16px;height:16px;fill:none;stroke:var(--berry);stroke-width:2;stroke-linecap:round}
+
+/* Kits */
+.kits{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:18px}
+@media (max-width:1000px){.kits{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.kits{grid-template-columns:1fr}}
+.kit{background:#fff;border-radius:var(--r);overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--blush-2)}
+.kit__art{height:170px;background:var(--bg);display:flex;justify-content:center;align-items:flex-end;gap:6px;padding-bottom:18px}
+.kit__art svg{height:110px;width:auto;filter:drop-shadow(0 10px 10px rgba(36,24,38,.14))}
+.kit__body{padding:18px;display:grid;gap:8px;flex:1;align-content:start}
+.kit h3{font-size:20px}
+.kit ul{font-size:14px;color:var(--ink-2);display:grid;gap:3px}
+.kit ul li{display:flex;justify-content:space-between;gap:10px}
+.kit ul li span:last-child{font-variant-numeric:tabular-nums;white-space:nowrap}
+.kit__price{display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;margin-top:6px}
+.kit__price b{font-family:var(--f-display);font-size:24px;font-variant-numeric:tabular-nums}
+.save{color:var(--berry);font-size:13px;font-weight:700}
+.kit .btn{margin:0 18px 18px}
+
+/* Own label band */
+.own{background:linear-gradient(120deg,#241826 0%,#3a2233 100%);color:#f3e9ee;border-radius:var(--r);padding:clamp(24px,4vw,48px);display:grid;grid-template-columns:1fr 1.2fr;gap:clamp(24px,4vw,48px);align-items:center}
+.own h2{color:#fff}.own .eyebrow{color:var(--gold)}
+.own p{color:#dccbd4;max-width:46ch}
+.own__copy{display:grid;gap:14px;justify-items:start}
+.scents{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.scent{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.14);border-radius:var(--r);padding:14px;display:grid;gap:8px;align-content:start;text-align:left;color:#f3e9ee}
+.scent:hover{border-color:rgba(255,255,255,.5)}
+.scent__b{aspect-ratio:1;border-radius:8px;background:var(--bg);display:grid;place-items:center;max-width:100%}
+.scent__b svg{width:42%;color:var(--tone)}
+.scent b{font-size:15px;color:#fff}
+.scent small{font-size:12px;color:#cbb9c4;line-height:1.4}
+.scent .price{color:#fff;font-size:15px}
+@media (max-width:860px){.own{grid-template-columns:1fr}}
+@media (max-width:480px){.scents{grid-template-columns:1fr 1fr}.scents .scent:last-child{grid-column:1/-1}}
+
+/* Brands */
+.brand-grid{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px}
+@media (max-width:1000px){.brand-grid{grid-template-columns:repeat(3,minmax(0,1fr))}}
+@media (max-width:560px){.brand-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.brand{background:#fff;border:1px solid var(--blush-2);border-radius:var(--r);padding:16px;display:grid;gap:4px;align-content:start;transition:border-color .2s,transform .2s}
+.brand:hover{border-color:var(--berry);transform:translateY(-3px)}
+.brand__mark{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--berry-dk);color:#fff;font-family:var(--f-display);font-weight:800;font-size:14px;letter-spacing:-.02em;margin-bottom:8px}
+.brand:nth-child(3n) .brand__mark{background:var(--gold)}
+.brand:nth-child(4n) .brand__mark{background:var(--sage)}
+.brand b{font-size:16px;line-height:1.25}
+.brand span{font-size:13px;color:var(--ink-3);line-height:1.35}
+.brand .brand__mark{color:#fff;font-size:14px}
+.brand--own{border-color:var(--gold);background:var(--gold-lt)}
+
+/* Offer band */
+.offer{background:var(--ink);color:#f3e9ee;border-radius:var(--r);padding:clamp(24px,4vw,44px);display:flex;justify-content:space-between;align-items:center;gap:24px 40px;flex-wrap:wrap}
+.offer h2{color:#fff}.offer .eyebrow{color:var(--pink)}
+.offer p{color:#dccbd4;margin-block:10px 18px;max-width:48ch}
+.timer{display:flex;gap:10px}
+.timer div{border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:10px 12px;min-width:64px;text-align:center;display:grid}
+.timer b{font-family:var(--f-display);font-size:28px;color:#fff;font-variant-numeric:tabular-nums;line-height:1.1}
+.timer small{font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:#cbb9c4}
+
+/* How we check */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px;counter-reset:s}
+@media (max-width:900px){.steps{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.steps{grid-template-columns:1fr}}
+.step{background:#fff;border:1px solid var(--blush-2);border-radius:var(--r);padding:20px;display:grid;gap:8px;align-content:start}
+.step__n{font-family:var(--f-mono);font-size:12px;color:var(--berry);font-weight:500}
+.step h3{font-size:18px}
+.step p{font-size:15px;color:var(--ink-2)}
+.proof{display:grid;grid-template-columns:auto 1fr;gap:28px;align-items:center;margin-top:28px;background:#fff;border-radius:var(--r);padding:clamp(18px,3vw,28px);border:1px solid var(--blush-2)}
+.proof p{color:var(--ink-2);max-width:60ch}
+.proof h3{font-size:20px;margin-bottom:6px}
+@media (max-width:640px){.proof{grid-template-columns:1fr}}
+
+/* Why */
+.why{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:28px}
+@media (max-width:900px){.why{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:520px){.why{grid-template-columns:1fr}}
+.why div{display:grid;gap:8px;align-content:start;border-top:2px solid var(--berry);padding-top:16px}
+.why h3{font-size:18px}
+.why p{color:var(--ink-2);font-size:15px}
+
+/* Finder */
+.finder{background:var(--berry-lt);border-radius:var(--r);padding:clamp(22px,4vw,44px);display:grid;grid-template-columns:.9fr 1.1fr;gap:clamp(22px,4vw,48px)}
+@media (max-width:860px){.finder{grid-template-columns:1fr}}
+.finder__intro{display:grid;gap:12px;align-content:start}
+.finder form{display:grid;gap:18px}
+.q{border:0;margin:0;padding:0;display:grid;gap:10px}
+.q legend{font-weight:700;font-size:15px;padding:0;margin-bottom:10px}
+.opts{display:flex;flex-wrap:wrap;gap:8px}
+.opts label{cursor:pointer}
+.opts input{position:absolute;opacity:0;pointer-events:none}
+.opts span{display:inline-block;border:1.5px solid var(--blush-2);background:#fff;border-radius:999px;padding:8px 15px;font-size:14px;font-weight:600}
+.opts input:checked+span{background:var(--ink);border-color:var(--ink);color:#fff}
+.opts input:focus-visible+span{outline:2px solid var(--berry);outline-offset:2px}
+.routine{background:#fff;border-radius:var(--r);padding:18px;display:grid;gap:12px}
+.routine h3{font-size:19px}
+.routine ol{margin:0;padding:0;list-style:none;display:grid;gap:0}
+.routine li{display:grid;grid-template-columns:28px 44px 1fr auto;gap:12px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}
+.routine li:last-child{border-bottom:0}
+.routine .n{font-family:var(--f-mono);font-size:12px;color:var(--berry)}
+.routine .thumb{width:44px;height:44px;border-radius:8px;background:var(--bg);display:grid;place-items:center}
+.routine .thumb svg{width:50%;color:var(--tone)}
+.routine li b{font-size:14px;display:block;line-height:1.3}
+.routine li small{font-size:12px;color:var(--ink-3)}
+.routine .p{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.routine__foot{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:12px}
+.routine__foot b{font-variant-numeric:tabular-nums}
+
+/* FAQ */
+.faq{display:grid;max-width:860px}
+.faq details{border-bottom:1px solid var(--line)}
+.faq summary{list-style:none;cursor:pointer;padding:18px 36px 18px 0;font-weight:700;font-size:17px;position:relative}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";position:absolute;right:4px;top:50%;transform:translateY(-50%);font-size:24px;font-weight:400;color:var(--berry)}
+.faq details[open] summary::after{content:"–"}
+.faq details p{padding-bottom:18px;color:var(--ink-2);max-width:70ch}
+
+/* Journal */
+.posts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+@media (max-width:900px){.posts{grid-template-columns:1fr}}
+.post{display:grid;gap:10px;align-content:start}
+.post__art{aspect-ratio:16/10;border-radius:var(--r);background:var(--bg);display:grid;place-items:center;max-width:100%}
+.post__art svg{height:58%;width:auto;color:var(--tone)}
+.post h3{font-size:20px}
+.post p{color:var(--ink-2);font-size:15px}
+.post .meta{font-size:13px;color:var(--ink-3)}
+
+/* Signup */
+.signup{background:var(--berry);color:#fff;border-radius:var(--r);padding:clamp(28px,5vw,56px);display:grid;grid-template-columns:1.1fr 1fr;gap:28px;align-items:center}
+.signup h2{color:#fff}.signup p{color:#f6dbe5;margin-top:10px}
+.signup form{display:flex;gap:10px;flex-wrap:wrap}
+.signup input{flex:1 1 220px;border:0;border-radius:999px;padding:15px 20px;font-size:15px;background:#fff;color:var(--ink)}
+.signup small{display:block;width:100%;font-size:13px;color:#f6dbe5;min-height:1.4em}
+@media (max-width:860px){.signup{grid-template-columns:1fr}}
+
+/* Footer */
+.footer{background:var(--ink);color:#d9ccd3;padding-block:56px 28px;font-size:14px}
+.footer__grid{display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:32px}
+.footer h3{color:#fff;font-family:var(--f-body);font-size:13px;letter-spacing:.12em;text-transform:uppercase;margin-bottom:14px}
+.footer ul{display:grid;gap:9px}
+.footer a:hover{color:#fff}
+.footer .logo svg{color:#fff}
+.footer .logo__word b{color:#fff}
+.footer .logo__word small{color:var(--pink)}
+.footer__about p{margin-top:14px;max-width:36ch}
+.footer__bottom{border-top:1px solid rgba(255,255,255,.14);margin-top:40px;padding-top:22px;display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;font-size:13px;color:#b3a3ac}
+.pay{display:flex;gap:8px;flex-wrap:wrap}
+.pay span{border:1px solid rgba(255,255,255,.25);border-radius:4px;padding:3px 8px;font-size:11px;font-weight:700;letter-spacing:.05em}
+@media (max-width:860px){.footer__grid{grid-template-columns:1fr 1fr}.footer__about{grid-column:1/-1}}
+
+/* Drawer, scrim, toast */
+.scrim{position:fixed;inset:0;background:rgba(36,24,38,.45);z-index:55;opacity:0;pointer-events:none;transition:opacity .2s}
+.scrim.is-open{opacity:1;pointer-events:auto}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:min(420px,100%);background:#fff;z-index:70;transform:translateX(100%);transition:transform .28s;display:grid;grid-template-rows:auto auto 1fr auto;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.drawer.is-open{transform:none}
+.drawer__head{display:flex;justify-content:space-between;align-items:center;padding:16px 20px;border-bottom:1px solid var(--line)}
+.drawer__head h2{font-size:19px}
+.ship{margin:14px 20px 0;background:var(--blush);border-radius:var(--r);padding:12px 14px;display:grid;gap:8px;font-size:14px}
+.ship__track{height:6px;border-radius:999px;background:#fff;overflow:hidden}
+.ship__fill{height:100%;background:var(--berry);width:0;transition:width .4s}
+.drawer__items{overflow:auto;padding:6px 20px}
+.line{display:grid;grid-template-columns:56px 1fr auto;gap:12px;padding-block:14px;border-bottom:1px solid var(--line);align-items:center}
+.line .thumb{width:56px;height:56px;border-radius:8px;background:var(--bg);display:grid;place-items:center}
+.line .thumb svg{width:48%;color:var(--tone)}
+.line b{font-size:14px;display:block;line-height:1.3}
+.line small{font-size:12px;color:var(--ink-3)}
+.qty{display:flex;align-items:center;gap:8px;margin-top:6px;font-size:13px}
+.qty button{width:26px;height:26px;border-radius:50%;border:1px solid var(--line);background:#fff;line-height:1}
+.line .p{font-weight:700;font-size:14px;font-variant-numeric:tabular-nums}
+.empty{padding:40px 0;text-align:center;color:var(--ink-2);display:grid;gap:14px;justify-items:center}
+.drawer__foot{border-top:1px solid var(--line);padding:16px 20px;display:grid;gap:12px}
+.total{display:flex;justify-content:space-between;font-weight:700;font-size:17px;font-variant-numeric:tabular-nums}
+.drawer__foot small{color:var(--ink-3);text-align:center;font-size:12px}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:#fff;padding:12px 20px;border-radius:999px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s,transform .2s;z-index:80;max-width:calc(100% - 32px);text-align:center}
+.toast.is-on{opacity:1;transform:translate(-50%,0)}
+</style>
+<script type="application/ld+json">{"@context": "https://schema.org", "@type": "OnlineStore", "name": "Nexus Beauty", "slogan": "Beauty, checked.", "areaServed": "PK", "currenciesAccepted": "PKR", "paymentAccepted": "Cash on delivery, Card, JazzCash, Easypaisa"}</script><script type="application/ld+json">{"@context": "https://schema.org", "@type": "FAQPage", "mainEntity": [{"@type": "Question", "name": "Are your products original?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. We buy only from brands and their authorised distributors, and every order shows the batch number and expiry date of each product. If anything looks wrong when it arrives, send us a photo and we refund you in full."}}, {"@type": "Question", "name": "Can I pay cash on delivery?", "acceptedAnswer": {"@type": "Answer", "text": "Yes. Cash on delivery works everywhere in Pakistan. You can also pay by card, JazzCash or Easypaisa."}}, {"@type": "Question", "name": "How long does delivery take?", "acceptedAnswer": {"@type": "Answer", "text": "Orders placed before 3pm leave the same day. Karachi and Lahore: 1\u20132 working days. Islamabad and Rawalpindi: 2\u20133 working days. Other cities: 3\u20135 working days."}}, {"@type": "Question", "name": "How much is delivery?", "acceptedAnswer": {"@type": "Answer", "text": "Delivery is free on orders over Rs 5,000. Below that it costs Rs 250."}}, {"@type": "Question", "name": "What is your return policy?", "acceptedAnswer": {"@type": "Answer", "text": "You can return unopened, unused products in their original packaging within 7 days. For hygiene reasons, opened products can only be returned if they arrived damaged or faulty."}}, {"@type": "Question", "name": "How do you source international brands?", "acceptedAnswer": {"@type": "Answer", "text": "Through each brand's authorised distributor or importer in Pakistan. We never sell \"first copy\" or grey-market stock. Ask us on WhatsApp for the source of any product before you buy."}}]}</script>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+<defs>
+ <symbol id="i-dropper" viewBox="0 0 100 160"><path d="M42 30V14c0-10 16-10 16 0v16z" fill="#2b1f2c"/><rect x="36" y="30" width="28" height="14" rx="2" fill="#c9a86a"/><rect x="24" y="44" width="52" height="108" rx="12" fill="currentColor"/><rect x="31" y="84" width="38" height="40" rx="3" fill="#fff" opacity=".85"/><rect x="36" y="94" width="28" height="3" fill="#2b1f2c" opacity=".55"/><rect x="40" y="102" width="20" height="2" fill="#2b1f2c" opacity=".35"/><rect x="29" y="52" width="5" height="90" rx="2.5" fill="#fff" opacity=".28"/></symbol>
+ <symbol id="i-perfume" viewBox="0 0 100 160"><rect x="37" y="8" width="26" height="28" rx="3" fill="#2b1f2c"/><rect x="43" y="36" width="14" height="10" fill="#c9a86a"/><rect x="14" y="46" width="72" height="104" rx="10" fill="currentColor"/><rect x="22" y="54" width="56" height="88" rx="6" fill="#fff" opacity=".16"/><rect x="30" y="86" width="40" height="26" rx="2" fill="#fff" opacity=".88"/><rect x="36" y="95" width="28" height="3" fill="#2b1f2c" opacity=".55"/><rect x="40" y="102" width="20" height="2" fill="#2b1f2c" opacity=".35"/></symbol>
+ <symbol id="i-bottle" viewBox="0 0 100 160"><rect x="40" y="6" width="20" height="22" rx="3" fill="#2b1f2c"/><rect x="43" y="28" width="14" height="6" fill="#2b1f2c" opacity=".8"/><path d="M28 50c0-12 8-16 22-16s22 4 22 16v92c0 6-4 10-10 10H38c-6 0-10-4-10-10z" fill="currentColor"/><rect x="34" y="78" width="32" height="46" rx="3" fill="#fff" opacity=".85"/><rect x="39" y="90" width="22" height="3" fill="#2b1f2c" opacity=".55"/><rect x="42" y="98" width="16" height="2" fill="#2b1f2c" opacity=".35"/><rect x="32" y="52" width="4" height="88" rx="2" fill="#fff" opacity=".25"/></symbol>
+ <symbol id="i-pump" viewBox="0 0 100 160"><path d="M46 8h28v8H56v12h-10z" fill="#2b1f2c"/><rect x="42" y="28" width="16" height="16" rx="2" fill="#2b1f2c"/><rect x="22" y="44" width="56" height="108" rx="14" fill="currentColor"/><rect x="30" y="80" width="40" height="44" rx="3" fill="#fff" opacity=".85"/><rect x="36" y="92" width="28" height="3" fill="#2b1f2c" opacity=".55"/><rect x="40" y="100" width="20" height="2" fill="#2b1f2c" opacity=".35"/><rect x="28" y="54" width="4" height="88" rx="2" fill="#fff" opacity=".25"/></symbol>
+ <symbol id="i-lipstick" viewBox="0 0 100 160"><path d="M40 60V28l20-14v46z" fill="currentColor"/><rect x="36" y="60" width="28" height="28" rx="2" fill="#c9a86a"/><rect x="31" y="88" width="38" height="64" rx="4" fill="#2b1f2c"/><rect x="36" y="94" width="4" height="52" rx="2" fill="#fff" opacity=".2"/></symbol>
+ <symbol id="i-jar" viewBox="0 0 100 160"><rect x="12" y="62" width="76" height="26" rx="6" fill="#2b1f2c"/><rect x="16" y="88" width="68" height="60" rx="12" fill="currentColor"/><rect x="28" y="100" width="44" height="30" rx="3" fill="#fff" opacity=".85"/><rect x="34" y="110" width="32" height="3" fill="#2b1f2c" opacity=".55"/><rect x="38" y="118" width="24" height="2" fill="#2b1f2c" opacity=".35"/></symbol>
+ <symbol id="i-tube" viewBox="0 0 100 160"><rect x="24" y="6" width="52" height="8" rx="2" fill="currentColor" opacity=".75"/><path d="M26 14h48l-8 112H34z" fill="currentColor"/><rect x="36" y="46" width="28" height="44" rx="3" fill="#fff" opacity=".85"/><rect x="40" y="58" width="20" height="3" fill="#2b1f2c" opacity=".55"/><rect x="42" y="66" width="16" height="2" fill="#2b1f2c" opacity=".35"/><rect x="36" y="126" width="28" height="26" rx="3" fill="#2b1f2c"/></symbol>
+ <symbol id="ic-search" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></symbol>
+ <symbol id="ic-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c1.5-4 4.5-6 8-6s6.5 2 8 6"/></symbol>
+ <symbol id="ic-heart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></symbol>
+ <symbol id="ic-bag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></symbol>
+ <symbol id="ic-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+ <symbol id="ic-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+ <symbol id="ic-truck" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2" fill="#fff"/><circle cx="17" cy="18" r="2" fill="#fff"/></symbol>
+ <symbol id="ic-shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5" stroke-linecap="round"/></symbol>
+ <symbol id="ic-return" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M4 9h11a5 5 0 010 10H9"/><path d="M8 5L4 9l4 4"/></symbol>
+ <symbol id="ic-cash" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></symbol>
+ <symbol id="ic-leaf" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M5 19C5 10 10 5 20 4c0 10-5 15-14 15z"/><path d="M5 19l8-8"/></symbol>
+ <symbol id="ic-chat" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4z"/></symbol>
+ <symbol id="ic-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+ <symbol id="ic-filter" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M4 6h16M7 12h10M10 18h4"/></symbol>
+ <symbol id="ic-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></symbol>
+<symbol id="mark" viewBox="0 0 120 80"><circle cx="44" cy="40" r="30" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="76" cy="40" r="30" fill="none" stroke="currentColor" stroke-width="6"/><path d="M60 14.62 A30 30 0 0 1 60 65.38 A30 30 0 0 1 60 14.62 Z" style="fill:var(--lens, #8c2350)"/></symbol></defs></svg>
+<div class="announce" aria-live="polite"><span id="announce">Free delivery on orders over <b>Rs 5,000</b></span></div>
+<header class="header">
+ <div class="wrap header__bar">
+  <button class="icon-btn menu-btn" type="button" data-open="mnav" aria-label="Open menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
+  <a class="logo" href="#top" aria-label="Nexus Beauty home"><svg viewBox="0 0 120 80" aria-hidden="true"><use href="#mark"/></svg><span class="logo__word"><b>Nexus</b><small>BEAUTY</small></span></a>
+  <nav class="nav" aria-label="Main">
+   <div class="mega-wrap"><button type="button" id="shopBtn" aria-expanded="false" aria-controls="mega">Shop <svg viewBox="0 0 24 24" aria-hidden="true" style="width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2"><path d="m6 9 6 6 6-6"/></svg></button>
+    <div class="mega" id="mega" hidden><div class="wrap"><a href="#picks">Skincare<small>Serums, creams, cleansers</small></a><a href="#picks">Sun Care<small>SPF, sticks, tinted</small></a><a href="#picks">Hair Care<small>Hair fall, masks</small></a><a href="#picks">Body Care<small>Lotions, gel oils</small></a><a href="#picks">Fragrance<small>Mists, perfume</small></a><a href="#picks">Makeup<small>Lips, blush, face</small></a><a href="#picks">Men&#x27;s Grooming<small>Face wash, beard</small></a><a href="#picks">Personal Care<small>Razors, hygiene</small></a><a href="#picks">Pakistani Derm<small>Rederm, Estelin, Jenpharm</small></a><a href="#picks">Minis &amp; Trial Sizes<small>Under Rs 1,000</small></a><a href="#picks">Koh-e-Noor<small>Our own label</small></a><a href="#picks">Gifts &amp; Sets<small>Routine kits</small></a></div></div></div>
+   <a href="#concerns">Concerns</a><a href="#brands">Brands</a><a href="#finder">Routine finder</a><a href="#journal">Journal</a>
+  </nav>
+  <div class="actions">
+   <button class="icon-btn" type="button" id="searchBtn" aria-expanded="false" aria-controls="searchpanel" aria-label="Search"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg></button>
+   <button class="icon-btn" type="button" id="wishBtn" aria-label="Wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg><span class="count" id="wishCount" hidden>0</span></button>
+   <button class="icon-btn" type="button" data-open="drawer" aria-label="Open bag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 8h14l-1 12H6z"/><path d="M9 8V6a3 3 0 016 0v2"/></svg><span class="count" id="cartCount" hidden>0</span></button>
+  </div>
+ </div>
+ <div class="searchpanel" id="searchpanel" hidden>
+  <div class="wrap">
+   <form class="sfield" role="search" id="searchForm"><label class="sr-only" for="q">Search products, brands and concerns</label><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/></svg><input id="q" type="search" placeholder="Search a product, brand or concern, e.g. hair fall" autocomplete="off"></form>
+   <div class="popular"><span>Popular:</span><button type="button" data-q="sunscreen">Sunscreen</button><button type="button" data-q="hair fall">Hair fall</button><button type="button" data-q="AXIS-Y">AXIS-Y</button><button type="button" data-q="PDRN">PDRN</button><button type="button" data-q="mist">Body mist</button><button type="button" data-q="rosemary">Rosemary</button></div>
+   <div class="results" id="results" aria-live="polite"></div>
+  </div>
+ </div>
+</header>
+<nav class="mnav" id="mnav" aria-label="Mobile" aria-hidden="true">
+ <div class="mnav__head"><span class="logo" ><svg viewBox="0 0 120 80" aria-hidden="true"><use href="#mark"/></svg><span class="logo__word"><b>Nexus</b><small>BEAUTY</small></span></span><button class="icon-btn" type="button" data-close aria-label="Close menu"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <p class="eyebrow">Shop</p><a href="#picks">Skincare<small>Serums, creams, cleansers</small></a><a href="#picks">Sun Care<small>SPF, sticks, tinted</small></a><a href="#picks">Hair Care<small>Hair fall, masks</small></a><a href="#picks">Body Care<small>Lotions, gel oils</small></a><a href="#picks">Fragrance<small>Mists, perfume</small></a><a href="#picks">Makeup<small>Lips, blush, face</small></a><a href="#picks">Men&#x27;s Grooming<small>Face wash, beard</small></a><a href="#picks">Personal Care<small>Razors, hygiene</small></a><a href="#picks">Pakistani Derm<small>Rederm, Estelin, Jenpharm</small></a><a href="#picks">Minis &amp; Trial Sizes<small>Under Rs 1,000</small></a><a href="#picks">Koh-e-Noor<small>Our own label</small></a><a href="#picks">Gifts &amp; Sets<small>Routine kits</small></a>
+ <p class="eyebrow">Explore</p><a href="#concerns">Concerns</a><a href="#brands">Brands</a><a href="#finder">Routine finder</a><a href="#journal">Journal</a>
+</nav>
+
+<main id="main">
+<section class="hero" id="top" aria-labelledby="hero-h">
+ <div class="wrap hero__grid">
+  <div>
+   <p class="eyebrow">Beauty, checked.</p>
+   <h1 id="hero-h">Good skin.<br><em>Good sense.</em></h1>
+   <p class="lede">Original Pakistani derm heroes, Korean icons and the next wave of beauty, chosen for your routine, your budget and our climate. Every order shows the batch number and expiry date.</p>
+   <div class="hero__ctas"><a class="btn btn--p btn--lg" href="#picks">Shop best sellers</a><a class="btn btn--g btn--lg" href="#finder">Find my routine</a></div>
+   <ul class="checks"><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Cash on delivery</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Delivered across Pakistan</li><li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>Minis from Rs 490</li></ul>
+  </div>
+  <div class="hero__art" aria-hidden="true">
+   <div class="disc"></div>
+   <div class="p p1"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg></div><div class="p p3"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg></div><div class="p p2"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg></div>
+   <div class="batch"><b>✓ Verified original</b><span>BATCH&nbsp;&nbsp;AX2609K</span><span>MFG&nbsp;&nbsp;&nbsp;&nbsp;03/2026</span><span>EXP&nbsp;&nbsp;&nbsp;&nbsp;02/2029</span></div>
+   <div class="hero__note"><b>New: Koh-e-Noor</b>Our own hair &amp; body mists, Rs 1,290</div>
+  </div>
+ </div>
+</section>
+
+<section class="trust" aria-label="Why shop with us"><ul class="wrap">
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M8.5 12l2.5 2.5 4.5-5"/></svg><div><b>Batch &amp; expiry shown</b><span>On every order</span></div></li>
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="6" width="19" height="12" rx="2"/><circle cx="12" cy="12" r="2.6"/></svg><div><b>Cash on delivery</b><span>Anywhere in Pakistan</span></div></li>
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M2 6h12v10H2zM14 10h4l3 3v3h-7z"/><circle cx="6" cy="18" r="2"/><circle cx="17" cy="18" r="2"/></svg><div><b>Same-day dispatch</b><span>Order before 3pm</span></div></li>
+ <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h11a5 5 0 010 10H9"/><path d="M8 5L4 9l4 4"/></svg><div><b>7-day returns</b><span>Unopened products</span></div></li>
+</ul></section>
+
+<section class="section" id="shop" aria-labelledby="col-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Start here</p><h2 class="h2" id="col-h">Shop by collection</h2></div><p class="lede" style="max-width:44ch">From pharmacy-trusted derm care to scent that lasts. Everything you need, nothing you don't.</p></div>
+  <div class="cols"><a class="col" href="#picks"><span class="col__img" style="--tone:#e2a33b;--tile:#fbf1df"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg></span><span>Skincare<small>Serums, creams, cleansers</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#f0c24b;--tile:#fdf5dc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg></span><span>Sun Care<small>SPF, sticks, tinted</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#c68a3a;--tile:#f8eedf"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-bottle"/></svg></span><span>Hair Care<small>Hair fall, masks</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#d9b48f;--tile:#f7efe6"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-pump"/></svg></span><span>Body Care<small>Lotions, gel oils</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#b04a6b;--tile:#f7e5eb"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg></span><span>Fragrance<small>Mists, perfume</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#9e2f4a;--tile:#f6e2e7"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-lipstick"/></svg></span><span>Makeup<small>Lips, blush, face</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#3c3f44;--tile:#e8e9eb"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg></span><span>Men&#x27;s Grooming<small>Face wash, beard</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#9bb79e;--tile:#eaf2eb"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-jar"/></svg></span><span>Personal Care<small>Razors, hygiene</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#7fa7b8;--tile:#e9f1f4"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-bottle"/></svg></span><span>Pakistani Derm<small>Rederm, Estelin, Jenpharm</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#e58aa8;--tile:#fbe7ee"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg></span><span>Minis &amp; Trial Sizes<small>Under Rs 1,000</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#c9a55a;--tile:#f6efdc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg></span><span>Koh-e-Noor<small>Our own label</small></span></a><a class="col" href="#picks"><span class="col__img" style="--tone:#b3a0c9;--tile:#f0ebf6"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-jar"/></svg></span><span>Gifts &amp; Sets<small>Routine kits</small></span></a></div>
+ </div>
+</section>
+
+<section class="section section--tint" id="picks" aria-labelledby="picks-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Proven in Pakistan</p><h2 class="h2" id="picks-h">Best sellers &amp; new arrivals</h2></div></div>
+  <div class="tabs" role="tablist" aria-label="Product lists"><button class="chip" type="button" role="tab" aria-selected="true" data-tab="best" data-note="The products Pakistan buys most, one or two from each category.">Best sellers</button><button class="chip" type="button" role="tab" aria-selected="false" data-tab="new" data-note="Trending in the US and Korea, and only just arriving in Pakistan.">New arrivals</button><button class="chip" type="button" role="tab" aria-selected="false" data-tab="mini" data-note="Minis and everyday favourites to try without spending much.">Under Rs 1,000</button></div>
+  <p class="tab-note" id="tabNote">The products Pakistan buys most, one or two from each category.</p>
+  <div class="grid" id="pickGrid"><article class="card" data-tabs="best mini">
+<div class="card__media" style="--tone:#e2a33b;--bg:#fbf1df"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg><div class="badges"><span class="pill pill--mini">Mini</span><span class="pill ">Korea</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Dark Spot Correcting Glow Serum to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">AXIS-Y</p>
+<h3 class="card__title">Dark Spot Correcting Glow Serum</h3>
+<p class="card__why">Pakistan&#x27;s most-reviewed serum. The mini sells as well as the 50 ml.</p>
+<div class="card__meta"><p class="price">Rs 799</p><span class="size">5 ml mini</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="axis-y-5">Add to bag</button>
+</article><article class="card" data-tabs="best">
+<div class="card__media" style="--tone:#b3a0c9;--bg:#f0ebf6"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-jar"/></svg><div class="badges"><span class="pill ">Korea</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save 345 Relief Cream to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Dr. Althea</p>
+<h3 class="card__title">345 Relief Cream</h3>
+<p class="card__why">Light barrier repair that suits the heat</p>
+<div class="card__meta"><p class="price">Rs 2,749</p><span class="size">50 ml</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="dr-althea-345">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#7fa7b8;--bg:#e9f1f4"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-jar"/></svg><div class="badges"></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Super Light Gel Moisturiser to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Pond&#x27;s</p>
+<h3 class="card__title">Super Light Gel Moisturiser</h3>
+<p class="card__why">A light gel for oily skin in summer</p>
+<div class="card__meta"><p class="price">Rs 749</p><span class="size">50 ml</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="ponds-gel">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#e2a33b;--bg:#fbf1df"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg><div class="badges"></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Bright Complete Vitamin C Serum to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Garnier</p>
+<h3 class="card__title">Bright Complete Vitamin C Serum</h3>
+<p class="card__why">An easy first vitamin C at a low price</p>
+<div class="card__meta"><p class="price">Rs 550</p><span class="size">Serum</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="garnier-vitc">Add to bag</button>
+</article><article class="card" data-tabs="new">
+<div class="card__media" style="--tone:#e58aa8;--bg:#fbe7ee"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg><div class="badges"><span class="pill pill--new">New</span><span class="pill ">Korea</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save PDRN Pink Peptide Serum to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Medicube</p>
+<h3 class="card__title">PDRN Pink Peptide Serum</h3>
+<p class="card__why">The number one product on US TikTok Shop this spring</p>
+<div class="card__meta"><p class="price">Rs 3,829</p><span class="size">Serum</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="medicube-pdrn">Add to bag</button>
+</article><article class="card" data-tabs="new">
+<div class="card__media" style="--tone:#9bb79e;--bg:#eaf2eb"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg><div class="badges"><span class="pill pill--new">New</span><span class="pill ">Korea</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Azelaic Acid 10 Hyaluron Redness Soothing Serum to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Anua</p>
+<h3 class="card__title">Azelaic Acid 10 Hyaluron Redness Soothing Serum</h3>
+<p class="card__why">For redness, bumps and post-acne marks</p>
+<div class="card__meta"><p class="price">Rs 6,659</p><span class="size">Serum</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="anua-azelaic">Add to bag</button>
+</article><article class="card" data-tabs="best">
+<div class="card__media" style="--tone:#f0c24b;--bg:#fdf5dc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg><div class="badges"><span class="pill ">Korea</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Relief Sun SPF 50+ to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Beauty of Joseon</p>
+<h3 class="card__title">Relief Sun SPF 50+</h3>
+<p class="card__why">The sunscreen with the most reviews in Pakistan</p>
+<div class="card__meta"><p class="price">Rs 1,299</p><span class="size">50 ml</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="boj-relief-sun">Add to bag</button>
+</article><article class="card" data-tabs="best">
+<div class="card__media" style="--tone:#c99a78;--bg:#f6ece4"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg><div class="badges"><span class="pill pill--derm">Derm brand</span><span class="pill pill--pk">Pakistani</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Tinted Sunscreen SPF 70 to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Estelin</p>
+<h3 class="card__title">Tinted Sunscreen SPF 70</h3>
+<p class="card__why">A Pakistani derm favourite with no white cast</p>
+<div class="card__meta"><p class="price">Rs 1,239</p><span class="size">Sunscreen</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="estelin-70">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#f0c24b;--bg:#fdf5dc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg><div class="badges"><span class="pill pill--derm">Derm brand</span><span class="pill pill--pk">Pakistani</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Neobrella Sunscreen SPF 60 to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Neophar</p>
+<h3 class="card__title">Neobrella Sunscreen SPF 60</h3>
+<p class="card__why">Derm-brand sun cream under Rs 1,000</p>
+<div class="card__meta"><p class="price">Rs 930</p><span class="size">Sunscreen</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="neobrella-60">Add to bag</button>
+</article><article class="card" data-tabs="new">
+<div class="card__media" style="--tone:#9bb79e;--bg:#eaf2eb"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg><div class="badges"><span class="pill pill--new">New</span><span class="pill ">Korea</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Cotton Soft Sun Stick SPF 50+ to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Tocobo</p>
+<h3 class="card__title">Cotton Soft Sun Stick SPF 50+</h3>
+<p class="card__why">Reapply over makeup or on the go</p>
+<div class="card__meta"><p class="price">Rs 4,509</p><span class="size">Stick</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="tocobo-stick">Add to bag</button>
+</article><article class="card" data-tabs="new">
+<div class="card__media" style="--tone:#7fa7b8;--bg:#e9f1f4"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg><div class="badges"><span class="pill pill--new">New</span><span class="pill ">Korea</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Hyalu-Cica Water-fit Sun Serum to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">SKIN1004</p>
+<h3 class="card__title">Hyalu-Cica Water-fit Sun Serum</h3>
+<p class="card__why">SPF that feels like a serum</p>
+<div class="card__meta"><p class="price">Rs 4,289</p><span class="size">Sun serum</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="skin1004-sun">Add to bag</button>
+</article><article class="card" data-tabs="best">
+<div class="card__media" style="--tone:#9bb79e;--bg:#eaf2eb"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-bottle"/></svg><div class="badges"><span class="pill pill--derm">Derm brand</span><span class="pill pill--pk">Pakistani</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Tressfix Hairfall &amp; Anti-Dandruff Shampoo to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Rederm</p>
+<h3 class="card__title">Tressfix Hairfall &amp; Anti-Dandruff Shampoo</h3>
+<p class="card__why">Pakistan&#x27;s number one hair fall shampoo online</p>
+<div class="card__meta"><p class="price">Rs 1,150</p><span class="size">Shampoo</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="rederm-tressfix">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#7fa7b8;--bg:#e9f1f4"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-bottle"/></svg><div class="badges"><span class="pill pill--derm">Derm brand</span><span class="pill pill--pk">Pakistani</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Anagrow Biotin Shampoo to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Jenpharm</p>
+<h3 class="card__title">Anagrow Biotin Shampoo</h3>
+<p class="card__why">Biotin shampoo from a trusted derm brand</p>
+<div class="card__meta"><p class="price">Rs 988</p><span class="size">Shampoo</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="jenpharm-anagrow">Add to bag</button>
+</article><article class="card" data-tabs="best">
+<div class="card__media" style="--tone:#c68a3a;--bg:#f8eedf"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-jar"/></svg><div class="badges"></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Premium Touch Hair Mask to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Fino</p>
+<h3 class="card__title">Premium Touch Hair Mask</h3>
+<p class="card__why">The best-loved mask for dry, damaged hair</p>
+<div class="card__meta"><p class="price">Rs 3,299</p><span class="size">Mask</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="fino-mask">Add to bag</button>
+</article><article class="card" data-tabs="new">
+<div class="card__media" style="--tone:#5f8f6a;--bg:#e6f0e8"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-jar"/></svg><div class="badges"></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Rosemary Mint Strengthening Hair Masque to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Mielle</p>
+<h3 class="card__title">Rosemary Mint Strengthening Hair Masque</h3>
+<p class="card__why">The rosemary original that started the trend</p>
+<div class="card__meta"><p class="price">Rs 4,079</p><span class="size">Masque</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="mielle-rosemary">Add to bag</button>
+</article><article class="card" data-tabs="best">
+<div class="card__media" style="--tone:#b04a6b;--bg:#f7e5eb"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-pump"/></svg><div class="badges"></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Gluta-Hya Serum Burst Lotion to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Vaseline</p>
+<h3 class="card__title">Gluta-Hya Serum Burst Lotion</h3>
+<p class="card__why">The body lotion with actives Pakistan buys most</p>
+<div class="card__meta"><p class="price">Rs 2,399</p><span class="size">Lotion</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="vaseline-gluta">Add to bag</button>
+</article><article class="card" data-tabs="best new">
+<div class="card__media" style="--tone:#c9a55a;--bg:#f6efdc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg><div class="badges"><span class="pill pill--own">Our label</span><span class="pill pill--new">New</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Vanilla Pistachio Hair &amp; Body Mist to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Koh-e-Noor by Nexus Beauty</p>
+<h3 class="card__title">Vanilla Pistachio Hair &amp; Body Mist</h3>
+<p class="card__why">Our own mist. Launch price.</p>
+<div class="card__meta"><p class="price">Rs 1,290<del><span class="sr-only">was </span>Rs 1,450</del></p><span class="size">100 ml</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="kn-vp">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#c9a55a;--bg:#f6efdc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg><div class="badges"><span class="pill pill--own">Our label</span><span class="pill pill--mini">Mini</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Vanilla Pistachio Mist, travel size to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Koh-e-Noor by Nexus Beauty</p>
+<h3 class="card__title">Vanilla Pistachio Mist, travel size</h3>
+<p class="card__why">Try the scent before the full size</p>
+<div class="card__meta"><p class="price">Rs 490</p><span class="size">30 ml</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="kn-vp-30">Add to bag</button>
+</article><article class="card" data-tabs="best mini">
+<div class="card__media" style="--tone:#9e2f4a;--bg:#f6e2e7"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-lipstick"/></svg><div class="badges"><span class="pill pill--pk">Pakistani</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Matte Lipstick to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Medora</p>
+<h3 class="card__title">Matte Lipstick</h3>
+<p class="card__why">Pakistan&#x27;s most-reviewed lipstick</p>
+<div class="card__meta"><p class="price">Rs 300</p><span class="size">Lipstick</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="medora-matte">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#c99a78;--bg:#f6ece4"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-lipstick"/></svg><div class="badges"><span class="pill pill--pk">Pakistani</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Natural Matte Lipstick 60 to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Swiss Miss</p>
+<h3 class="card__title">Natural Matte Lipstick 60</h3>
+<p class="card__why">A local matte favourite</p>
+<div class="card__meta"><p class="price">Rs 400</p><span class="size">Lipstick</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="swiss-miss-60">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#c68a3a;--bg:#f8eedf"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg><div class="badges"><span class="pill pill--pk">Pakistani</span></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Beard Oil to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Rivaj</p>
+<h3 class="card__title">Beard Oil</h3>
+<p class="card__why">Softens and tames the beard</p>
+<div class="card__meta"><p class="price">Rs 695</p><span class="size">Beard oil</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="rivaj-beard">Add to bag</button>
+</article><article class="card" data-tabs="mini">
+<div class="card__media" style="--tone:#e58aa8;--bg:#fbe7ee"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg><div class="badges"></div></div>
+<button class="wish" type="button" aria-pressed="false" aria-label="Save Daisy Plus Razors to wishlist"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7.5-4.6-9-9.3C2 7.4 4.2 4.5 7.4 4.5c2 0 3.4 1.1 4.6 2.6 1.2-1.5 2.6-2.6 4.6-2.6 3.2 0 5.4 2.9 4.4 6.2-1.5 4.7-9 9.3-9 9.3z"/></svg></button>
+<p class="card__brand">Gillette</p>
+<h3 class="card__title">Daisy Plus Razors</h3>
+<p class="card__why">The top hair removal pick online</p>
+<div class="card__meta"><p class="price">Rs 599</p><span class="size">Pack</span></div>
+<button class="btn btn--d btn--block" type="button" data-add="daisy-plus">Add to bag</button>
+</article></div>
+ </div>
+</section>
+
+<section class="section" id="concerns" aria-labelledby="con-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Your skin, your starting point</p><h2 class="h2" id="con-h">Shop by concern</h2><p class="lede">Pick a concern and we'll show every product that targets it.</p></div></div>
+  <div class="concerns"><button type="button" data-concern="hairfall"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Hair fall</button><button type="button" data-concern="acne"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Acne &amp; breakouts</button><button type="button" data-concern="spots"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Pigmentation &amp; dark spots</button><button type="button" data-concern="dull"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Dullness</button><button type="button" data-concern="dry"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Dehydration &amp; barrier</button><button type="button" data-concern="dandruff"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Dandruff</button><button type="button" data-concern="sun"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Sun protection</button><button type="button" data-concern="body"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Body texture</button><button type="button" data-concern="scent"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Long-lasting scent</button><button type="button" data-concern="lips"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Lips</button><button type="button" data-concern="men"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v4M12 17v4M3 12h4M17 12h4M6 6l2.5 2.5M15.5 15.5 18 18M6 18l2.5-2.5M15.5 8.5 18 6"/></svg>Men&#x27;s grooming</button></div>
+ </div>
+</section>
+
+<section class="section section--tint" id="kits" aria-labelledby="kit-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Less guesswork</p><h2 class="h2" id="kit-h">Shop by solution</h2></div><p class="lede" style="max-width:44ch">Ready-made routines for the concerns Pakistan shops for most. Every kit is 15% off.</p></div>
+  <div class="kits"><article class="kit"><div class="kit__art" style="--bg:#fbf1df"><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#e2a33b"><use href="#i-dropper"/></svg><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#e2a33b"><use href="#i-dropper"/></svg><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#f0c24b"><use href="#i-tube"/></svg></div><div class="kit__body"><p class="eyebrow">Routine kit · 15% off</p><h3>The Bright &amp; Protected Edit</h3><p class="card__why">For dull skin and dark spots</p><ul><li><span>Garnier Bright Complete Vitamin C Serum</span><span>Rs 550</span></li><li><span>AXIS-Y Dark Spot Correcting Glow Serum</span><span>Rs 799</span></li><li><span>Beauty of Joseon Relief Sun SPF 50+</span><span>Rs 1,299</span></li></ul><div class="kit__price"><b>Rs 2,251</b><del class="size">Rs 2,648</del><span class="save">Save Rs 397</span></div></div><button class="btn btn--p" type="button" data-kit="garnier-vitc,axis-y-5,boj-relief-sun" data-kit-name="The Bright &amp; Protected Edit" data-kit-price="2251">Add kit to bag</button></article><article class="kit"><div class="kit__art" style="--bg:#eaf2eb"><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#9bb79e"><use href="#i-bottle"/></svg><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#7fa7b8"><use href="#i-bottle"/></svg></div><div class="kit__body"><p class="eyebrow">Routine kit · 15% off</p><h3>Hair Fall Reset</h3><p class="card__why">For hair fall and dandruff</p><ul><li><span>Rederm Tressfix Hairfall &amp; Anti-Dandruff Shampoo</span><span>Rs 1,150</span></li><li><span>Jenpharm Anagrow Biotin Shampoo</span><span>Rs 988</span></li></ul><div class="kit__price"><b>Rs 1,817</b><del class="size">Rs 2,138</del><span class="save">Save Rs 321</span></div></div><button class="btn btn--p" type="button" data-kit="rederm-tressfix,jenpharm-anagrow" data-kit-name="Hair Fall Reset" data-kit-price="1817">Add kit to bag</button></article><article class="kit"><div class="kit__art" style="--bg:#f0ebf6"><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#b3a0c9"><use href="#i-jar"/></svg><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#c99a78"><use href="#i-tube"/></svg></div><div class="kit__body"><p class="eyebrow">Routine kit · 15% off</p><h3>Barrier Comfort Ritual</h3><p class="card__why">For dry, sensitive skin</p><ul><li><span>Dr. Althea 345 Relief Cream</span><span>Rs 2,749</span></li><li><span>Estelin Tinted Sunscreen SPF 70</span><span>Rs 1,239</span></li></ul><div class="kit__price"><b>Rs 3,390</b><del class="size">Rs 3,988</del><span class="save">Save Rs 598</span></div></div><button class="btn btn--p" type="button" data-kit="dr-althea-345,estelin-70" data-kit-name="Barrier Comfort Ritual" data-kit-price="3390">Add kit to bag</button></article><article class="kit"><div class="kit__art" style="--bg:#f6efdc"><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#b04a6b"><use href="#i-pump"/></svg><svg viewBox="0 0 100 160" aria-hidden="true" style="color:#c9a55a"><use href="#i-perfume"/></svg></div><div class="kit__body"><p class="eyebrow">Routine kit · 15% off</p><h3>Gourmand Glow Set</h3><p class="card__why">Scent that lasts all day</p><ul><li><span>Vaseline Gluta-Hya Serum Burst Lotion</span><span>Rs 2,399</span></li><li><span>Koh-e-Noor Vanilla Pistachio Hair &amp; Body Mist</span><span>Rs 1,290</span></li></ul><div class="kit__price"><b>Rs 3,136</b><del class="size">Rs 3,689</del><span class="save">Save Rs 553</span></div></div><button class="btn btn--p" type="button" data-kit="vaseline-gluta,kn-vp" data-kit-name="Gourmand Glow Set" data-kit-price="3136">Add kit to bag</button></article></div>
+ </div>
+</section>
+
+<section class="section" aria-labelledby="own-h">
+ <div class="wrap own">
+  <div class="own__copy">
+   <p class="eyebrow">Koh-e-Noor by Nexus Beauty</p>
+   <h2 class="h2" id="own-h">Our own hair &amp; body mists</h2>
+   <p>Body sprays cost Rs 550 and fade fast. Perfume mists cost Rs 2,000 or more. Koh-e-Noor sits in between: 100 ml of long-lasting scent for your hair, skin and clothes, made in Pakistan.</p>
+   <button class="btn btn--w btn--lg" type="button" data-add="kn-vp-30">Try a 30 ml for Rs 490</button>
+  </div>
+  <div class="scents">
+   <button class="scent" type="button" data-add="kn-vp"><span class="scent__b" style="--tone:#c9a55a;--bg:#f6efdc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg></span><b>Vanilla Pistachio</b><small>Pistachio, vanilla, soft musk</small><span class="price">Rs 1,290</span></button><button class="scent" type="button" data-add="kn-oud"><span class="scent__b" style="--tone:#8a4b2f;--bg:#f3e6dc"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg></span><b>Oud Amber</b><small>Saffron, oud, warm amber</small><span class="price">Rs 1,290</span></button><button class="scent" type="button" data-add="kn-musk"><span class="scent__b" style="--tone:#86aec2;--bg:#e8f1f5"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg></span><b>Fresh Musk</b><small>Cotton flower, white musk</small><span class="price">Rs 1,290</span></button>
+  </div>
+ </div>
+</section>
+
+<section class="section section--tint" id="brands" aria-labelledby="br-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Know what's inside</p><h2 class="h2" id="br-h">Pakistani favourites &amp; global icons</h2><p class="lede">Trusted local derm names next to the international brands worth bringing home.</p></div></div>
+  <div class="tabs" role="tablist" aria-label="Brand lists"><button class="chip" type="button" role="tab" aria-selected="true" data-brands="pk">Pakistani brands</button><button class="chip" type="button" role="tab" aria-selected="false" data-brands="intl">International brands</button></div>
+  <div class="brand-grid" id="brands-pk" style="margin-top:18px"><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">R</span><b>Rederm</b><span>Hair fall and acne care</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">N</span><b>Neophar</b><span>Everyday sunscreen</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">E</span><b>Estelin</b><span>Sun care and vitamin C</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">J</span><b>Jenpharm</b><span>Hair growth care</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">BB</span><b>B&amp;B Dermaceuticals</b><span>Gel SPF and body wash</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">B</span><b>Beautenic</b><span>Modern actives, made locally</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">GG</span><b>Glow &amp; Glee</b><span>Everyday skincare</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">C</span><b>Conatural</b><span>Plant-based body care</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">R</span><b>Rivaj</b><span>Colour cosmetics</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">M</span><b>Medora</b><span>Classic matte lipsticks</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">SM</span><b>Swiss Miss</b><span>Soft colour and care</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">HB</span><b>Hype by Capri</b><span>Sweet body sprays</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">H</span><b>Hemani</b><span>Oils and scent</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">SG</span><b>Saeed Ghani</b><span>Rose water and herbal care</span></a><a class="brand brand--own" href="#picks"><span class="brand__mark" aria-hidden="true">K</span><b>Koh-e-Noor</b><span>Our own fragrance label</span></a></div>
+  <div class="brand-grid" id="brands-intl" style="margin-top:18px" hidden><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">LP</span><b>L&#x27;Oréal Paris</b><span>France</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">G</span><b>Garnier</b><span>France</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">P</span><b>Pond&#x27;s</b><span>Everyday hydration</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">V</span><b>Vaseline</b><span>Body care</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">BO</span><b>Beauty of Joseon</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">A</span><b>AXIS-Y</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">DA</span><b>Dr. Althea</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">M</span><b>Medicube</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">A</span><b>Anua</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">S</span><b>SKIN1004</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">T</span><b>Tocobo</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">L</span><b>Laneige</b><span>Korea</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">F</span><b>Fino</b><span>Japan</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">T</span><b>TRESemmé</b><span>Hair care</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">D</span><b>Dove</b><span>Body and hair</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">O</span><b>OGX</b><span>Hair care</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">M</span><b>Mielle</b><span>USA</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">M</span><b>Maybelline</b><span>Makeup</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">L</span><b>Lattafa</b><span>UAE fragrance</span></a><a class="brand" href="#picks"><span class="brand__mark" aria-hidden="true">GM</span><b>Garnier Men</b><span>Men</span></a></div>
+ </div>
+</section>
+
+<section class="section" aria-labelledby="off-h">
+ <div class="wrap offer">
+  <div><p class="eyebrow">Deal of the week</p><h2 class="h2" id="off-h">Any 3 routine essentials, 15% off</h2><p>Pick any three products from the kits above or build your own. The offer ends Sunday at midnight, Pakistan time.</p><a class="btn btn--w" href="#kits">Shop routine kits</a></div>
+  <div class="timer" id="timer" aria-label="Time left in this week's offer"><div><b>00</b><small>days</small></div><div><b>00</b><small>hours</small></div><div><b>00</b><small>mins</small></div><div><b>00</b><small>secs</small></div></div>
+ </div>
+</section>
+
+<section class="section section--tint" id="checked" aria-labelledby="chk-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Proof over promises</p><h2 class="h2" id="chk-h">How we check every order</h2><p class="lede">Fake and expired products are the biggest worry when buying beauty online in Pakistan. This is how we make sure yours is original and fresh.</p></div></div>
+  <div class="steps"><div class="step"><span class="step__n">Step 1</span><h3>We buy from the source</h3><p>Every product comes from the brand or its authorised distributor. We keep the invoice for every batch.</p></div><div class="step"><span class="step__n">Step 2</span><h3>We check every batch</h3><p>Before a product goes on the shelf we record its batch number and expiry date.</p></div><div class="step"><span class="step__n">Step 3</span><h3>We print it on your order</h3><p>Your parcel sticker lists the batch and expiry of each item, so you can check it before you open it.</p></div><div class="step"><span class="step__n">Step 4</span><h3>You pay when it arrives</h3><p>Cash on delivery anywhere in Pakistan. If anything looks wrong, send a photo and we refund you in full.</p></div></div>
+  <div class="proof"><div class="batch"><b>✓ Checked before packing</b><span>ORDER&nbsp;&nbsp;NX-104829</span><span>AXIS-Y Glow Serum 5 ml</span><span>BATCH&nbsp;&nbsp;AX2609K · EXP 02/2029</span></div><div><h3>This is what your parcel sticker looks like</h3><p>Every item is listed with its batch number and expiry date. Check it against the box before you pay the rider. We're a new store, so we don't have customer reviews yet. We'd rather earn them than fake them.</p></div></div>
+ </div>
+</section>
+
+<section class="section" aria-labelledby="why-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">Why we exist</p><h2 class="h2" id="why-h">Why Nexus Beauty</h2></div></div>
+  <div class="why">
+   <div><h3>Proof over promises</h3><p>Batch and expiry on every order, and sourcing we can show you.</p></div>
+   <div><h3>Local trust, global curiosity</h3><p>A proper home for Pakistani derm brands, next to the best international names.</p></div>
+   <div><h3>Advice by concern</h3><p>Shop for hair fall, acne or dark spots, and get free WhatsApp advice from our team.</p></div>
+   <div><h3>Made for our climate</h3><p>Light textures, sunscreen you'll actually reapply, and scents that last in the heat.</p></div>
+  </div>
+ </div>
+</section>
+
+<section class="section section--tint" id="finder" aria-labelledby="fd-h">
+ <div class="wrap finder">
+  <div class="finder__intro">
+   <p class="eyebrow">Not sure where to begin?</p>
+   <h2 class="h2" id="fd-h">Find your routine in 3 taps</h2>
+   <p class="lede">Choose your main concern, your skin type and your budget. We'll suggest a simple routine from products that already work for people in Pakistan.</p>
+  </div>
+  <div style="display:grid;gap:18px">
+   <form id="finderForm">
+    <fieldset class="q"><legend>1. What's your main concern?</legend><div class="opts">
+     <label><input type="radio" name="concern" value="spots" checked><span>Dark spots</span></label><label><input type="radio" name="concern" value="acne"><span>Acne</span></label><label><input type="radio" name="concern" value="dull"><span>Dullness</span></label><label><input type="radio" name="concern" value="dry"><span>Dryness</span></label><label><input type="radio" name="concern" value="hairfall"><span>Hair fall</span></label><label><input type="radio" name="concern" value="sun"><span>Sun protection</span></label>
+    </div></fieldset>
+    <fieldset class="q"><legend>2. Your skin type</legend><div class="opts">
+     <label><input type="radio" name="skin" value="oily" checked><span>Oily</span></label><label><input type="radio" name="skin" value="combo"><span>Combination</span></label><label><input type="radio" name="skin" value="dry"><span>Dry</span></label><label><input type="radio" name="skin" value="sensitive"><span>Sensitive</span></label><label><input type="radio" name="skin" value="normal"><span>Normal</span></label>
+    </div></fieldset>
+    <fieldset class="q"><legend>3. Your budget</legend><div class="opts">
+     <label><input type="radio" name="budget" value="3000" checked><span>Under Rs 3,000</span></label><label><input type="radio" name="budget" value="6000"><span>Rs 3,000–6,000</span></label><label><input type="radio" name="budget" value="99999"><span>No limit</span></label>
+    </div></fieldset>
+   </form>
+   <div class="routine" id="routine" aria-live="polite"></div>
+  </div>
+ </div>
+</section>
+
+<section class="section" aria-labelledby="faq-h">
+ <div class="wrap" style="display:grid;gap:24px">
+  <div><p class="eyebrow">The reassuring bits</p><h2 class="h2" id="faq-h">Questions, answered</h2></div>
+  <div class="faq"><details><summary>Are your products original?</summary><p>Yes. We buy only from brands and their authorised distributors, and every order shows the batch number and expiry date of each product. If anything looks wrong when it arrives, send us a photo and we refund you in full.</p></details><details><summary>Can I pay cash on delivery?</summary><p>Yes. Cash on delivery works everywhere in Pakistan. You can also pay by card, JazzCash or Easypaisa.</p></details><details><summary>How long does delivery take?</summary><p>Orders placed before 3pm leave the same day. Karachi and Lahore: 1–2 working days. Islamabad and Rawalpindi: 2–3 working days. Other cities: 3–5 working days.</p></details><details><summary>How much is delivery?</summary><p>Delivery is free on orders over Rs 5,000. Below that it costs Rs 250.</p></details><details><summary>What is your return policy?</summary><p>You can return unopened, unused products in their original packaging within 7 days. For hygiene reasons, opened products can only be returned if they arrived damaged or faulty.</p></details><details><summary>How do you source international brands?</summary><p>Through each brand&#x27;s authorised distributor or importer in Pakistan. We never sell &quot;first copy&quot; or grey-market stock. Ask us on WhatsApp for the source of any product before you buy.</p></details></div>
+ </div>
+</section>
+
+<section class="section section--tint" id="journal" aria-labelledby="jr-h">
+ <div class="wrap">
+  <div class="sec-head"><div><p class="eyebrow">The Nexus journal</p><h2 class="h2" id="jr-h">Guides for better routines</h2></div></div>
+  <div class="posts"><article class="post"><div class="post__art" style="--bg:#fdf5dc;--tone:#f0c24b"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-tube"/></svg></div><p class="eyebrow">Skin science</p><h3>How to build a routine for Pakistan&#x27;s heat</h3><p>Light gels, the right sunscreen and when to skip heavy creams.</p><p class="meta">5 min read · Coming soon</p></article><article class="post"><div class="post__art" style="--bg:#fbe7ee;--tone:#e58aa8"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-dropper"/></svg></div><p class="eyebrow">Ingredient guide</p><h3>PDRN vs niacinamide: what to know</h3><p>What the new biotech ingredient does, and who actually needs it.</p><p class="meta">6 min read · Coming soon</p></article><article class="post"><div class="post__art" style="--bg:#f3e6dc;--tone:#8a4b2f"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-perfume"/></svg></div><p class="eyebrow">Fragrance</p><h3>From body spray to perfume</h3><p>How to layer sweet, oud and musk scents so they last all day.</p><p class="meta">4 min read · Coming soon</p></article></div>
+ </div>
+</section>
+
+<section class="section" aria-labelledby="su-h">
+ <div class="wrap signup">
+  <div><h2 class="h2" id="su-h">Get Rs 200 off your first order</h2><p>Join the Nexus list for routine tips, new arrivals and WhatsApp-only offers. One or two emails a week.</p></div>
+  <form id="signupForm" novalidate><label class="sr-only" for="email">Email address</label><input id="email" type="email" placeholder="Your email address" autocomplete="email" required><button class="btn btn--d" type="submit">Join the list</button><small id="signupMsg" role="status"></small></form>
+ </div>
+</section>
+</main>
+
+<footer class="footer">
+ <div class="wrap">
+  <div class="footer__grid">
+   <div class="footer__about"><span class="logo" ><svg viewBox="0 0 120 80" aria-hidden="true"><use href="#mark"/></svg><span class="logo__word"><b>Nexus</b><small>BEAUTY</small></span></span><p>Pakistan's checked beauty store. Original skincare, hair care, fragrance and makeup, with the batch and expiry on every order.</p><p>WhatsApp: <b>+92 300 000 0000</b><br>Email: <b>care@nexusbeauty.pk</b><br>10am–10pm, every day</p></div>
+   <div><h3>Shop</h3><ul><li><a href="#picks">Skincare</a></li><li><a href="#picks">Sun Care</a></li><li><a href="#picks">Hair Care</a></li><li><a href="#picks">Body Care</a></li><li><a href="#picks">Fragrance</a></li><li><a href="#picks">Makeup</a></li><li><a href="#picks">Men&#x27;s Grooming</a></li></ul></div>
+   <div><h3>Help</h3><ul><li><a href="#checked">How we check authenticity</a></li><li><a href="#main">Track my order</a></li><li><a href="#faq-h">Delivery &amp; returns</a></li><li><a href="#finder">Routine finder</a></li><li><a href="#main">Contact us</a></li></ul></div>
+   <div><h3>Nexus Beauty</h3><ul><li><a href="#main">About us</a></li><li><a href="#journal">Journal</a></li><li><a href="#brands">Stock your brand with us</a></li><li><a href="#main">Privacy policy</a></li><li><a href="#main">Terms of service</a></li></ul></div>
+  </div>
+  <div class="footer__bottom"><span>© 2026 Nexus Beauty. Beauty, checked.</span><div class="pay" aria-label="Payment methods"><span>COD</span><span>VISA</span><span>MASTERCARD</span><span>JAZZCASH</span><span>EASYPAISA</span></div></div>
+ </div>
+</footer>
+
+<div class="scrim" id="scrim"></div>
+<aside class="drawer" id="drawer" aria-label="Shopping bag" aria-hidden="true">
+ <div class="drawer__head"><h2>Your bag</h2><button class="icon-btn" type="button" data-close aria-label="Close bag"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>
+ <div class="ship"><span id="shipText">Free delivery over Rs 5,000</span><div class="ship__track"><div class="ship__fill" id="shipFill"></div></div></div>
+ <div class="drawer__items" id="cartItems"></div>
+ <div class="drawer__foot"><div class="total"><span>Subtotal</span><span id="subtotal">Rs 0</span></div><button class="btn btn--p btn--lg btn--block" type="button" id="checkout">Checkout securely</button><small>Cash on delivery, cards, JazzCash and Easypaisa accepted.</small></div>
+</aside>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<script>
+(function(){
+"use strict";
+var DATA=[{"id": "axis-y-5", "n": "Dark Spot Correcting Glow Serum", "b": "AXIS-Y", "s": "5 ml mini", "p": 799, "sh": "dropper", "t": "#e2a33b", "bg": "#fbf1df", "c": "skincare", "k": "spots dull"}, {"id": "axis-y-50", "n": "Dark Spot Correcting Glow Serum", "b": "AXIS-Y", "s": "50 ml", "p": 4049, "sh": "dropper", "t": "#e2a33b", "bg": "#fbf1df", "c": "skincare", "k": "spots dull"}, {"id": "dr-althea-345", "n": "345 Relief Cream", "b": "Dr. Althea", "s": "50 ml", "p": 2749, "sh": "jar", "t": "#b3a0c9", "bg": "#f0ebf6", "c": "skincare", "k": "dry sensitive"}, {"id": "ponds-gel", "n": "Super Light Gel Moisturiser", "b": "Pond's", "s": "50 ml", "p": 749, "sh": "jar", "t": "#7fa7b8", "bg": "#e9f1f4", "c": "skincare", "k": "dry"}, {"id": "loreal-glycolic", "n": "Glycolic Bright Face Wash", "b": "L'Or\u00e9al Paris", "s": "Face wash", "p": 999, "sh": "tube", "t": "#b04a6b", "bg": "#f7e5eb", "c": "skincare", "k": "spots dull"}, {"id": "garnier-vitc", "n": "Bright Complete Vitamin C Serum", "b": "Garnier", "s": "Serum", "p": 550, "sh": "dropper", "t": "#e2a33b", "bg": "#fbf1df", "c": "skincare", "k": "dull spots"}, {"id": "medicube-pdrn", "n": "PDRN Pink Peptide Serum", "b": "Medicube", "s": "Serum", "p": 3829, "sh": "dropper", "t": "#e58aa8", "bg": "#fbe7ee", "c": "skincare", "k": "dull dry"}, {"id": "anua-azelaic", "n": "Azelaic Acid 10 Hyaluron Redness Soothing Serum", "b": "Anua", "s": "Serum", "p": 6659, "sh": "dropper", "t": "#9bb79e", "bg": "#eaf2eb", "c": "skincare", "k": "acne sensitive spots"}, {"id": "boj-relief-sun", "n": "Relief Sun SPF 50+", "b": "Beauty of Joseon", "s": "50 ml", "p": 1299, "sh": "tube", "t": "#f0c24b", "bg": "#fdf5dc", "c": "sun", "k": "sun spots"}, {"id": "estelin-70", "n": "Tinted Sunscreen SPF 70", "b": "Estelin", "s": "Sunscreen", "p": 1239, "sh": "tube", "t": "#c99a78", "bg": "#f6ece4", "c": "sun", "k": "sun spots"}, {"id": "neobrella-60", "n": "Neobrella Sunscreen SPF 60", "b": "Neophar", "s": "Sunscreen", "p": 930, "sh": "tube", "t": "#f0c24b", "bg": "#fdf5dc", "c": "sun", "k": "sun"}, {"id": "tocobo-stick", "n": "Cotton Soft Sun Stick SPF 50+", "b": "Tocobo", "s": "Stick", "p": 4509, "sh": "tube", "t": "#9bb79e", "bg": "#eaf2eb", "c": "sun", "k": "sun"}, {"id": "skin1004-sun", "n": "Hyalu-Cica Water-fit Sun Serum", "b": "SKIN1004", "s": "Sun serum", "p": 4289, "sh": "tube", "t": "#7fa7b8", "bg": "#e9f1f4", "c": "sun", "k": "sun sensitive"}, {"id": "rederm-tressfix", "n": "Tressfix Hairfall & Anti-Dandruff Shampoo", "b": "Rederm", "s": "Shampoo", "p": 1150, "sh": "bottle", "t": "#9bb79e", "bg": "#eaf2eb", "c": "hair", "k": "hairfall dandruff"}, {"id": "jenpharm-anagrow", "n": "Anagrow Biotin Shampoo", "b": "Jenpharm", "s": "Shampoo", "p": 988, "sh": "bottle", "t": "#7fa7b8", "bg": "#e9f1f4", "c": "hair", "k": "hairfall"}, {"id": "fino-mask", "n": "Premium Touch Hair Mask", "b": "Fino", "s": "Mask", "p": 3299, "sh": "jar", "t": "#c68a3a", "bg": "#f8eedf", "c": "hair", "k": "frizz"}, {"id": "mielle-rosemary", "n": "Rosemary Mint Strengthening Hair Masque", "b": "Mielle", "s": "Masque", "p": 4079, "sh": "jar", "t": "#5f8f6a", "bg": "#e6f0e8", "c": "hair", "k": "hairfall frizz"}, {"id": "vaseline-gluta", "n": "Gluta-Hya Serum Burst Lotion", "b": "Vaseline", "s": "Lotion", "p": 2399, "sh": "pump", "t": "#b04a6b", "bg": "#f7e5eb", "c": "body", "k": "body dull"}, {"id": "vaseline-gel-oil", "n": "Intensive Care Body Gel Oil", "b": "Vaseline", "s": "Gel oil", "p": 3439, "sh": "pump", "t": "#d9b48f", "bg": "#f7efe6", "c": "body", "k": "body dry"}, {"id": "kn-vp", "n": "Vanilla Pistachio Hair & Body Mist", "b": "Koh-e-Noor by Nexus Beauty", "s": "100 ml", "p": 1290, "sh": "perfume", "t": "#c9a55a", "bg": "#f6efdc", "c": "fragrance", "k": "scent"}, {"id": "kn-oud", "n": "Oud Amber Hair & Body Mist", "b": "Koh-e-Noor by Nexus Beauty", "s": "100 ml", "p": 1290, "sh": "perfume", "t": "#8a4b2f", "bg": "#f3e6dc", "c": "fragrance", "k": "scent"}, {"id": "kn-musk", "n": "Fresh Musk Hair & Body Mist", "b": "Koh-e-Noor by Nexus Beauty", "s": "100 ml", "p": 1290, "sh": "perfume", "t": "#86aec2", "bg": "#e8f1f5", "c": "fragrance", "k": "scent"}, {"id": "kn-vp-30", "n": "Vanilla Pistachio Mist, travel size", "b": "Koh-e-Noor by Nexus Beauty", "s": "30 ml", "p": 490, "sh": "perfume", "t": "#c9a55a", "bg": "#f6efdc", "c": "fragrance", "k": "scent"}, {"id": "hype-fruit", "n": "Fruit Frenzy Body Spray", "b": "Hype by Capri", "s": "150 ml", "p": 550, "sh": "bottle", "t": "#e58aa8", "bg": "#fbe7ee", "c": "fragrance", "k": "scent"}, {"id": "medora-matte", "n": "Matte Lipstick", "b": "Medora", "s": "Lipstick", "p": 300, "sh": "lipstick", "t": "#9e2f4a", "bg": "#f6e2e7", "c": "makeup", "k": "lips"}, {"id": "swiss-miss-60", "n": "Natural Matte Lipstick 60", "b": "Swiss Miss", "s": "Lipstick", "p": 400, "sh": "lipstick", "t": "#c99a78", "bg": "#f6ece4", "c": "makeup", "k": "lips"}, {"id": "garnier-men-acno", "n": "Acno Fight Face Wash", "b": "Garnier Men", "s": "Face wash", "p": 1050, "sh": "tube", "t": "#3c3f44", "bg": "#e8e9eb", "c": "men", "k": "acne men"}, {"id": "rivaj-beard", "n": "Beard Oil", "b": "Rivaj", "s": "Beard oil", "p": 695, "sh": "dropper", "t": "#c68a3a", "bg": "#f8eedf", "c": "men", "k": "men"}, {"id": "daisy-plus", "n": "Daisy Plus Razors", "b": "Gillette", "s": "Pack", "p": 599, "sh": "tube", "t": "#e58aa8", "bg": "#fbe7ee", "c": "personal", "k": ""}], BY={}; DATA.forEach(function(p){BY[p.id]=p;});
+var FREE=5000, KEY="nexus-beauty-bag";
+function $(s,r){return (r||document).querySelector(s);} function $$(s,r){return [].slice.call((r||document).querySelectorAll(s));}
+function rs(n){return "Rs "+Math.round(n).toLocaleString("en-US");}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c];});}
+function thumb(p){return '<span class="thumb" style="--tone:'+p.t+';--bg:'+p.bg+'"><svg viewBox="0 0 100 160" aria-hidden="true"><use href="#i-'+p.sh+'"/></svg></span>';}
+
+/* Announcement bar */
+var msgs=["Free delivery on orders over <b>Rs 5,000</b>","Cash on delivery <b>anywhere in Pakistan</b>","Batch and expiry <b>shown on every order</b>"],ai=0,an=$("#announce");
+if(!window.matchMedia("(prefers-reduced-motion: reduce)").matches) setInterval(function(){ai=(ai+1)%msgs.length;an.innerHTML=msgs[ai];},4000);
+
+/* Toast */
+var toastEl=$("#toast"),tt; function toast(m){toastEl.textContent=m;toastEl.classList.add("is-on");clearTimeout(tt);tt=setTimeout(function(){toastEl.classList.remove("is-on");},2200);}
+
+/* Panels */
+var scrim=$("#scrim");
+function open(id){var el=document.getElementById(id);el.classList.add("is-open");el.setAttribute("aria-hidden","false");scrim.classList.add("is-open");}
+function closeAll(){$$(".drawer,.mnav").forEach(function(el){el.classList.remove("is-open");el.setAttribute("aria-hidden","true");});scrim.classList.remove("is-open");toggleSearch(false);toggleMega(false);}
+$$("[data-open]").forEach(function(b){b.addEventListener("click",function(){open(b.dataset.open);});});
+$$("[data-close]").forEach(function(b){b.addEventListener("click",closeAll);});
+scrim.addEventListener("click",closeAll);
+document.addEventListener("keydown",function(e){if(e.key==="Escape")closeAll();});
+$$(".mnav a").forEach(function(a){a.addEventListener("click",closeAll);});
+
+/* Mega menu */
+var shopBtn=$("#shopBtn"),mega=$("#mega");
+function toggleMega(on){if(!mega)return;mega.hidden=!on;shopBtn.setAttribute("aria-expanded",on);}
+shopBtn.addEventListener("click",function(e){e.stopPropagation();toggleMega(mega.hidden);toggleSearch(false);});
+$$("#mega a").forEach(function(a){a.addEventListener("click",function(){toggleMega(false);});});
+document.addEventListener("click",function(e){if(!e.target.closest(".mega-wrap"))toggleMega(false);if(!e.target.closest(".searchpanel")&&!e.target.closest("#searchBtn"))toggleSearch(false);});
+
+/* Search */
+var sp=$("#searchpanel"),sb=$("#searchBtn"),q=$("#q"),res=$("#results");
+function toggleSearch(on){if(!sp)return;sp.hidden=!on;sb.setAttribute("aria-expanded",on);if(on){setTimeout(function(){q.focus();},30);}}
+sb.addEventListener("click",function(){toggleSearch(sp.hidden);toggleMega(false);});
+var ALIAS={"hair fall":"hairfall","sunscreen":"sun spf","spf":"sun","mist":"scent fragrance","perfume":"scent fragrance","acne":"acne","dark spots":"spots","pigmentation":"spots","dandruff":"dandruff","lipstick":"lips makeup"};
+function search(v){
+  v=(v||"").trim().toLowerCase(); if(!v){res.innerHTML="";return;}
+  var extra=ALIAS[v]||"";
+  var hits=DATA.filter(function(p){var hay=(p.n+" "+p.b+" "+p.c+" "+p.k+" "+p.s).toLowerCase();return hay.indexOf(v)>-1||(extra&&extra.split(" ").some(function(w){return hay.indexOf(w)>-1;}));});
+  res.innerHTML=hits.length?hits.slice(0,8).map(function(p){return '<a href="#picks" data-add-search="'+p.id+'">'+thumb(p)+'<span><b>'+esc(p.n)+'</b><small>'+esc(p.b)+' · '+esc(p.s)+'</small></span><span class="p">'+rs(p.p)+'</span></a>';}).join(""):'<p>No products match "'+esc(v)+'". Try "sunscreen", "hair fall" or a brand name, or message us on WhatsApp.</p>';
+}
+q.addEventListener("input",function(){search(q.value);});
+$("#searchForm").addEventListener("submit",function(e){e.preventDefault();search(q.value);});
+$$("[data-q]").forEach(function(b){b.addEventListener("click",function(){q.value=b.dataset.q;search(q.value);q.focus();});});
+res.addEventListener("click",function(e){var a=e.target.closest("[data-add-search]");if(!a)return;e.preventDefault();addItem(a.dataset.addSearch);toggleSearch(false);});
+
+/* Cart */
+function load(){try{return JSON.parse(localStorage.getItem(KEY))||[];}catch(e){return [];}}
+function save(){try{localStorage.setItem(KEY,JSON.stringify(cart));}catch(e){}}
+var cart=load().filter(function(l){return l.kit||BY[l.id];});
+function lineInfo(l){return l.kit?{n:l.name,s:"Routine kit",p:l.price,sh:"jar",t:"#8c2350",bg:"#f6e3eb"}:BY[l.id];}
+function render(){
+  var count=0,sum=0;cart.forEach(function(l){var p=lineInfo(l);count+=l.qty;sum+=p.p*l.qty;});
+  var cc=$("#cartCount");cc.textContent=count;cc.hidden=!count;
+  $("#subtotal").textContent=rs(sum);
+  var left=Math.max(0,FREE-sum);
+  $("#shipText").innerHTML=left>0?"You're <b>"+rs(left)+"</b> away from <b>free delivery</b>":"<b>You've unlocked free delivery.</b>";
+  $("#shipFill").style.width=Math.min(100,sum/FREE*100)+"%";
+  var el=$("#cartItems");
+  el.innerHTML=cart.length?cart.map(function(l,i){var p=lineInfo(l);return '<div class="line">'+thumb(p)+'<div><b>'+esc(p.n)+'</b><small>'+esc(p.s)+'</small><div class="qty"><button type="button" data-q-i="'+i+'" data-d="-1" aria-label="One less">−</button><span>'+l.qty+'</span><button type="button" data-q-i="'+i+'" data-d="1" aria-label="One more">+</button></div></div><span class="p">'+rs(p.p*l.qty)+'</span></div>';}).join(""):'<div class="empty"><p>Your bag is empty.</p><a class="btn btn--d" href="#picks" data-close-link>Shop best sellers</a></div>';
+}
+function addItem(id,silent){var l=cart.filter(function(x){return x.id===id;})[0];if(l)l.qty++;else cart.push({id:id,qty:1});save();render();if(!silent){toast(BY[id].n+" added to your bag");open("drawer");}}
+function addKit(ids,name,price){var id="kit:"+name;var l=cart.filter(function(x){return x.id===id;})[0];if(l)l.qty++;else cart.push({id:id,kit:ids,name:name,price:+price,qty:1});cart.forEach(function(x){if(x.kit){x.p=x.price;}});save();render();toast(name+" added to your bag");open("drawer");}
+document.addEventListener("click",function(e){
+  var a=e.target.closest("[data-add]");if(a){addItem(a.dataset.add);return;}
+  var k=e.target.closest("[data-kit]");if(k){addKit(k.dataset.kit.split(","),k.dataset.kitName,k.dataset.kitPrice);return;}
+  var qb=e.target.closest("[data-q-i]");if(qb){var l=cart[+qb.dataset.qI];l.qty+= +qb.dataset.d;if(l.qty<=0)cart.splice(+qb.dataset.qI,1);save();render();return;}
+  if(e.target.closest("[data-close-link]")){closeAll();return;}
+  var w=e.target.closest(".wish");if(w){var on=w.getAttribute("aria-pressed")!=="true";w.setAttribute("aria-pressed",on);var n=$$('.wish[aria-pressed="true"]').length,wc=$("#wishCount");wc.textContent=n;wc.hidden=!n;toast(on?"Saved to your wishlist":"Removed from your wishlist");}
+});
+/* kits store their own price */
+lineInfo=function(l){return l.kit?{n:l.name,s:"Routine kit · "+l.kit.length+" products",p:l.price,sh:"jar",t:"#8c2350",bg:"#f6e3eb"}:BY[l.id];};
+$("#checkout").addEventListener("click",function(){toast(cart.length?"Checkout connects to your Shopify or WooCommerce store":"Your bag is empty");});
+$("#wishBtn").addEventListener("click",function(){var n=$$('.wish[aria-pressed="true"]').length;toast(n?n+" saved product"+(n>1?"s":""):"Tap the heart on any product to save it");});
+
+/* Product tabs */
+var grid=$("#pickGrid"),cards=$$(".card",grid),note=$("#tabNote");
+function showTab(t){$$("[data-tab]").forEach(function(b){b.setAttribute("aria-selected",b.dataset.tab===t);});cards.forEach(function(c){c.hidden=(" "+c.dataset.tabs+" ").indexOf(" "+t+" ")<0;});var b=$('[data-tab="'+t+'"]');note.textContent=b.dataset.note;}
+$$("[data-tab]").forEach(function(b){b.addEventListener("click",function(){showTab(b.dataset.tab);});});
+showTab("best");
+
+/* Concerns open search with that concern */
+$$("[data-concern]").forEach(function(b){b.addEventListener("click",function(){var hits=DATA.filter(function(p){return (" "+p.k+" ").indexOf(" "+b.dataset.concern+" ")>-1;});window.scrollTo({top:0,behavior:"smooth"});toggleSearch(true);q.value=b.textContent.trim();res.innerHTML=hits.map(function(p){return '<a href="#picks" data-add-search="'+p.id+'">'+thumb(p)+'<span><b>'+esc(p.n)+'</b><small>'+esc(p.b)+' · '+esc(p.s)+'</small></span><span class="p">'+rs(p.p)+'</span></a>';}).join("")||"<p>We're adding products for this concern soon.</p>";});});
+
+/* Brand tabs */
+$$("[data-brands]").forEach(function(b){b.addEventListener("click",function(){$$("[data-brands]").forEach(function(x){x.setAttribute("aria-selected",x===b);});$("#brands-pk").hidden=b.dataset.brands!=="pk";$("#brands-intl").hidden=b.dataset.brands!=="intl";});});
+
+/* Countdown to Sunday 23:59:59 Pakistan time (UTC+5) */
+var tb=$$("#timer b");
+function nextSunday(){var now=Date.now(),pk=new Date(now+5*3600e3);var day=pk.getUTCDay();var add=(7-day)%7;var end=Date.UTC(pk.getUTCFullYear(),pk.getUTCMonth(),pk.getUTCDate()+add,23,59,59)-5*3600e3;if(end<=now)end+=7*864e5;return end;}
+var END=nextSunday();
+function tick(){var d=Math.max(0,END-Date.now());if(!d)END=nextSunday();var v=[Math.floor(d/864e5),Math.floor(d/36e5)%24,Math.floor(d/6e4)%60,Math.floor(d/1e3)%60];tb.forEach(function(b,i){b.textContent=String(v[i]).padStart(2,"0");});}
+tick();setInterval(tick,1000);
+
+/* Routine finder */
+var PLAN={
+ spots:[["Cleanse","loreal-glycolic","garnier-men-acno"],["Treat","axis-y-5","garnier-vitc","axis-y-50"],["Protect","estelin-70","boj-relief-sun","neobrella-60"]],
+ acne:[["Cleanse","garnier-men-acno","loreal-glycolic"],["Treat","anua-azelaic","axis-y-5"],["Moisturise","ponds-gel","dr-althea-345"],["Protect","neobrella-60","boj-relief-sun"]],
+ dull:[["Cleanse","loreal-glycolic"],["Treat","garnier-vitc","medicube-pdrn","axis-y-5"],["Protect","boj-relief-sun","estelin-70"]],
+ dry:[["Treat","medicube-pdrn","garnier-vitc"],["Moisturise","dr-althea-345","ponds-gel"],["Protect","boj-relief-sun","skin1004-sun"]],
+ hairfall:[["Wash","rederm-tressfix","jenpharm-anagrow"],["Strengthen","jenpharm-anagrow","mielle-rosemary"],["Repair","fino-mask","mielle-rosemary"]],
+ sun:[["Daily SPF","boj-relief-sun","estelin-70","neobrella-60"],["Reapply","tocobo-stick","skin1004-sun","neobrella-60"]]
+};
+var SKIN_AVOID={dry:["ponds-gel","garnier-men-acno"],sensitive:["loreal-glycolic","garnier-men-acno"],oily:["dr-althea-345"]};
+function build(){
+  var f=new FormData($("#finderForm")),c=f.get("concern"),s=f.get("skin"),bud=+f.get("budget");
+  var avoid=SKIN_AVOID[s]||[],used={},steps=[];
+  PLAN[c].forEach(function(st){var opts=st.slice(1).filter(function(id){return avoid.indexOf(id)<0&&!used[id];});if(!opts.length)opts=st.slice(1).filter(function(id){return !used[id];});if(!opts.length)return;steps.push({label:st[0],opts:opts,pick:0});used[opts[0]]=1;});
+  function total(){return steps.reduce(function(t,x){return t+BY[x.opts[x.pick]].p;},0);}
+  // swap to cheaper options until within budget
+  var guard=0;while(total()>bud&&guard++<20){var best=null;steps.forEach(function(x,i){x.opts.forEach(function(id,j){if(j===x.pick)return;var diff=BY[x.opts[x.pick]].p-BY[id].p;if(diff>0&&(!best||diff>best.d))best={i:i,j:j,d:diff};});});if(!best)break;steps[best.i].pick=best.j;}
+  if(total()>bud&&steps.length>2){steps.pop();}
+  var ids=steps.map(function(x){return x.opts[x.pick];}),t=total();
+  $("#routine").innerHTML='<h3>Your '+steps.length+'-step routine</h3><ol>'+steps.map(function(x,i){var p=BY[x.opts[x.pick]];return '<li><span class="n">'+String(i+1).padStart(2,"0")+'</span>'+thumb(p)+'<span><b>'+esc(p.n)+'</b><small>'+esc(x.label)+' · '+esc(p.b)+'</small></span><span class="p">'+rs(p.p)+'</span></li>';}).join("")+'</ol><div class="routine__foot"><span>Total <b>'+rs(t)+'</b>'+(t>bud?' · a little over budget':'')+'</span><button class="btn btn--p" type="button" data-routine="'+ids.join(",")+'">Add routine to bag</button></div>';
+}
+$("#finderForm").addEventListener("change",build);build();
+document.addEventListener("click",function(e){var r=e.target.closest("[data-routine]");if(!r)return;r.dataset.routine.split(",").forEach(function(id){addItem(id,true);});toast("Routine added to your bag");open("drawer");});
+
+/* Newsletter */
+$("#signupForm").addEventListener("submit",function(e){e.preventDefault();var em=$("#email"),m=$("#signupMsg");if(!em.checkValidity()||!em.value){m.textContent="Please enter a valid email address, like name@example.com.";em.focus();return;}m.textContent="You're on the list. We'll email your Rs 200 code once the store opens.";em.value="";});
+
+render();
+})();
+</script>
+</body>
+</html>
