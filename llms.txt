@@ -1,0 +1,23 @@
+# Sensula
+
+> Sensula is a multi-brand online store for original beauty and personal care products: skincare, makeup, haircare, bath & body, fragrance, men's grooming and personal hygiene. It stocks 120+ local and international brands, sourced directly from brands or authorised distributors.
+
+Key facts:
+- Delivery: same-day dispatch before 3pm; 1–2 days to major cities, 3–5 days elsewhere; free over $50.00.
+- Payment: cash on delivery, cards, Apple Pay, Google Pay.
+- Returns: 14 days on unopened items.
+- Customer care: +1 555 010 2030, care@sensula.com, 9am–9pm daily.
+
+## Main pages
+- [Home](https://www.sensula.com/): categories, bestsellers, brands, offers, FAQ
+- [Shop all](https://www.sensula.com/shop.html): full catalogue with filters by category, brand, origin, concern and price
+
+## Bestselling products
+- [Hyaluronic Dew Serum](https://www.sensula.com/product.html): Hanok Skin, 30 ml, $24.00, rated 4.8/5 (312 reviews)
+- [15% Vitamin C Glow Serum](https://www.sensula.com/product.html): Lumière Lab, 30 ml, $28.00, rated 4.7/5 (198 reviews)
+- [Rose & Oud Eau de Parfum](https://www.sensula.com/product.html): Sensula Atelier, 50 ml, $45.00, rated 4.9/5 (421 reviews)
+- [Argan Repair Hair Oil](https://www.sensula.com/product.html): Veda Roots, 100 ml, $14.00, rated 4.6/5 (156 reviews)
+- [Gentle Foaming Cleanser](https://www.sensula.com/product.html): Hanok Skin, 150 ml, $16.00, rated 4.7/5 (264 reviews)
+- [Matte Velvet Lipstick — Berry Nude](https://www.sensula.com/product.html): Maison Rouge, 3.5 g, $18.00, rated 4.5/5 (89 reviews)
+- [Whipped Shea Body Butter](https://www.sensula.com/product.html): Veda Roots, 200 g, $12.00, rated 4.8/5 (230 reviews)
+- [Invisible SPF 50 PA++++ Sun Fluid](https://www.sensula.com/product.html): Lumière Lab, 50 ml, $22.00, rated 4.7/5 (177 reviews)
