@@ -1,0 +1,575 @@
+<title>Nexus Beauty Brand Book</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,opsz,wght@0,6..96,500;0,6..96,600;1,6..96,500&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Nexus Beauty uses one fixed light palette on purpose: the guide must show the true brand colours. */
+:root{
+  color-scheme: light;
+  --ink:#241826; --ink-2:#5c4d5e; --ink-3:#8a7c8b;
+  --paper:#ffffff; --blush:#f8f1f2; --blush-2:#efe3e6; --line:#e9e1e4;
+  --berry:#8c2350; --berry-dk:#6d1a3e; --berry-lt:#f6e3eb;
+  --sage:#466b58; --sage-lt:#e5efe9; --gold:#b7862b; --gold-lt:#f6ecd8;
+  --no:#b3261e; --no-lt:#fbe9e7;
+  --f-display:"Bodoni Moda","Didot","Bodoni 72",Georgia,serif;
+  --f-body:"Figtree","Segoe UI",system-ui,-apple-system,sans-serif;
+  --f-mono:"IBM Plex Mono",ui-monospace,Menlo,Consolas,monospace;
+  --r:12px;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:400 16px/1.6 var(--f-body);-webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;line-height:1.12;text-wrap:balance}
+p{margin:0}
+ul,ol{margin:0;padding:0}
+a{color:var(--berry)}
+:focus-visible{outline:2px solid var(--berry);outline-offset:2px;border-radius:4px}
+.wrap{max-width:1180px;margin-inline:auto;padding-inline:clamp(16px,4vw,40px)}
+.eyebrow{font-size:12px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--berry)}
+.mono{font-family:var(--f-mono);font-variant-numeric:tabular-nums}
+.lede{font-size:18px;color:var(--ink-2);max-width:62ch}
+.muted{color:var(--ink-2)}
+.small{font-size:14px}
+
+/* Top bar */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:10;background:rgba(255,255,255,.95);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.bar .wrap{display:flex;align-items:center;gap:20px;padding-block:10px}
+.bar nav{display:flex;gap:4px;overflow-x:auto;scrollbar-width:none;flex:1;min-width:0}
+.bar nav::-webkit-scrollbar{display:none}
+.bar nav a{flex:none;text-decoration:none;color:var(--ink);font-size:14px;font-weight:500;padding:6px 12px;border-radius:999px}
+.bar nav a:hover{background:var(--blush)}
+.minilogo{display:flex;align-items:center;gap:8px;text-decoration:none;color:var(--ink);flex:none}
+.minilogo svg{width:26px;height:26px}
+.minilogo b{font-family:var(--f-display);font-size:20px;font-weight:600}
+
+/* Cover */
+.cover{background:var(--ink);color:#f3e9ee;overflow:hidden;position:relative}
+.cover .wrap{display:grid;grid-template-columns:1.2fr .8fr;gap:40px;align-items:center;padding-block:clamp(48px,8vw,104px)}
+.cover h1{font-family:var(--f-display);font-weight:500;font-size:clamp(44px,7.4vw,92px);letter-spacing:-.02em;line-height:1;color:#fff;margin-block:16px 22px}
+.cover h1 em{color:#e9b8cb}
+.cover .lede{color:#dccbd4}
+.cover .eyebrow{color:#e9b8cb}
+.cover__meta{display:flex;flex-wrap:wrap;gap:8px 22px;margin-top:28px;font-size:13px;color:#b8a5b0}
+.cover__mark{justify-self:center;width:min(100%,340px);aspect-ratio:1;display:grid;place-items:center}
+.cover__mark svg{width:100%;height:auto}
+@media (max-width:820px){.cover .wrap{grid-template-columns:1fr}.cover__mark{width:200px;justify-self:start}}
+
+/* Sections */
+section.ch{padding-block:clamp(56px,8vw,96px);border-bottom:1px solid var(--line);scroll-margin-top:60px}
+section.ch.tint{background:var(--blush)}
+.chead{display:grid;grid-template-columns:200px 1fr;gap:28px;margin-bottom:40px}
+.chead .num{font-family:var(--f-mono);font-size:13px;color:var(--berry);padding-top:10px}
+.chead h2{font-family:var(--f-display);font-weight:500;font-size:clamp(32px,4.4vw,52px);letter-spacing:-.01em}
+.chead .lede{margin-top:14px}
+@media (max-width:820px){.chead{grid-template-columns:1fr;gap:6px}}
+.body{margin-left:228px;display:grid;gap:36px}
+@media (max-width:820px){.body{margin-left:0}}
+h3.sub{font-family:var(--f-body);font-size:13px;letter-spacing:.14em;text-transform:uppercase;font-weight:700;color:var(--ink-2)}
+
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:20px}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px}
+.grid4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
+@media (max-width:900px){.grid3,.grid4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:560px){.grid2,.grid3,.grid4{grid-template-columns:minmax(0,1fr)}}
+.body>*,.grid2>*,.grid3>*,.grid4>*{min-width:0}
+.label .batch{display:grid;max-width:100%}.label .batch span{white-space:normal}
+
+.box{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:22px;display:grid;gap:10px;align-content:start}
+.tint .box{border-color:var(--blush-2)}
+.box h4{font-size:18px;font-weight:700}
+.box p,.box li{font-size:15px;color:var(--ink-2)}
+.box ul{display:grid;gap:6px;padding-left:18px}
+
+/* Statement */
+.statement{font-family:var(--f-display);font-size:clamp(26px,3.4vw,40px);line-height:1.2;max-width:26ch}
+.statement em{color:var(--berry)}
+.pos{display:grid;grid-template-columns:max-content 1fr;gap:14px 22px;font-size:16px;margin:0}
+.pos dt{font-weight:700}
+.pos dd{margin:0;color:var(--ink-2)}
+@media (max-width:560px){.pos{grid-template-columns:1fr;gap:2px}.pos dd{margin-bottom:10px}}
+
+/* Personality sliders */
+.traits{display:grid;gap:18px}
+.trait{display:grid;grid-template-columns:130px 1fr 130px;gap:14px;align-items:center;font-size:14px}
+.trait span:last-child{text-align:right}
+.trait .track{height:6px;border-radius:999px;background:var(--blush-2);position:relative}
+.trait .track i{position:absolute;top:50%;left:var(--at);width:18px;height:18px;margin:-9px 0 0 -9px;border-radius:50%;background:var(--berry);box-shadow:0 0 0 4px var(--berry-lt)}
+@media (max-width:560px){.trait{grid-template-columns:1fr 1fr;row-gap:6px}.trait .track{grid-column:1/-1;grid-row:2}}
+
+/* Logo */
+.logo-stage{border-radius:var(--r);display:grid;place-items:center;padding:clamp(28px,5vw,56px) 20px;min-height:220px}
+.logo-stage svg{width:min(100%,360px);height:auto}
+.logo-stage--light{background:var(--paper);border:1px solid var(--line)}
+.logo-stage--dark{background:var(--ink)}
+.logo-stage--berry{background:var(--berry)}
+.logo-stage--blush{background:var(--blush)}
+.cap{font-size:13px;color:var(--ink-2);margin-top:10px}
+.clear{position:relative;padding:34px;border:1.5px dashed var(--berry);border-radius:4px;display:inline-block;background:var(--paper)}
+.clear svg{width:240px;max-width:100%;height:auto;display:block}
+.clear::before{content:"N";position:absolute;top:6px;left:8px;font-family:var(--f-display);font-size:13px;color:var(--berry)}
+.sizes-row{display:flex;gap:28px;align-items:flex-end;flex-wrap:wrap}
+.sizes-row figure{margin:0;display:grid;gap:8px;justify-items:start}
+.sizes-row figcaption{font-size:12px;color:var(--ink-2);font-family:var(--f-mono)}
+
+.dont{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:12px;align-content:start}
+.dont .stage{height:110px;display:grid;place-items:center;border-radius:8px;background:var(--blush);overflow:hidden}
+.dont .stage svg{width:160px;height:auto}
+.dont p{font-size:14px;color:var(--ink-2)}
+.dont p b{color:var(--no)}
+
+/* Colour */
+.swatch{border-radius:var(--r);overflow:hidden;border:1px solid var(--line);display:grid;background:var(--paper)}
+.swatch .chip{height:120px;display:flex;align-items:flex-end;padding:12px 14px;font-weight:700;font-size:14px}
+.swatch .info{padding:14px;display:grid;gap:4px;font-size:13px}
+.swatch .info b{font-size:16px}
+.swatch .info .mono{color:var(--ink-2);font-size:12px}
+.ratio{display:flex;height:56px;border-radius:var(--r);overflow:hidden;border:1px solid var(--line)}
+.ratio div{display:flex;align-items:center;padding-inline:12px;font-size:12px;font-weight:700;white-space:nowrap;overflow:hidden}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:var(--r);background:var(--paper)}
+table{width:100%;border-collapse:collapse;font-size:14px}
+th{text-align:left;font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-2);background:var(--blush);padding:10px 14px;border-bottom:1px solid var(--line)}
+td{padding:12px 14px;border-bottom:1px solid var(--line);vertical-align:top}
+tr:last-child td{border-bottom:0}
+td.num{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.pair{display:inline-block;padding:4px 10px;border-radius:6px;font-weight:700;font-size:13px}
+.ok{color:var(--sage);font-weight:700}
+.warn{color:var(--no);font-weight:700}
+
+/* Type */
+.specimen{display:grid;gap:6px;padding-block:18px;border-top:1px solid var(--line)}
+.specimen:first-of-type{border-top:0}
+.specimen .meta{font-family:var(--f-mono);font-size:12px;color:var(--ink-3)}
+.scale{display:grid;gap:0}
+.scale div{display:grid;grid-template-columns:120px 1fr;gap:16px;align-items:baseline;padding-block:10px;border-top:1px solid var(--line)}
+.scale div > span:first-child{font-family:var(--f-mono);font-size:12px;color:var(--ink-3)}
+@media (max-width:560px){.scale div{grid-template-columns:1fr;gap:2px}}
+
+/* Batch stamp */
+.batch{font-family:var(--f-mono);font-size:13px;line-height:1.55;background:var(--paper);border:1.5px dashed var(--ink);border-radius:6px;padding:12px 14px;display:inline-grid;gap:2px;font-variant-numeric:tabular-nums}
+.batch b{font-family:var(--f-body);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--sage)}
+.batch--tilt{transform:rotate(-3deg)}
+
+/* Voice */
+.vs{display:grid;grid-template-columns:1fr 1fr;gap:0;border:1px solid var(--line);border-radius:var(--r);overflow:hidden;background:var(--paper)}
+.vs > div{padding:16px 18px;display:grid;gap:6px;border-bottom:1px solid var(--line)}
+.vs > div:nth-last-child(-n+2){border-bottom:0}
+.vs > div:nth-child(odd){border-right:1px solid var(--line)}
+.vs .lab{font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+.vs .yes .lab{color:var(--sage)}
+.vs .no .lab{color:var(--no)}
+.vs .no p{color:var(--ink-2)}
+@media (max-width:640px){.vs{grid-template-columns:1fr}.vs > div:nth-child(odd){border-right:0}.vs > div:nth-last-child(2){border-bottom:1px solid var(--line)}}
+.words{display:flex;flex-wrap:wrap;gap:8px}
+.words span{border-radius:999px;padding:5px 12px;font-size:14px;font-weight:600}
+.words.yes span{background:var(--sage-lt);color:var(--sage)}
+.words.no span{background:var(--no-lt);color:var(--no);text-decoration:line-through}
+
+/* Applications */
+.post{aspect-ratio:1;border-radius:var(--r);overflow:hidden;position:relative;display:grid;align-content:space-between;padding:20px;max-width:100%}
+.post h4{font-family:var(--f-display);font-weight:500;font-size:26px;line-height:1.1}
+.post small{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase}
+.post--a{background:var(--berry);color:#fff}
+.post--b{background:var(--blush);color:var(--ink)}
+.post--c{background:var(--ink);color:#f3e9ee}
+.post .tag{justify-self:start;background:#fff;color:var(--ink);border-radius:999px;padding:4px 10px;font-size:12px;font-weight:700}
+.chat{background:#e9e4dc;border-radius:var(--r);padding:18px;display:grid;gap:10px;font-size:14px}
+.chat p{max-width:85%;padding:9px 12px;border-radius:10px;line-height:1.45}
+.chat .in{background:#fff;justify-self:start}
+.chat .out{background:#d9f2d0;justify-self:end}
+.label{border:1.5px solid var(--ink);border-radius:8px;padding:18px;display:grid;gap:14px;background:var(--paper)}
+.label__top{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid var(--line);padding-bottom:12px}
+.label__top svg{width:130px;height:auto}
+.btns{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn{display:inline-flex;align-items:center;border-radius:999px;padding:12px 22px;font-weight:600;font-size:15px;border:1.5px solid transparent;line-height:1}
+.btn--p{background:var(--berry);color:#fff}
+.btn--d{background:var(--ink);color:#fff}
+.btn--g{border-color:var(--ink);color:var(--ink)}
+.pill{display:inline-block;font-size:11px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;padding:4px 9px;border-radius:999px}
+
+/* Architecture */
+.arch{display:grid;gap:14px;justify-items:center;text-align:center}
+.arch__master{background:var(--ink);color:#fff;border-radius:var(--r);padding:18px 26px;display:grid;gap:4px}
+.arch__master b{font-family:var(--f-display);font-size:26px;font-weight:600}
+.arch__line{width:2px;height:22px;background:var(--line)}
+.arch__row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;width:100%}
+.arch__row > div{background:var(--paper);border:1px solid var(--blush-2);border-radius:var(--r);padding:16px;display:grid;gap:6px;align-content:start}
+.arch__row b{font-family:var(--f-display);font-size:20px;font-weight:600}
+@media (max-width:700px){.arch__row{grid-template-columns:1fr}}
+
+.foot{padding-block:40px 64px;color:var(--ink-2);font-size:14px}
+.foot .wrap{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap}
+@media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
+</style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <!-- Nexus mark: two rings that meet; the shared lens is where local and global beauty connect -->
+    <symbol id="mark" viewBox="0 0 120 80">
+      <circle cx="44" cy="40" r="30" fill="none" stroke="currentColor" stroke-width="6"/>
+      <circle cx="76" cy="40" r="30" fill="none" stroke="currentColor" stroke-width="6"/>
+      <path d="M60 14.62 A30 30 0 0 1 60 65.38 A30 30 0 0 1 60 14.62 Z" style="fill:var(--lens, #8c2350)"/>
+    </symbol>
+  </defs>
+</svg>
+
+<header class="bar">
+  <div class="wrap">
+    <a class="minilogo" href="#top" aria-label="Nexus Beauty brand book, top"><svg viewBox="0 0 120 80" aria-hidden="true" style="color:var(--ink)"><use href="#mark"/></svg><b>Nexus</b></a>
+    <nav aria-label="Sections"><a href="#core">Brand core</a><a href="#logo">Logo</a><a href="#colour">Colour</a><a href="#type">Type</a><a href="#stamp">Batch stamp</a><a href="#voice">Voice</a><a href="#claims">Claims</a><a href="#imagery">Imagery</a><a href="#apps">In use</a></nav>
+  </div>
+</header>
+
+<main id="top">
+<section class="cover" aria-labelledby="cover-h">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Brand guidelines · Version 1.0 · September 2026</p>
+      <h1 id="cover-h">Nexus Beauty.<br><em>Beauty, checked.</em></h1>
+      <p class="lede">How Nexus Beauty looks, sounds and behaves: on the website, in the parcel, on Instagram and in every WhatsApp reply. Use this book whenever you design, write or brief someone for the brand.</p>
+      <div class="cover__meta"><span>Multi-brand beauty store · Pakistan</span><span>Own label: Koh-e-Noor</span><span>Owner: Nexus Beauty brand team</span></div>
+    </div>
+    <div class="cover__mark" aria-hidden="true">
+      <svg viewBox="0 0 120 80" style="color:#fff;--lens:#e9b8cb"><use href="#mark"/></svg>
+    </div>
+  </div>
+</section>
+
+<!-- 01 CORE -->
+<section class="ch" id="core" aria-labelledby="core-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">01 · Brand core</span><div><h2 id="core-h">Who we are</h2><p class="lede">A nexus is a meeting point. Nexus Beauty is where Pakistan's trusted derm brands, Korean and global favourites and our own label meet, all checked before they reach you.</p></div></div>
+    <div class="body">
+      <p class="statement">We sell only originals, and we <em>prove it</em> on every box.</p>
+      <dl class="pos">
+        <dt>Purpose</dt><dd>Make it safe and easy for anyone in Pakistan to buy beauty products they can trust.</dd>
+        <dt>Positioning</dt><dd>For beauty buyers in Pakistan who worry about fakes and expired stock, Nexus Beauty is the online store that shows the batch number and expiry date on every order. Big resellers have range but no proof. We have both.</dd>
+        <dt>Promise</dt><dd>Original, fresh, fairly priced and delivered fast, with cash on delivery anywhere in Pakistan.</dd>
+        <dt>Tagline</dt><dd><b>Beauty, checked.</b> Use it under the logo, in ads and on the parcel tape.</dd>
+        <dt>Proof points</dt><dd>Batch and expiry on every order · Sourced from brands and authorised distributors only · Free WhatsApp skin advice · Minis to try before you buy</dd>
+      </dl>
+      <div>
+        <h3 class="sub" style="margin-bottom:16px">Who we serve</h3>
+        <div class="grid3">
+          <div class="box"><h4>The careful buyer</h4><p>Woman, 20–35, Karachi, Lahore or Islamabad. Has been sold a fake before. Reads reviews, checks expiry, pays cash on delivery. Wants proof more than discounts.</p></div>
+          <div class="box"><h4>The derm follower</h4><p>Trusts what her dermatologist recommends: Rederm, Estelin, Jenpharm. Today she buys from a pharmacy. Wants the full range in one place, sorted by concern.</p></div>
+          <div class="box"><h4>The trend tryer</h4><p>18–28, follows TikTok and Korean skincare. Wants PDRN, sun sticks and new mists early, and likes a mini before the full size.</p></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-bottom:16px">Values</h3>
+        <div class="grid4">
+          <div class="box"><h4>Proof over promises</h4><p>We show the batch, the source and the price per ml, and we never ask customers to just trust us.</p></div>
+          <div class="box"><h4>Plain advice</h4><p>We explain what a product does in simple words and say when it isn't right for you.</p></div>
+          <div class="box"><h4>Fair and fresh</h4><p>Fair prices, fresh stock and no fake "80% off" sales.</p></div>
+          <div class="box"><h4>Every skin tone</h4><p>We celebrate brown skin as it is. We never sell or say "fair", "white" or "lighter".</p></div>
+        </div>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-bottom:18px">Personality</h3>
+        <div class="traits" aria-label="Where Nexus Beauty sits on each scale">
+          <div class="trait"><span>Friendly</span><span class="track"><i style="--at:35%"></i></span><span>Formal</span></div>
+          <div class="trait"><span>Expert</span><span class="track"><i style="--at:30%"></i></span><span>Casual</span></div>
+          <div class="trait"><span>Calm</span><span class="track"><i style="--at:25%"></i></span><span>Loud</span></div>
+          <div class="trait"><span>Premium</span><span class="track"><i style="--at:45%"></i></span><span>Budget</span></div>
+          <div class="trait"><span>Modern</span><span class="track"><i style="--at:30%"></i></span><span>Traditional</span></div>
+        </div>
+        <p class="small muted" style="margin-top:14px">In one line: a knowledgeable friend who works at a pharmacy counter and also knows every K-beauty launch.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 02 LOGO -->
+<section class="ch tint" id="logo" aria-labelledby="logo-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">02 · Logo</span><div><h2 id="logo-h">The Nexus mark</h2><p class="lede">Two rings meet, and the berry lens is where they overlap: local and global, science and beauty, store and customer. The wordmark is set in Bodoni Moda with "BEAUTY" in spaced Figtree capitals.</p></div></div>
+    <div class="body">
+      <div class="grid2">
+        <div>
+          <div class="logo-stage logo-stage--light">
+            <svg viewBox="0 0 420 110" role="img" aria-label="Nexus Beauty primary logo">
+              <use href="#mark" x="0" y="15" width="120" height="80" style="color:#241826"/>
+              <text x="138" y="66" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="58" font-weight="600" fill="#241826">Nexus</text>
+              <text x="141" y="92" font-family="Figtree, Segoe UI, sans-serif" font-size="15" font-weight="700" letter-spacing="7.5" fill="#8c2350">BEAUTY</text>
+            </svg>
+          </div>
+          <p class="cap"><b>Primary lockup.</b> Plum mark and wordmark with a berry lens. Use it on white or blush.</p>
+        </div>
+        <div>
+          <div class="logo-stage logo-stage--dark">
+            <svg viewBox="0 0 420 110" role="img" aria-label="Nexus Beauty logo reversed">
+              <use href="#mark" x="0" y="15" width="120" height="80" style="color:#ffffff;--lens:#e9b8cb"/>
+              <text x="138" y="66" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="58" font-weight="600" fill="#ffffff">Nexus</text>
+              <text x="141" y="92" font-family="Figtree, Segoe UI, sans-serif" font-size="15" font-weight="700" letter-spacing="7.5" fill="#e9b8cb">BEAUTY</text>
+            </svg>
+          </div>
+          <p class="cap"><b>Reversed.</b> White with a pink lens (#E9B8CB) on plum. Use it for the footer, parcel tape and night-time posts.</p>
+        </div>
+        <div>
+          <div class="logo-stage logo-stage--berry">
+            <svg viewBox="0 0 420 110" role="img" aria-label="Nexus Beauty logo in white on berry">
+              <use href="#mark" x="0" y="15" width="120" height="80" style="color:#ffffff;--lens:#ffffff"/>
+              <text x="138" y="66" font-family="Bodoni Moda, Didot, Georgia, serif" font-size="58" font-weight="600" fill="#ffffff">Nexus</text>
+              <text x="141" y="92" font-family="Figtree, Segoe UI, sans-serif" font-size="15" font-weight="700" letter-spacing="7.5" fill="#ffffff">BEAUTY</text>
+            </svg>
+          </div>
+          <p class="cap"><b>One colour.</b> All white on berry, or all plum for single-colour printing like stamps and receipts.</p>
+        </div>
+        <div>
+          <div class="logo-stage logo-stage--blush" style="gap:24px;grid-auto-flow:column">
+            <svg viewBox="0 0 120 80" role="img" aria-label="Nexus mark on its own" style="width:120px;color:#241826"><use href="#mark"/></svg>
+            <svg viewBox="0 0 100 100" role="img" aria-label="Nexus app icon" style="width:96px"><rect width="100" height="100" rx="22" fill="#8c2350"/><use href="#mark" x="14" y="22" width="72" height="56" style="color:#fff;--lens:#e9b8cb"/></svg>
+          </div>
+          <p class="cap"><b>Mark and icon.</b> Use the mark alone for the favicon, Instagram profile photo, app icon and product seals.</p>
+        </div>
+      </div>
+
+      <div class="grid2" style="align-items:start">
+        <div style="display:grid;gap:12px">
+          <h3 class="sub">Clear space</h3>
+          <div><span class="clear"><svg viewBox="0 0 420 110" aria-hidden="true"><use href="#mark" x="0" y="15" width="120" height="80" style="color:#241826"/><text x="138" y="66" font-family="Bodoni Moda, Georgia, serif" font-size="58" font-weight="600" fill="#241826">Nexus</text><text x="141" y="92" font-family="Figtree, sans-serif" font-size="15" font-weight="700" letter-spacing="7.5" fill="#8c2350">BEAUTY</text></svg></span></div>
+          <p class="small muted">Keep space equal to the height of the "N" in Nexus on every side. Nothing else goes inside that space: no text, no stickers, no image edges.</p>
+        </div>
+        <div style="display:grid;gap:12px">
+          <h3 class="sub">Minimum size</h3>
+          <div class="sizes-row">
+            <figure><svg viewBox="0 0 420 110" style="width:120px" aria-hidden="true"><use href="#mark" x="0" y="15" width="120" height="80" style="color:#241826"/><text x="138" y="66" font-family="Bodoni Moda, Georgia, serif" font-size="58" font-weight="600" fill="#241826">Nexus</text><text x="141" y="92" font-family="Figtree, sans-serif" font-size="15" font-weight="700" letter-spacing="7.5" fill="#8c2350">BEAUTY</text></svg><figcaption>Lockup · 120 px / 30 mm</figcaption></figure>
+            <figure><svg viewBox="0 0 120 80" style="width:32px;color:#241826" aria-hidden="true"><use href="#mark"/></svg><figcaption>Mark · 32 px / 8 mm</figcaption></figure>
+          </div>
+          <p class="small muted">Below these sizes, "BEAUTY" becomes hard to read. Use the mark on its own instead.</p>
+        </div>
+      </div>
+
+      <div>
+        <h3 class="sub" style="margin-bottom:16px">Never do this</h3>
+        <div class="grid4">
+          <div class="dont"><div class="stage"><svg viewBox="0 0 420 110" aria-hidden="true" style="transform:scaleX(1.5)"><use href="#mark" x="0" y="15" width="120" height="80" style="color:#241826"/><text x="138" y="66" font-family="Bodoni Moda, Georgia, serif" font-size="58" font-weight="600" fill="#241826">Nexus</text></svg></div><p><b>Don't stretch</b> or squash the logo. Always scale it evenly.</p></div>
+          <div class="dont"><div class="stage"><svg viewBox="0 0 420 110" aria-hidden="true"><use href="#mark" x="0" y="15" width="120" height="80" style="color:#2f7d32;--lens:#f2a900"/><text x="138" y="66" font-family="Bodoni Moda, Georgia, serif" font-size="58" font-weight="600" fill="#2f7d32">Nexus</text></svg></div><p><b>Don't recolour</b> it outside the brand palette.</p></div>
+          <div class="dont"><div class="stage" style="background:linear-gradient(135deg,#d88fb0,#8fb3d8)"><svg viewBox="0 0 420 110" aria-hidden="true"><use href="#mark" x="0" y="15" width="120" height="80" style="color:#241826"/><text x="138" y="66" font-family="Bodoni Moda, Georgia, serif" font-size="58" font-weight="600" fill="#241826">Nexus</text></svg></div><p><b>Don't place it</b> on busy photos or gradients where it loses contrast.</p></div>
+          <div class="dont"><div class="stage"><svg viewBox="0 0 420 110" aria-hidden="true"><use href="#mark" x="0" y="15" width="120" height="80" style="color:#241826"/><text x="138" y="66" font-family="Arial, sans-serif" font-size="54" font-style="italic" font-weight="700" fill="#241826">NEXUS</text></svg></div><p><b>Don't retype</b> the name in another font or in capitals. Use the logo files.</p></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 03 COLOUR -->
+<section class="ch" id="colour" aria-labelledby="colour-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">03 · Colour</span><div><h2 id="colour-h">Plum, berry and blush</h2><p class="lede">A warm, grown-up palette that feels like a good pharmacy and a good boutique at once. Plum and white do most of the work. Berry is for actions and highlights.</p></div></div>
+    <div class="body">
+      <div class="grid3">
+        <div class="swatch"><div class="chip" style="background:#241826;color:#fff">Plum</div><div class="info"><b>Plum Ink</b><span class="mono">#241826 · RGB 36 24 38</span><span class="mono">CMYK 55 75 45 75</span><span>Text, logo, dark sections</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#8c2350;color:#fff">Berry</div><div class="info"><b>Nexus Berry</b><span class="mono">#8C2350 · RGB 140 35 80</span><span class="mono">CMYK 20 95 40 25</span><span>Buttons, links, the logo lens</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#f8f1f2;color:#241826">Blush</div><div class="info"><b>Blush</b><span class="mono">#F8F1F2 · RGB 248 241 242</span><span class="mono">CMYK 0 4 2 2</span><span>Soft section backgrounds</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#466b58;color:#fff">Sage</div><div class="info"><b>Trust Sage</b><span class="mono">#466B58 · RGB 70 107 88</span><span class="mono">CMYK 65 30 60 25</span><span>Verified, in stock, batch stamp</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#b7862b;color:#fff">Gold</div><div class="info"><b>Koh-e-Noor Gold</b><span class="mono">#B7862B · RGB 183 134 43</span><span class="mono">CMYK 25 45 95 10</span><span>Own-label accents, stars. Never for small text.</span></div></div>
+        <div class="swatch"><div class="chip" style="background:#ffffff;color:#241826;border-bottom:1px solid var(--line)">White</div><div class="info"><b>Paper White</b><span class="mono">#FFFFFF</span><span class="mono">CMYK 0 0 0 0</span><span>Main background, product cards</span></div></div>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-bottom:12px">How much of each</h3>
+        <div class="ratio" aria-label="Colour proportions">
+          <div style="flex:55;background:#fff;color:#241826">White 55%</div>
+          <div style="flex:20;background:#f8f1f2;color:#241826">Blush 20%</div>
+          <div style="flex:15;background:#241826;color:#fff">Plum 15%</div>
+          <div style="flex:7;background:#8c2350;color:#fff">Berry 7%</div>
+          <div style="flex:3;background:#466b58;color:#fff" title="Sage and gold 3%">3%</div>
+        </div>
+        <p class="small muted" style="margin-top:10px">Berry works because it is rare. If a page feels loud, use less berry, not a new colour.</p>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-bottom:12px">Readable pairs</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Pair</th><th>Contrast</th><th>Use for</th></tr></thead>
+          <tbody>
+            <tr><td><span class="pair" style="background:#fff;color:#241826;border:1px solid var(--line)">Plum on white</span></td><td class="num">17.0 : 1</td><td><span class="ok">Any text</span></td></tr>
+            <tr><td><span class="pair" style="background:#f8f1f2;color:#241826">Plum on blush</span></td><td class="num">15.3 : 1</td><td><span class="ok">Any text</span></td></tr>
+            <tr><td><span class="pair" style="background:#8c2350;color:#fff">White on berry</span></td><td class="num">8.5 : 1</td><td><span class="ok">Buttons, banners, any text</span></td></tr>
+            <tr><td><span class="pair" style="background:#fff;color:#466b58;border:1px solid var(--line)">Sage on white</span></td><td class="num">6.0 : 1</td><td><span class="ok">Labels, "In stock", small text</span></td></tr>
+            <tr><td><span class="pair" style="background:#241826;color:#b7862b">Gold on plum</span></td><td class="num">5.2 : 1</td><td><span class="ok">Own-label headings on dark</span></td></tr>
+            <tr><td><span class="pair" style="background:#fff;color:#b7862b;border:1px solid var(--line)">Gold on white</span></td><td class="num">3.3 : 1</td><td><span class="warn">Large headings and icons only. Never body text.</span></td></tr>
+          </tbody></table></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 04 TYPE -->
+<section class="ch tint" id="type" aria-labelledby="type-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">04 · Typography</span><div><h2 id="type-h">Three typefaces, three jobs</h2><p class="lede">A fashion serif for headlines, a friendly sans for everything you read, and a mono for codes and proof. All three are free on Google Fonts.</p></div></div>
+    <div class="body">
+      <div class="box" style="gap:0">
+        <div class="specimen"><span class="meta">DISPLAY · Bodoni Moda 500 / 600 · Headlines, logo, prices in ads</span><p style="font-family:var(--f-display);font-size:clamp(34px,5vw,56px);line-height:1.05">Original beauty, <em style="color:var(--berry)">checked</em> before it ships.</p></div>
+        <div class="specimen"><span class="meta">BODY · Figtree 400 / 600 / 700 · Paragraphs, buttons, navigation, product names</span><p style="font-size:18px;max-width:60ch">Rederm Tressfix is a hair fall and anti-dandruff shampoo from a Pakistani dermatology brand. Use it three times a week and leave it on for two minutes before rinsing.</p></div>
+        <div class="specimen"><span class="meta">UTILITY · IBM Plex Mono 400 / 500 · Batch codes, expiry, order numbers, price per ml</span><p class="mono" style="font-size:16px">BATCH AX2609K · EXP 02/2029 · ORDER NX-104829 · Rs 12.9/ml</p></div>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-bottom:10px">Type scale (web)</h3>
+        <div class="scale">
+          <div><span>H1 · 56–68 px</span><span style="font-family:var(--f-display);font-size:clamp(34px,4.6vw,60px);line-height:1.05">Beauty, checked.</span></div>
+          <div><span>H2 · 32–40 px</span><span style="font-family:var(--f-display);font-size:clamp(26px,3.2vw,38px)">Top picks by category</span></div>
+          <div><span>H3 · 18 px bold</span><span style="font-size:18px;font-weight:700">Dark Spot Correcting Glow Serum</span></div>
+          <div><span>Body · 16 px</span><span>Hydrates dull skin and fades marks in four to six weeks.</span></div>
+          <div><span>Label · 12 px caps</span><span class="eyebrow">Proven in Pakistan</span></div>
+          <div><span>Code · 13 px mono</span><span class="mono" style="font-size:13px">EXP 02/2029</span></div>
+        </div>
+      </div>
+      <div class="grid3">
+        <div class="box"><h4>Sentence case</h4><p>Write headings and buttons in sentence case: "Shop top picks", not "Shop Top Picks". Capitals are only for small labels.</p></div>
+        <div class="box"><h4>Italic for one word</h4><p>Put one important word in a headline in berry italic. Only one per headline.</p></div>
+        <div class="box"><h4>Urdu and Roman Urdu</h4><p>For Urdu script use Noto Nastaliq Urdu. Roman Urdu in captions uses Figtree like English.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 05 STAMP -->
+<section class="ch" id="stamp" aria-labelledby="stamp-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">05 · Signature element</span><div><h2 id="stamp-h">The batch stamp</h2><p class="lede">The dashed batch stamp is the most recognisable Nexus element after the logo. It turns our main promise into something you can see. Use it wherever we make a claim about authenticity.</p></div></div>
+    <div class="body">
+      <div class="grid3" style="align-items:center">
+        <div style="display:grid;justify-items:center;padding:24px;background:var(--blush);border-radius:var(--r)"><div class="batch batch--tilt"><b>✓ Verified original</b><span>BATCH&nbsp;&nbsp;AX2609K</span><span>MFG&nbsp;&nbsp;&nbsp;&nbsp;03/2026</span><span>EXP&nbsp;&nbsp;&nbsp;&nbsp;02/2029</span></div></div>
+        <div class="box"><h4>How to build it</h4><ul><li>1.5 px dashed Plum border, 6 px corners</li><li>Heading in Figtree 700 caps, Sage, with a tick</li><li>Codes in IBM Plex Mono, aligned in columns</li><li>Tilt −3° only on marketing. Keep it straight on product pages and invoices.</li></ul></div>
+        <div class="box"><h4>Where it appears</h4><ul><li>Hero images and ads</li><li>Every product page (real codes)</li><li>The parcel sticker and invoice</li><li>Unboxing videos and stories</li></ul></div>
+      </div>
+      <p class="small muted">Rule: in customer-facing places (product pages, stickers, invoices) the stamp must show the product's real batch and expiry. Sample codes are only for ads and mock-ups.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 06 VOICE -->
+<section class="ch tint" id="voice" aria-labelledby="voice-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">06 · Voice &amp; tone</span><div><h2 id="voice-h">How we talk</h2><p class="lede">We sound like a friend who knows skincare: clear, warm and honest. We explain, we don't hype. Short sentences. Real numbers. No pressure.</p></div></div>
+    <div class="body">
+      <div class="grid4">
+        <div class="box"><h4>Clear</h4><p>Say what it does and who it's for, in words a first-time buyer understands.</p></div>
+        <div class="box"><h4>Honest</h4><p>Give real timelines ("4–6 weeks") and say when a product isn't right for someone.</p></div>
+        <div class="box"><h4>Warm</h4><p>Friendly, never cheesy. A light "Assalam o Alaikum" or "Shukriya" in chats is welcome.</p></div>
+        <div class="box"><h4>Proof-first</h4><p>Lead with the batch, the source, the size and the price per ml. Let the facts sell.</p></div>
+      </div>
+      <div class="vs">
+        <div class="yes"><span class="lab">Say</span><p>Fades dark spots in 4–6 weeks with daily use.</p></div>
+        <div class="no"><span class="lab">Not</span><p>Instant glass skin overnight!!! 😍✨</p></div>
+        <div class="yes"><span class="lab">Say</span><p>Evens out your skin tone.</p></div>
+        <div class="no"><span class="lab">Not</span><p>Makes you fair and white in 7 days.</p></div>
+        <div class="yes"><span class="lab">Say</span><p>Original, from the brand's authorised distributor. Batch AX2609K, expires 02/2029.</p></div>
+        <div class="no"><span class="lab">Not</span><p>100% original guaranteed trust us!!</p></div>
+        <div class="yes"><span class="lab">Say</span><p>Restocked. 40 left in 50 ml.</p></div>
+        <div class="no"><span class="lab">Not</span><p>HURRY!! LAST CHANCE!! 80% OFF ENDS TONIGHT!!</p></div>
+      </div>
+      <div class="grid2">
+        <div style="display:grid;gap:10px"><h3 class="sub">Words we use</h3><div class="words yes"><span>original</span><span>checked</span><span>brightening</span><span>even tone</span><span>glow</span><span>fresh stock</span><span>try-size</span><span>derm-recommended</span><span>batch</span><span>expiry</span></div></div>
+        <div style="display:grid;gap:10px"><h3 class="sub">Words we never use</h3><div class="words no"><span>whitening</span><span>fairness</span><span>gora</span><span>bleach</span><span>miracle</span><span>100% cure</span><span>copy / first copy</span><span>master copy</span><span>official (unless authorised)</span></div></div>
+      </div>
+      <div>
+        <h3 class="sub" style="margin-bottom:12px">Tone by channel</h3>
+        <div class="tbl"><table>
+          <thead><tr><th>Channel</th><th>Tone</th><th>Example</th></tr></thead>
+          <tbody>
+            <tr><td><b>Website</b></td><td>Clear and factual</td><td>A light gel moisturiser for oily skin in hot weather. 50 ml, about 2 months of daily use.</td></tr>
+            <tr><td><b>Instagram / TikTok</b></td><td>Warm and curious, Roman Urdu welcome</td><td>PDRN kya hai aur kya aap ki skin ko chahiye? 3 cheezein jo jaan'na zaroori hain 👇</td></tr>
+            <tr><td><b>WhatsApp</b></td><td>Personal and helpful</td><td>Walaikum Assalam Ayesha! For oily skin with marks, start with the AXIS-Y 5 ml mini (Rs 799) and use SPF every morning.</td></tr>
+            <tr><td><b>Order updates</b></td><td>Short and exact</td><td>Your order NX-104829 left our warehouse today. Expect it in Lahore by Thursday. Pay Rs 3,149 on delivery.</td></tr>
+            <tr><td><b>Complaints</b></td><td>Calm, own it, fix it</td><td>Sorry your sunscreen arrived dented. We're sending a new one today at no cost. You don't need to return the old one.</td></tr>
+          </tbody></table></div>
+      </div>
+      <p class="small muted">Emoji: one per message at most, and never in product pages, headlines or complaints.</p>
+    </div>
+  </div>
+</section>
+
+<!-- 07 CLAIMS -->
+<section class="ch" id="claims" aria-labelledby="claims-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">07 · Claims &amp; trust rules</span><div><h2 id="claims-h">What we can and can't say</h2><p class="lede">Trust is the whole brand. One fake product or one false claim costs more than any sale earns. These rules apply to everyone who writes, posts or sells for Nexus Beauty.</p></div></div>
+    <div class="body">
+      <div class="grid2">
+        <div class="box" style="border-color:var(--sage)"><h4 style="color:var(--sage)">Always</h4><ul>
+          <li>Buy only from the brand or its authorised distributor, and keep the invoice for every batch.</li>
+          <li>Show the real batch number and expiry date on product pages and in the parcel.</li>
+          <li>Use "brightening", "even tone" or "fades dark spots" for pigmentation products.</li>
+          <li>Give sources for numbers ("in a 4-week study of 30 people").</li>
+          <li>Check that own-label products and imports meet DRAP rules before listing.</li>
+        </ul></div>
+        <div class="box" style="border-color:var(--no)"><h4 style="color:var(--no)">Never</h4><ul>
+          <li>Sell or promote whitening, fairness or skin-bleaching creams, or products without a full ingredient list.</li>
+          <li>Call ourselves an "official" or "authorised" seller unless the brand has confirmed it in writing.</li>
+          <li>Show "before and after" photos that have been edited, filtered or lightened.</li>
+          <li>Write or pay for fake reviews, or remove honest negative ones.</li>
+          <li>Promise medical results: "cures acne", "stops hair fall permanently".</li>
+        </ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 08 IMAGERY -->
+<section class="ch tint" id="imagery" aria-labelledby="img-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">08 · Photography &amp; imagery</span><div><h2 id="img-h">Real skin, real light</h2><p class="lede">Our photos should look like a bright, clean bathroom shelf in a Pakistani home, not a studio in Seoul.</p></div></div>
+    <div class="body">
+      <div class="grid3">
+        <div class="box"><h4>People</h4><ul><li>Pakistani models across every skin tone, including deep brown</li><li>Visible texture: pores, freckles, a little shine</li><li>Mix of ages, hijab and no hijab, men for men's lines</li><li>Never lighten skin in editing</li></ul></div>
+        <div class="box"><h4>Products</h4><ul><li>White or blush background, soft daylight from one side</li><li>Props from the subject's world: lawn fabric, marble, brass, jasmine</li><li>Show the batch code on the box in at least one shot</li><li>Same angle and shadow for every product card</li></ul></div>
+        <div class="box"><h4>Video</h4><ul><li>Unboxing that shows the batch stamp and sticker</li><li>Texture close-ups: swatch, spray, pump</li><li>Real customers and our advisors, subtitled in English and Roman Urdu</li><li>Vertical 9:16, first 2 seconds show the product</li></ul></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 09 ARCHITECTURE + APPLICATIONS -->
+<section class="ch" id="apps" aria-labelledby="apps-h">
+  <div class="wrap">
+    <div class="chead"><span class="num">09 · Brand in use</span><div><h2 id="apps-h">Brand family and everyday pieces</h2><p class="lede">How Nexus Beauty sits with our own label, and how the brand looks on the things customers touch most.</p></div></div>
+    <div class="body">
+      <div class="arch">
+        <div class="arch__master"><b>Nexus Beauty</b><span class="small" style="color:#dccbd4">The store · Beauty, checked.</span></div>
+        <div class="arch__line" aria-hidden="true"></div>
+        <div class="arch__row">
+          <div><span class="eyebrow">Curated</span><b>Pakistani derm brands</b><p class="small muted">Rederm, Estelin, Neophar, Jenpharm. Shown under their own logos.</p></div>
+          <div><span class="eyebrow">Curated</span><b>Global &amp; Korean brands</b><p class="small muted">AXIS-Y, Beauty of Joseon, Medicube and more. Shown under their own logos.</p></div>
+          <div style="border-color:var(--gold)"><span class="eyebrow" style="color:#8a6420">Own label</span><b>Koh-e-Noor by Nexus Beauty</b><p class="small muted">Our fragrance line. It has its own name and uses Koh-e-Noor Gold, with "by Nexus Beauty" underneath.</p></div>
+        </div>
+      </div>
+
+      <div class="grid3">
+        <div class="post post--a"><small>New arrival</small><div style="display:grid;gap:10px"><h4>PDRN is here.</h4><p style="font-size:14px;opacity:.9">Medicube PDRN Pink Peptide Serum · Rs 3,829</p><span class="tag">Batch shown on every box</span></div></div>
+        <div class="post post--b"><small style="color:var(--berry)">Skin tip</small><div style="display:grid;gap:10px"><h4>Sunscreen every morning. Even indoors.</h4><div class="batch" style="justify-self:start;font-size:11px"><b>✓ Verified original</b><span>EXP 02/2029</span></div></div></div>
+        <div class="post post--c"><small style="color:#b7862b">Koh-e-Noor by Nexus Beauty</small><div style="display:grid;gap:10px"><h4 style="color:#fff">Vanilla Pistachio.<br><em style="color:#b7862b">Made in Pakistan.</em></h4><p style="font-size:14px;color:#dccbd4">100 ml hair &amp; body mist · Rs 1,290</p></div></div>
+      </div>
+
+      <div class="grid2" style="align-items:start">
+        <div style="display:grid;gap:10px">
+          <h3 class="sub">Parcel sticker</h3>
+          <div class="label">
+            <div class="label__top"><svg viewBox="0 0 420 110" role="img" aria-label="Nexus Beauty logo"><use href="#mark" x="0" y="15" width="120" height="80" style="color:#241826"/><text x="138" y="66" font-family="Bodoni Moda, Georgia, serif" font-size="58" font-weight="600" fill="#241826">Nexus</text><text x="141" y="92" font-family="Figtree, sans-serif" font-size="15" font-weight="700" letter-spacing="7.5" fill="#8c2350">BEAUTY</text></svg><span class="mono small">ORDER NX-104829</span></div>
+            <div class="batch" style="justify-self:start"><b>✓ Checked before packing</b><span>AXIS-Y Glow Serum 5 ml · BATCH AX2609K · EXP 02/2029</span><span>Relief Sun SPF 50+ 50 ml · BATCH BJ2605R · EXP 11/2028</span></div>
+            <p class="small muted">Packed by Hira · 27 Sep 2026 · Questions? WhatsApp us. We reply within 2 hours.</p>
+          </div>
+        </div>
+        <div style="display:grid;gap:10px">
+          <h3 class="sub">WhatsApp reply</h3>
+          <div class="chat" aria-label="Example WhatsApp conversation">
+            <p class="in">Is the Beauty of Joseon sunscreen original? Last time I got a fake one 😞</p>
+            <p class="out">Walaikum Assalam! Yes, it's original. We buy it from the authorised distributor. Your box will show batch BJ2605R, expiry 11/2028, and you can check that code on the brand's site.</p>
+            <p class="out">If anything looks wrong when it arrives, send us a photo and we'll refund you in full. 🌸</p>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:grid;gap:12px">
+        <h3 class="sub">Buttons and tags</h3>
+        <div class="btns"><span class="btn btn--p">Add to bag</span><span class="btn btn--d">Buy now, pay on delivery</span><span class="btn btn--g">Shop by concern</span></div>
+        <div class="btns"><span class="pill" style="background:#fff;border:1px solid var(--line)">Bestseller</span><span class="pill" style="background:#241826;color:#fff">New</span><span class="pill" style="background:#e7eef6;color:#2c5a85">Derm brand</span><span class="pill" style="background:var(--sage-lt);color:var(--sage)">Pakistani</span><span class="pill" style="background:#fff4d6;color:#7a5a06">Mini</span><span class="pill" style="background:var(--berry);color:#fff">Our label</span></div>
+        <p class="small muted">Buttons are fully rounded. Berry means the main action on the screen. Use only one berry button per section.</p>
+      </div>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="foot">
+  <div class="wrap"><span>Nexus Beauty brand guidelines · v1.0 · September 2026</span><span>Questions about the brand? Ask the brand team before you publish.</span></div>
+</footer>
