@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /cart
+Disallow: /checkout
+Disallow: /order-confirmation
+Disallow: /account
+Disallow: /wishlist
+Disallow: /search
+
+Sitemap: https://nexusbeauty.pk/sitemap.xml
