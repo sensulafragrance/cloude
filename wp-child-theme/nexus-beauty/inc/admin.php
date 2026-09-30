@@ -76,6 +76,32 @@ function nexus_setup_page() {
 			<?php endforeach; ?>
 			</tbody>
 		</table>
+		<h2><?php esc_html_e( 'Automatic setup', 'nexus-beauty' ); ?></h2>
+		<p><?php esc_html_e( 'Setup ran when you activated the theme. Running it again only adds what is missing: it never changes or deletes your existing pages, menus or products.', 'nexus-beauty' ); ?></p>
+		<p style="display:flex;gap:8px;flex-wrap:wrap">
+			<?php
+			$nexus_buttons = array( 'rerun' => __( 'Run setup again', 'nexus-beauty' ) );
+			if ( class_exists( 'WooCommerce' ) ) {
+				$nexus_buttons['import'] = __( 'Import starter products', 'nexus-beauty' );
+			}
+			foreach ( $nexus_buttons as $nexus_task => $nexus_label ) :
+				?>
+				<form method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+					<input type="hidden" name="action" value="nexus_setup">
+					<input type="hidden" name="task" value="<?php echo esc_attr( $nexus_task ); ?>">
+					<?php wp_nonce_field( 'nexus_setup' ); ?>
+					<button class="button"><?php echo esc_html( $nexus_label ); ?></button>
+				</form>
+			<?php endforeach; ?>
+		</p>
+		<?php
+		$nexus_log = get_option( 'nexus_setup_log', array() );
+		if ( $nexus_log ) :
+			?>
+			<details><summary><?php esc_html_e( 'Last setup log', 'nexus-beauty' ); ?></summary>
+				<ul style="list-style:disc;padding-left:20px"><?php foreach ( (array) ( isset( $nexus_log['items'] ) ? $nexus_log['items'] : array() ) as $nexus_line ) : ?><li><?php echo esc_html( $nexus_line ); ?></li><?php endforeach; ?></ul>
+			</details>
+		<?php endif; ?>
 		<h2><?php esc_html_e( 'Building pages', 'nexus-beauty' ); ?></h2>
 		<p><?php esc_html_e( 'In the block editor, click + > Patterns > Nexus Beauty. "Full home page" builds the whole home page. Set the page template to "Nexus full width" for edge-to-edge sections.', 'nexus-beauty' ); ?></p>
 		<h2><?php esc_html_e( 'Shortcodes', 'nexus-beauty' ); ?></h2>
@@ -109,6 +135,14 @@ add_action(
 			if ( $id && ! is_wp_error( $id ) ) {
 				set_theme_mod( 'nexus_track_page', $id );
 			}
+		} elseif ( 'rerun' === $task && function_exists( 'nexus_run_setup' ) ) {
+			nexus_run_setup();
+			wp_safe_redirect( admin_url( 'themes.php?page=nexus-setup&nexus-done=1' ) );
+			exit;
+		} elseif ( 'import' === $task && current_user_can( 'manage_woocommerce' ) && function_exists( 'nexus_run_setup' ) ) {
+			nexus_run_setup( true );
+			wp_safe_redirect( admin_url( 'themes.php?page=nexus-setup&nexus-done=1' ) );
+			exit;
 		} elseif ( 'classic' === $task && current_user_can( 'manage_woocommerce' ) && function_exists( 'wc_get_page_id' ) ) {
 			foreach ( array( 'cart' => '[woocommerce_cart]', 'checkout' => '[woocommerce_checkout]' ) as $page => $code ) {
 				$id = wc_get_page_id( $page );

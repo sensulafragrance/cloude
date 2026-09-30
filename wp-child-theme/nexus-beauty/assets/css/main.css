@@ -507,3 +507,21 @@ input:focus, select:focus, textarea:focus { border-color: var(--nx-accent); outl
 @media (prefers-reduced-motion: reduce) {
 	*, *::before, *::after { transition: none !important; animation: none !important; scroll-behavior: auto !important; }
 }
+
+/* Forms and tables used on setup pages */
+.nx-form { display: grid; gap: 14px; max-width: 640px; }
+.nx-form label { display: grid; gap: 6px; font-size: 14px; font-weight: 600; color: var(--nx-ink); }
+.nx-form input, .nx-form select, .nx-form textarea { width: 100%; box-sizing: border-box; border: 1px solid var(--nx-line); border-radius: 10px; padding: 12px 14px; font: inherit; font-weight: 400; background: var(--nx-paper); color: var(--nx-ink); }
+.nx-form input:focus, .nx-form select:focus, .nx-form textarea:focus { outline: 2px solid var(--nx-accent); outline-offset: 1px; border-color: var(--nx-accent); }
+.nx-form textarea { min-height: 140px; resize: vertical; }
+.nx-form-row { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+.nx-hp { position: absolute !important; left: -9999px !important; width: 1px; height: 1px; overflow: hidden; }
+.nx-note--ok { background: var(--nx-sage-lt); color: var(--nx-sage); }
+.nx-note--err { background: #fbe9e7; color: var(--nx-red); }
+.nx-table-wrap { overflow-x: auto; -webkit-overflow-scrolling: touch; border: 1px solid var(--nx-line); border-radius: var(--nx-r); margin: 16px 0; }
+.nx-table { width: 100%; border-collapse: collapse; font-size: 14px; min-width: 420px; }
+.nx-table th, .nx-table td { padding: 12px 14px; text-align: left; border-bottom: 1px solid var(--nx-line); }
+.nx-table th { background: var(--nx-blush); font-weight: 700; color: var(--nx-ink); }
+.nx-table tr:last-child td { border-bottom: 0; }
+.nx-form p { margin: 0; display: grid; gap: 6px; }
+.nx-form p > label { font-size: 14px; font-weight: 600; }

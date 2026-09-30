@@ -138,19 +138,46 @@ add_shortcode(
 		if ( ! class_exists( 'WooCommerce' ) || ! function_exists( 'nexus_bundle_html' ) ) {
 			return '';
 		}
-		$a     = shortcode_atts( array( 'ids' => '', 'title' => '', 'who' => '', 'roles' => '', 'how' => '', 'tips' => '', 'avoid' => '' ), $atts, 'nexus_kit' );
-		$ids   = array_filter( array_map( 'absint', explode( ',', $a['ids'] ) ) );
+		$a     = shortcode_atts( array( 'ids' => '', 'skus' => '', 'tag' => '', 'limit' => 5, 'title' => '', 'who' => '', 'roles' => '', 'how' => '', 'tips' => '', 'avoid' => '' ), $atts, 'nexus_kit' );
 		$roles = explode( '|', $a['roles'] );
 		$how   = explode( '|', $a['how'] );
-		$rows  = array();
-		foreach ( array_values( $ids ) as $i => $id ) {
-			$p = wc_get_product( $id );
-			if ( $p ) {
+		// Products by ID, or by SKU (SKUs survive exports and imports between sites).
+		$list = array_filter( array_map( 'absint', explode( ',', $a['ids'] ) ) );
+		if ( ! $list && $a['skus'] ) {
+			$list = array_map(
+				function ( $sku ) {
+					return (int) wc_get_product_id_by_sku( trim( $sku ) );
+				},
+				explode( ',', $a['skus'] )
+			);
+		}
+		$rows = array();
+		foreach ( array_values( $list ) as $i => $id ) {
+			$p = $id ? wc_get_product( $id ) : null;
+			if ( $p && 'publish' === $p->get_status() ) {
 				$rows[] = array( $p, isset( $roles[ $i ] ) ? trim( $roles[ $i ] ) : '', isset( $how[ $i ] ) ? trim( $how[ $i ] ) : '', false );
 			}
 		}
+		// Fallback: best-selling in-stock products with these tags, so kits fill themselves from your own catalogue.
+		if ( count( $rows ) < 2 && $a['tag'] ) {
+			$rows  = array();
+			$found = wc_get_products(
+				array(
+					'status'       => 'publish',
+					'type'         => 'simple',
+					'stock_status' => 'instock',
+					'tag'          => array_map( 'sanitize_title', explode( ',', $a['tag'] ) ),
+					'limit'        => max( 2, min( 8, (int) $a['limit'] ) ),
+					'orderby'      => 'popularity',
+					'order'        => 'DESC',
+				)
+			);
+			foreach ( $found as $p ) {
+				$rows[] = array( $p, '', '', false );
+			}
+		}
 		if ( count( $rows ) < 2 ) {
-			return current_user_can( 'edit_posts' ) ? '<p class="nx-note">' . esc_html__( 'Kit: add at least two in-stock simple product IDs to the ids="" attribute.', 'nexus-beauty' ) . '</p>' : '';
+			return current_user_can( 'edit_posts' ) ? '<p class="nx-note">' . esc_html__( 'Kit: no matching products yet. Add product IDs or SKUs, or tag at least two in-stock products with the kit\'s tag.', 'nexus-beauty' ) . '</p>' : '';
 		}
 		$title   = $a['title'] ? $a['title'] : __( 'Complete kit', 'nexus-beauty' );
 		$heading = '<div class="nx-sec-head"><p class="nx-eyebrow">' . esc_html( sprintf( /* translators: %d: products */ __( '%d-product routine', 'nexus-beauty' ), count( $rows ) ) ) . '</p><h3 class="nx-h2">' . esc_html( $title ) . '</h3>' . ( $a['who'] ? '<p class="nx-lede">' . esc_html( $a['who'] ) . '</p>' : '' ) . '</div>';
@@ -205,3 +232,92 @@ add_shortcode(
 		return '<a class="nx-btn nx-btn--wa" href="' . esc_url( nexus_whatsapp_url( $a['message'] ) ) . '" target="_blank" rel="noopener">' . nexus_icon( 'whatsapp' ) . esc_html( $a['text'] ) . '</a>';
 	}
 );
+
+/**
+ * Delivery times table built from Customize > Nexus Beauty > Delivery.
+ */
+add_shortcode(
+	'nexus_delivery_table',
+	function () {
+		$free = (float) nexus_opt( 'free_shipping' );
+		$out  = '<div class="nx-table-wrap"><table class="nx-table"><thead><tr><th scope="col">' . esc_html__( 'City', 'nexus-beauty' ) . '</th><th scope="col">' . esc_html__( 'Delivery time', 'nexus-beauty' ) . '</th><th scope="col">' . esc_html__( 'Estimated arrival if you order now', 'nexus-beauty' ) . '</th></tr></thead><tbody>';
+		$rows = nexus_cities();
+		$rows[ __( 'Other cities', 'nexus-beauty' ) ] = nexus_opt( 'default_days' );
+		foreach ( $rows as $city => $days ) {
+			/* translators: %s: day range such as 1–2 */
+			$out .= '<tr><td>' . esc_html( $city ) . '</td><td>' . esc_html( sprintf( __( '%s working days', 'nexus-beauty' ), str_replace( '-', '–', $days ) ) ) . '</td><td>' . esc_html( nexus_eta_text( $city ) ) . '</td></tr>';
+		}
+		$out .= '</tbody></table></div>';
+		if ( $free > 0 ) {
+			/* translators: %s: amount */
+			$out .= '<p class="nx-note">' . esc_html( sprintf( __( 'Free delivery on orders over %s. Orders placed before the cut-off leave the same day.', 'nexus-beauty' ), nexus_price_text( $free ) ) ) . '</p>';
+		}
+		return $out;
+	}
+);
+
+/**
+ * Contact form. Sends an email to the support address (Customize > Nexus Beauty > Store & contact).
+ */
+add_shortcode(
+	'nexus_contact_form',
+	function () {
+		$sent = isset( $_GET['nx-sent'] ) ? sanitize_key( wp_unslash( $_GET['nx-sent'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+		ob_start();
+		if ( 'ok' === $sent ) {
+			echo '<p class="nx-note nx-note--ok" role="status">' . esc_html__( 'Thanks! We\'ve received your message and will reply within 2 hours during opening hours.', 'nexus-beauty' ) . '</p>';
+		} elseif ( 'err' === $sent ) {
+			echo '<p class="nx-note nx-note--err" role="alert">' . esc_html__( 'Please fill in your name, a phone number or email, and a message of at least 10 characters.', 'nexus-beauty' ) . '</p>';
+		}
+		?>
+		<form class="nx-form" method="post" action="<?php echo esc_url( admin_url( 'admin-post.php' ) ); ?>">
+			<input type="hidden" name="action" value="nexus_contact">
+			<input type="hidden" name="back" value="<?php echo esc_url( get_permalink() ); ?>">
+			<?php wp_nonce_field( 'nexus_contact', 'nx_contact_nonce' ); ?>
+			<p class="nx-hp" aria-hidden="true"><label>Website <input type="text" name="website" tabindex="-1" autocomplete="off"></label></p>
+			<p><label for="nx-cname"><?php esc_html_e( 'Your name', 'nexus-beauty' ); ?></label><input id="nx-cname" name="cname" autocomplete="name" required></p>
+			<p><label for="nx-creply"><?php esc_html_e( 'Mobile number or email', 'nexus-beauty' ); ?></label><input id="nx-creply" name="creply" autocomplete="tel" required></p>
+			<p><label for="nx-ctopic"><?php esc_html_e( 'Topic', 'nexus-beauty' ); ?></label><select id="nx-ctopic" name="ctopic">
+				<?php foreach ( array( __( 'Question about a product', 'nexus-beauty' ), __( 'My order', 'nexus-beauty' ), __( 'Returns and refunds', 'nexus-beauty' ), __( 'Skin or hair advice', 'nexus-beauty' ), __( 'Stock my brand', 'nexus-beauty' ), __( 'Something else', 'nexus-beauty' ) ) as $t ) : ?>
+					<option><?php echo esc_html( $t ); ?></option>
+				<?php endforeach; ?>
+			</select></p>
+			<p><label for="nx-cmsg"><?php esc_html_e( 'Message', 'nexus-beauty' ); ?></label><textarea id="nx-cmsg" name="cmsg" rows="5" required minlength="10"></textarea></p>
+			<p><button class="nx-btn nx-btn--primary" type="submit"><?php esc_html_e( 'Send message', 'nexus-beauty' ); ?></button></p>
+		</form>
+		<?php
+		return ob_get_clean();
+	}
+);
+
+/**
+ * Handle the contact form.
+ */
+function nexus_handle_contact() {
+	$back = isset( $_POST['back'] ) ? esc_url_raw( wp_unslash( $_POST['back'] ) ) : home_url( '/' );
+	if ( ! isset( $_POST['nx_contact_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nx_contact_nonce'] ) ), 'nexus_contact' ) ) {
+		wp_safe_redirect( add_query_arg( 'nx-sent', 'err', $back ) );
+		exit;
+	}
+	// Bots fill the hidden "website" field.
+	if ( ! empty( $_POST['website'] ) ) {
+		wp_safe_redirect( add_query_arg( 'nx-sent', 'ok', $back ) );
+		exit;
+	}
+	$name  = isset( $_POST['cname'] ) ? sanitize_text_field( wp_unslash( $_POST['cname'] ) ) : '';
+	$reply = isset( $_POST['creply'] ) ? sanitize_text_field( wp_unslash( $_POST['creply'] ) ) : '';
+	$topic = isset( $_POST['ctopic'] ) ? sanitize_text_field( wp_unslash( $_POST['ctopic'] ) ) : '';
+	$msg   = isset( $_POST['cmsg'] ) ? sanitize_textarea_field( wp_unslash( $_POST['cmsg'] ) ) : '';
+	if ( strlen( $name ) < 2 || strlen( $reply ) < 5 || strlen( $msg ) < 10 ) {
+		wp_safe_redirect( add_query_arg( 'nx-sent', 'err', $back ) );
+		exit;
+	}
+	$to      = nexus_opt( 'support_email' ) ? nexus_opt( 'support_email' ) : get_option( 'admin_email' );
+	$headers = is_email( $reply ) ? array( 'Reply-To: ' . $name . ' <' . $reply . '>' ) : array();
+	/* translators: 1: topic, 2: name */
+	wp_mail( $to, sprintf( __( '[Contact] %1$s – %2$s', 'nexus-beauty' ), $topic, $name ), "Name: $name\nReply to: $reply\nTopic: $topic\n\n$msg", $headers );
+	wp_safe_redirect( add_query_arg( 'nx-sent', 'ok', $back ) . '#nx-contact' );
+	exit;
+}
+add_action( 'admin_post_nexus_contact', 'nexus_handle_contact' );
+add_action( 'admin_post_nopriv_nexus_contact', 'nexus_handle_contact' );

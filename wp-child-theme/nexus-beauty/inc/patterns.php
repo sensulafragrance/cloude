@@ -67,7 +67,7 @@ add_action(
 			. nexus_p( 'Beauty, checked.', 'nx-eyebrow' )
 			. nexus_h( 'Good skin. <em>Good sense.</em>', 1, 'nx-hero__title' )
 			. nexus_p( 'Original Pakistani derm heroes, Korean icons and the next wave of beauty, chosen for your routine, your budget and our climate. Every order shows the batch number and expiry date.', 'nx-lede' )
-			. '<!-- wp:buttons --><div class="wp-block-buttons">' . nexus_btn( 'Shop best sellers', esc_url( $shop ) ) . nexus_btn( 'Find my routine', '#kits', true ) . '</div><!-- /wp:buttons -->'
+			. '<!-- wp:buttons --><div class="wp-block-buttons">' . nexus_btn( 'Shop best sellers', esc_url( $shop ) ) . nexus_btn( 'Find my routine', esc_url( home_url( '/routines/' ) ), true ) . '</div><!-- /wp:buttons -->'
 			. nexus_p( '✓ Cash on delivery &nbsp; ✓ Delivered across Pakistan &nbsp; ✓ Minis from Rs 490', 'nx-hero__checks' )
 			. '</div><!-- /wp:column --><!-- wp:column {"verticalAlignment":"center"} --><div class="wp-block-column is-vertically-aligned-center">'
 			. '<!-- wp:html --><div class="nx-hero__art" aria-hidden="true"><div class="nx-hero__disc"></div><div class="nx-batch nx-batch--tilt"><strong>✓ Verified original</strong><span>BATCH <b>AX2609K</b></span><span>MFG <b>03/2026</b></span><span>EXP <b>02/2029</b></span></div></div><!-- /wp:html -->'
@@ -79,7 +79,7 @@ add_action(
 		$tabs  = nexus_group( nexus_sec_head( 'Proven in Pakistan', 'Best sellers & new arrivals' ) . nexus_sc( '[nexus_product_tabs tabs="best,new,sale" limit="8" columns="4"]' ), 'nx-section nx-section--tint' );
 		$kit   = nexus_group(
 			nexus_sec_head( 'Shop by problem', 'Complete kits, with a guide to get results', 'Every product you need for one problem, in the order you use them. 15% off when you choose 3 or more.' )
-			. nexus_sc( '[nexus_kit ids="" title="Complete Brightening Kit" who="For dull skin, dark spots and uneven tone." roles="Cleanse|Vitamin C serum|Dark spot serum|Moisturise|Sunscreen" how="Morning and night|3–4 drops in the morning|2–3 drops at night|A pea-sized amount|Two finger-lengths, reapply outdoors" tips="Wear sunscreen every morning|Expect results in 4–8 weeks|Exfoliate at most twice a week|Patch test new products" avoid="Unlabelled whitening creams|Lemon or toothpaste on skin"]' ),
+			. nexus_sc( '[nexus_kit skus="NX-LOREAL-GLYCOLIC,NX-GARNIER-VITC,NX-AXIS-Y-5,NX-PONDS-GEL,NX-ESTELIN-70" tag="dark-spots,dullness" title="Complete Brightening Kit" who="For dull skin, dark spots and uneven tone." roles="Cleanse|Vitamin C serum|Dark spot serum|Moisturise|Sunscreen" how="Morning and night, 30 seconds|3–4 drops in the morning|2–3 drops at night|A pea-sized amount|Two finger-lengths, reapply outdoors" tips="Wear sunscreen every morning|Expect results in 4–8 weeks|Exfoliate at most twice a week|Patch test new products" avoid="Unlabelled whitening creams|Lemon or toothpaste on skin"]' ),
 			'nx-section'
 		);
 		$steps = nexus_group(

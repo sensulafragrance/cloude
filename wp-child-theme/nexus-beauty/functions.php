@@ -23,6 +23,8 @@ $nexus_modules = array(
 	'patterns',         // Block patterns for the home page and info pages.
 	'shortcodes',       // [nexus_product_tabs], [nexus_kit] and more.
 	'admin',            // Setup checklist and notices.
+	'setup-content',    // Content for the pages created on activation.
+	'auto-setup',       // One-click-free setup: pages, menus, products, shipping.
 );
 
 // WooCommerce features load only when WooCommerce is active.

@@ -9,33 +9,54 @@ No page builder and no extra plugins needed. About 8.5 KB of CSS and 5 KB of Jav
 
 == Installation ==
 
-1. Appearance > Themes > Add New: install and activate "GeneratePress" once, so it's available as the parent.
-2. Appearance > Themes > Add New > Upload Theme: upload nexus-beauty.zip and activate "Nexus Beauty".
-3. Install and activate WooCommerce (Settings > General: currency Pakistani rupee; Store country Pakistan).
-4. Appearance > Nexus setup: follow the checklist. It has one-click buttons to
-   - create the Wishlist page,
-   - create the Order tracking page,
-   - switch Cart and Checkout to the classic version (needed for the Pakistan checkout features).
-5. Appearance > Menus:
-   - "Main menu (header and mobile)": your categories. Add the CSS class "mega" to a top-level item
-     (Screen Options > CSS Classes) to turn its sub-menu into a full-width mega menu.
-   - "Footer: Shop", "Footer: Help", "Footer: Company": the menu name is used as the column title.
-6. Appearance > Customize > Nexus Beauty: WhatsApp number, announcement messages, free delivery
-   threshold, delivery cities and days, dispatch cut-off, bundle discount, colours.
-7. WooCommerce > Settings > Shipping: add "Free shipping" with the same minimum amount as the
-   free delivery bar (default Rs 5,000), and a flat rate (e.g. Rs 250) for other orders.
-8. Home page: Pages > Add New > "+ > Patterns > Nexus Beauty > Full home page". Set the page
-   template to "Nexus full width", then Settings > Reading > "A static page" > choose it.
-   Replace the batch-stamp art in the hero with a product photo (delete the HTML block, add an Image block).
-   In the kit section, put real product IDs in [nexus_kit ids="..."].
+1. Appearance > Themes > Add New: install "GeneratePress" (you don't need to activate it; it only has to be installed).
+2. Install and activate WooCommerce.
+3. Appearance > Themes > Add New > Upload Theme: upload nexus-beauty.zip and activate "Nexus Beauty".
+
+That's it. On activation the theme sets up the store by itself (see below) and shows a summary.
+You can see the log and run it again any time at Appearance > Nexus setup.
+
+== What happens automatically on activation ==
+
+Pages (only the ones that don't exist yet; nothing is overwritten):
+Home, Routines (problem kits), All collections, Brands A–Z, Offers, About us, Contact us,
+How we check authenticity, Delivery information, Returns & refunds, FAQs, Terms of service,
+Privacy policy, Wishlist, Track your order, Journal (blog).
+
+Site:
+- The Nexus home page becomes the front page and Journal becomes the blog page (your previous
+  front page is remembered and restored if you switch theme).
+- Menus are built from your product categories: main menu, footer Shop/Help/Company. Menu
+  locations that already have a menu are left alone.
+
+Store (runs as soon as WooCommerce is active, even if you activate WooCommerce later):
+- Every product, existing and new, uses the Nexus design automatically: shop, category (collection),
+  brand and product pages, badges, filters, side cart, wishlist, bundle pricing.
+- 33 starter products (with categories, tags, brands and cross-sells) are imported only if your store
+  has no products yet. To add them to a store that already has products: Appearance > Nexus setup >
+  "Import starter products" (products whose SKU already exists are skipped). Add images afterwards;
+  prices for St. Ives, Dove Body Polish, Cetaphil and Rederm Clariderm are estimates.
+- New store only: currency set to Pakistani rupee and store country to Pakistan.
+- Cart and Checkout switched to the classic version (needed for the Pakistan checkout features);
+  the previous content is saved and restored if you switch theme.
+- If you have no shipping zones: a Pakistan zone with a Rs 250 flat rate and free delivery over the
+  threshold (default Rs 5,000). If no payment method is enabled: Cash on delivery.
+
+== After activation (optional) ==
+
+- Appearance > Customize > Nexus Beauty: WhatsApp number, announcement messages, free delivery
+  threshold, delivery cities and days, dispatch cut-off, bundle discount, colours.
+- Add the CSS class "mega" to a top-level menu item for a full-width mega menu (already set on "Shop").
+- Replace the batch-stamp art in the home hero with a product photo.
+- Kits pick products by SKU, falling back to best-sellers with the matching tag. Change them in the
+  page with [nexus_kit ids="..."] or skus="..." / tag="...".
 
 Recommended GeneratePress settings (Customize > Layout > Container): "One container", content width 1240px.
 
-== Import the sample products ==
+== Import the sample products manually (alternative) ==
 
 WooCommerce > Products > Import > choose sample-data/nexus-products.csv > "Run the importer".
-Keep the "Meta: _nx_..." columns mapped to "Import as meta data". Add product images afterwards.
-Prices for St. Ives, Dove Body Polish, Cetaphil and Rederm Clariderm are estimates: please check them.
+Keep the "Meta: _nx_..." columns mapped to "Import as meta data".
 
 == Features ==
 

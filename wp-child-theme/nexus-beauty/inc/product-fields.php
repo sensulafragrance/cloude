@@ -209,5 +209,8 @@ function nexus_brand( $product ) {
 	if ( ! $attr ) {
 		$attr = $product->get_attribute( 'brand' );
 	}
+	if ( ! $attr ) {
+		$attr = (string) get_post_meta( $id, '_nx_brand', true );
+	}
 	return array( $attr, '' );
 }
