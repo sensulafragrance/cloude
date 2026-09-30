@@ -102,17 +102,23 @@ function nexus_setup_page() {
 				<ul style="list-style:disc;padding-left:20px"><?php foreach ( (array) ( isset( $nexus_log['items'] ) ? $nexus_log['items'] : array() ) as $nexus_line ) : ?><li><?php echo esc_html( $nexus_line ); ?></li><?php endforeach; ?></ul>
 			</details>
 		<?php endif; ?>
-		<h2><?php esc_html_e( 'Building pages', 'nexus-beauty' ); ?></h2>
-		<p><?php esc_html_e( 'In the block editor, click + > Patterns > Nexus Beauty. "Full home page" builds the whole home page. Set the page template to "Nexus full width" for edge-to-edge sections.', 'nexus-beauty' ); ?></p>
+		<h2><?php esc_html_e( 'How the store fills itself', 'nexus-beauty' ); ?></h2>
+		<ul style="list-style:disc;padding-left:20px;max-width:900px">
+			<li><?php esc_html_e( 'Home page: category tiles and tabs come from your top-level product categories (Products > Categories; drag to reorder). Top picks are your featured products (the star in Products). "Just arrived" shows your newest products. Brands come from Products > Brands.', 'nexus-beauty' ); ?></li>
+			<li><?php esc_html_e( 'Tag products "our-label" for the own-label spotlight, "mini" for the minis offer, and "bestseller", "derm", "korea", "imported", "pakistani" for the badges on cards. Other tags (e.g. Hair fall, Dark spots) become the "Shop by concern" chips and the Concern filter.', 'nexus-beauty' ); ?></li>
+			<li><?php esc_html_e( 'Each category can have its own illustration colour and tab note (Products > Categories > edit). Each brand can be marked Pakistani or International and as a dermatologist brand (Products > Brands > edit).', 'nexus-beauty' ); ?></li>
+			<li><?php esc_html_e( 'Product pages: fill the "Nexus details" tab for the tagline, size, batch and expiry, quick facts, how to use, ingredients, questions and linked sizes or scents. Cross-sells become "Frequently bought together".', 'nexus-beauty' ); ?></li>
+			<li><?php esc_html_e( 'Home page texts, hero image and colours: Appearance > Customize > Nexus Beauty.', 'nexus-beauty' ); ?></li>
+		</ul>
 		<h2><?php esc_html_e( 'Shortcodes', 'nexus-beauty' ); ?></h2>
 		<ul style="list-style:disc;padding-left:20px">
 			<li><code>[nexus_product_tabs tabs="best,new,sale" limit="8" columns="4"]</code></li>
 			<li><code>[nexus_categories limit="12"]</code> · <code>[nexus_brands limit="24"]</code> · <code>[nexus_trust]</code></li>
-			<li><code>[nexus_kit ids="12,34,56" title="Hair Fall Kit" roles="Shampoo|Mask|Serum" how="3 times a week|Once a week|Daily" tips="Tip one|Tip two" avoid="Avoid one"]</code></li>
+			<li><code>[nexus_kit skus="SKU1,SKU2,SKU3" tag="hair-fall" title="Hair Fall Kit" roles="Shampoo|Mask|Serum" how="3 times a week|Once a week|Daily" tips="Tip one|Tip two" avoid="Avoid one"]</code></li>
 			<li><code>[nexus_videos urls="https://youtu.be/…,https://youtu.be/…" titles="Title one|Title two"]</code> · <code>[nexus_whatsapp]</code></li>
 			<li><code>[nexus_wishlist]</code> · <code>[nexus_recently_viewed limit="8"]</code></li>
 		</ul>
-		<p><?php esc_html_e( 'Product tags with the slugs bestseller, mini, derm, our-label, korea and pakistani show as badges on product cards.', 'nexus-beauty' ); ?></p>
+		<p><?php esc_html_e( 'Also available: [nexus_delivery_table], [nexus_contact_form].', 'nexus-beauty' ); ?></p>
 	</div>
 	<?php
 }

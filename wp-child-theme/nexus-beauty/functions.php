@@ -9,7 +9,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-define( 'NEXUS_VERSION', '1.0.0' );
+define( 'NEXUS_VERSION', '2.0.0' );
 define( 'NEXUS_DIR', get_stylesheet_directory() );
 define( 'NEXUS_URI', get_stylesheet_directory_uri() );
 
@@ -18,7 +18,8 @@ $nexus_modules = array(
 	'setup',            // Theme supports, menus, widget areas.
 	'customizer',       // Appearance > Customize > Nexus Beauty.
 	'enqueue',          // CSS, JS, fonts and speed tweaks.
-	'layout',           // Header, footer, announcement bar, floating buttons.
+	'layout',           // Header, footer, search panel, side bag and mobile menu.
+	'home',             // Home page sections, filled from the store.
 	'schema',           // Organization and search markup when no SEO plugin is active.
 	'patterns',         // Block patterns for the home page and info pages.
 	'shortcodes',       // [nexus_product_tabs], [nexus_kit] and more.
@@ -30,8 +31,8 @@ $nexus_modules = array(
 // WooCommerce features load only when WooCommerce is active.
 $nexus_woo_modules = array(
 	'product-fields',   // Batch, expiry, size, tagline and extra product details.
-	'woo-loop',         // Product cards, badges and shop filters.
-	'woo-single',       // Product page additions.
+	'woo-loop',         // Product cards, badges, shop filters, sorting and pagination.
+	'woo-single',       // Product page: gallery, buy box, facts, bundles, reviews, Q&A.
 	'woo-cart',         // Side cart, free delivery bar, bundle discounts.
 	'woo-checkout',     // Pakistan-friendly checkout and order details.
 	'wishlist',         // Wishlist with cookie + account sync.

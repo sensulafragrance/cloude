@@ -15,6 +15,7 @@ defined( 'ABSPATH' ) || exit;
 function nexus_product_fields() {
 	return array(
 		'_nx_tagline'     => array( __( 'Tagline (one line under the product name)', 'nexus-beauty' ), 'text', __( 'e.g. "Fades dark spots and acne marks in 4–8 weeks"', 'nexus-beauty' ) ),
+		'_nx_subtitle'    => array( __( 'Line under the title on the product page (optional)', 'nexus-beauty' ), 'text', __( 'Defaults to the tagline.', 'nexus-beauty' ) ),
 		'_nx_size'        => array( __( 'Size shown on cards', 'nexus-beauty' ), 'text', __( 'e.g. 50 ml', 'nexus-beauty' ) ),
 		'_nx_volume'      => array( __( 'Amount for unit price (number only)', 'nexus-beauty' ), 'number', __( 'e.g. 50. Shows "Rs 81 per ml" next to the price.', 'nexus-beauty' ) ),
 		'_nx_unit'        => array( __( 'Unit', 'nexus-beauty' ), 'select', '' ),
@@ -28,6 +29,19 @@ function nexus_product_fields() {
 		'_nx_howto'       => array( __( 'How to use (one step per line)', 'nexus-beauty' ), 'textarea', '' ),
 		'_nx_faq'         => array( __( 'Questions (one per line: Question | Answer)', 'nexus-beauty' ), 'textarea', '' ),
 		'_nx_video'       => array( __( 'YouTube video URL (review or how-to)', 'nexus-beauty' ), 'url', '' ),
+		'_nx_facts'       => array( __( 'Quick facts (one per line: Label | Value)', 'nexus-beauty' ), 'textarea', __( 'e.g. Wear time | 3–4 hours on skin. Shown in the "Quick facts" box.', 'nexus-beauty' ) ),
+		'_nx_notes'       => array( __( 'Fragrance notes (one per line: Top | Pistachio, pear)', 'nexus-beauty' ), 'textarea', '' ),
+		'_nx_wear'        => array( __( 'Wear time bars (one per line: Skin | 45 | 3–4 h)', 'nexus-beauty' ), 'textarea', '' ),
+		'_nx_group'       => array( __( 'Sizes group', 'nexus-beauty' ), 'text', __( 'Give sizes of the same product the same group name (e.g. axis-y-serum). They show as size buttons on each other\'s page.', 'nexus-beauty' ) ),
+		'_nx_choice'      => array( __( 'Size button label', 'nexus-beauty' ), 'text', __( 'e.g. 100 ml. Defaults to the size shown on cards.', 'nexus-beauty' ) ),
+		'_nx_choice_tag'  => array( __( 'Small tag on the size button', 'nexus-beauty' ), 'text', __( 'e.g. Most popular, Best value, Travel size', 'nexus-beauty' ) ),
+		'_nx_scent_group' => array( __( 'Scents / shades group', 'nexus-beauty' ), 'text', __( 'Give scents or shades of one line the same group name (e.g. koh-e-noor-mists). They show as colour dots on each other\'s page.', 'nexus-beauty' ) ),
+		'_nx_scent'       => array( __( 'Scent or shade name', 'nexus-beauty' ), 'text', __( 'e.g. Vanilla Pistachio', 'nexus-beauty' ) ),
+		'_nx_fbt_title'   => array( __( 'Frequently bought together: heading', 'nexus-beauty' ), 'text', __( 'Default: Complete the routine', 'nexus-beauty' ) ),
+		'_nx_fbt_text'    => array( __( 'Frequently bought together: intro', 'nexus-beauty' ), 'text', '' ),
+		'_nx_shape'       => array( __( 'Illustration when there is no photo', 'nexus-beauty' ), 'shape', '' ),
+		'_nx_tone'        => array( __( 'Illustration colour (hex)', 'nexus-beauty' ), 'text', __( 'e.g. #e2a33b. Leave empty to use the category colour.', 'nexus-beauty' ) ),
+		'_nx_bg'          => array( __( 'Card background colour (hex)', 'nexus-beauty' ), 'text', __( 'e.g. #fbf1df', 'nexus-beauty' ) ),
 	);
 }
 
@@ -64,6 +78,10 @@ add_action(
 					break;
 				case 'select':
 					$args['options'] = array( 'ml' => 'ml', 'g' => 'g', 'pcs' => __( 'piece', 'nexus-beauty' ) );
+					woocommerce_wp_select( $args );
+					break;
+				case 'shape':
+					$args['options'] = array( '' => __( 'From the category', 'nexus-beauty' ) ) + array_combine( nexus_shapes(), array_map( 'ucfirst', nexus_shapes() ) );
 					woocommerce_wp_select( $args );
 					break;
 				case 'number':
@@ -213,4 +231,70 @@ function nexus_brand( $product ) {
 		$attr = (string) get_post_meta( $id, '_nx_brand', true );
 	}
 	return array( $attr, '' );
+}
+
+/* ---------- Category and brand settings ---------- */
+
+/**
+ * Extra fields on product categories and brands.
+ *
+ * @param string $taxonomy Taxonomy.
+ * @return array key => [ label, type, options ]
+ */
+function nexus_term_fields( $taxonomy ) {
+	if ( 'product_cat' === $taxonomy ) {
+		return array(
+			'nx_shape' => array( __( 'Illustration', 'nexus-beauty' ), 'select', array( '' => __( 'Automatic', 'nexus-beauty' ) ) + array_combine( nexus_shapes(), array_map( 'ucfirst', nexus_shapes() ) ) ),
+			'nx_tone'  => array( __( 'Illustration colour (hex)', 'nexus-beauty' ), 'text', array() ),
+			'nx_tile'  => array( __( 'Tile background (hex)', 'nexus-beauty' ), 'text', array() ),
+			'nx_short' => array( __( 'Short line under the name on the home page', 'nexus-beauty' ), 'text', array() ),
+			'nx_note'  => array( __( 'Note shown on the home page tab', 'nexus-beauty' ), 'text', array() ),
+		);
+	}
+	if ( 'product_brand' === $taxonomy ) {
+		return array(
+			'nx_origin' => array( __( 'Origin', 'nexus-beauty' ), 'select', array( '' => '—', 'local' => __( 'Pakistani', 'nexus-beauty' ), 'intl' => __( 'International', 'nexus-beauty' ) ) ),
+			'nx_note'   => array( __( 'Short line on brand tiles (e.g. Pakistan · Derm)', 'nexus-beauty' ), 'text', array() ),
+			'nx_derm'   => array( __( 'Show in the dermatologist brands section', 'nexus-beauty' ), 'select', array( '' => __( 'No', 'nexus-beauty' ), '1' => __( 'Yes', 'nexus-beauty' ) ) ),
+		);
+	}
+	return array();
+}
+
+foreach ( array( 'product_cat', 'product_brand' ) as $nexus_tax ) {
+	add_action(
+		$nexus_tax . '_edit_form_fields',
+		function ( $term, $taxonomy ) {
+			foreach ( nexus_term_fields( $taxonomy ) as $key => $f ) {
+				$val = get_term_meta( $term->term_id, $key, true );
+				echo '<tr class="form-field"><th scope="row"><label for="' . esc_attr( $key ) . '">' . esc_html( $f[0] ) . '</label></th><td>';
+				if ( 'select' === $f[1] ) {
+					echo '<select name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '">';
+					foreach ( $f[2] as $v => $l ) {
+						echo '<option value="' . esc_attr( $v ) . '"' . selected( (string) $val, (string) $v, false ) . '>' . esc_html( $l ) . '</option>';
+					}
+					echo '</select>';
+				} else {
+					echo '<input type="text" name="' . esc_attr( $key ) . '" id="' . esc_attr( $key ) . '" value="' . esc_attr( $val ) . '">';
+				}
+				echo '</td></tr>';
+			}
+			wp_nonce_field( 'nexus_term', 'nexus_term_nonce' );
+		},
+		20,
+		2
+	);
+	add_action(
+		'edited_' . $nexus_tax,
+		function ( $term_id ) use ( $nexus_tax ) {
+			if ( ! isset( $_POST['nexus_term_nonce'] ) || ! wp_verify_nonce( sanitize_text_field( wp_unslash( $_POST['nexus_term_nonce'] ) ), 'nexus_term' ) ) {
+				return;
+			}
+			foreach ( array_keys( nexus_term_fields( $nexus_tax ) ) as $key ) {
+				if ( isset( $_POST[ $key ] ) ) {
+					update_term_meta( $term_id, $key, sanitize_text_field( wp_unslash( $_POST[ $key ] ) ) );
+				}
+			}
+		}
+	);
 }

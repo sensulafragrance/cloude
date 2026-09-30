@@ -51,7 +51,8 @@ function nexus_pattern( $slug ) {
 }
 
 function nexus_content_home() {
-	return nexus_pattern( 'home' );
+	// The home page is drawn by front-page.php from the store (categories, products, brands).
+	return '';
 }
 
 function nexus_content_routines() {
@@ -80,7 +81,7 @@ function nexus_content_routines() {
 }
 
 function nexus_content_collections() {
-	return nexus_p( 'Every way to shop Nexus Beauty, from sunscreen to Pakistani derm brands.', 'nx-lede' ) . nexus_sc( '[nexus_categories limit="50"]' );
+	return nexus_p( 'Every way to shop ' . esc_html( get_bloginfo( 'name' ) ) . ', from sunscreen to Pakistani derm brands.', 'nx-lede' ) . nexus_sc( '[nexus_categories limit="50"]' );
 }
 
 function nexus_content_brands() {
@@ -96,10 +97,10 @@ function nexus_content_offers() {
 }
 
 function nexus_content_about() {
-	return nexus_p( 'We started Nexus Beauty because buying skincare online in Pakistan shouldn\'t feel like a gamble.', 'nx-lede' )
+	return nexus_p( 'We started ' . esc_html( get_bloginfo( 'name' ) ) . ' because buying skincare online in Pakistan shouldn\'t feel like a gamble.', 'nx-lede' )
 		. nexus_h( 'Our story', 2 )
 		. nexus_p( 'Fake and expired products are the biggest worry for anyone buying beauty online in Pakistan. Big stores have huge ranges but show no proof. Small shops promise "100% original" but can\'t show where their stock came from.' )
-		. nexus_p( 'Nexus Beauty is the meeting point of Pakistan\'s trusted dermatologist brands, the best Korean and international skincare, and our own Koh-e-Noor fragrance label. Every product is checked before it reaches you.' )
+		. nexus_p( esc_html( get_bloginfo( 'name' ) ) . ' is the meeting point of Pakistan\'s trusted dermatologist brands, the best Korean and international skincare, and our own Koh-e-Noor fragrance label. Every product is checked before it reaches you.' )
 		. nexus_h( 'Our promise: Beauty, checked.', 2 )
 		. nexus_list( array( 'We buy only from brands and their authorised distributors, and keep the invoice for every batch.', 'We print the batch number and expiry date of every item on your parcel sticker.', 'We never sell "first copy", grey-market or unlabelled whitening creams.', 'We only publish reviews from verified orders, and never edit or hide them.' ) )
 		. nexus_pattern( 'steps' ) . nexus_pattern( 'cta' );

@@ -13,18 +13,17 @@ add_action(
 		load_child_theme_textdomain( 'nexus-beauty', NEXUS_DIR . '/languages' );
 
 		add_theme_support( 'woocommerce' );
-		add_theme_support( 'wc-product-gallery-zoom' );
-		add_theme_support( 'wc-product-gallery-lightbox' );
-		add_theme_support( 'wc-product-gallery-slider' );
+		// The product gallery is the design's own (thumbnails + stage), so WooCommerce's slider/zoom scripts aren't loaded.
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'custom-logo', array( 'height' => 80, 'width' => 260, 'flex-width' => true, 'flex-height' => true ) );
 
 		register_nav_menus(
 			array(
 				'primary'       => __( 'Main menu (header and mobile)', 'nexus-beauty' ),
-				'nexus-footer-1' => __( 'Footer: Shop', 'nexus-beauty' ),
-				'nexus-footer-2' => __( 'Footer: Help', 'nexus-beauty' ),
-				'nexus-footer-3' => __( 'Footer: Company', 'nexus-beauty' ),
+				'nexus-footer-1' => __( 'Footer column 1: Shop', 'nexus-beauty' ),
+				'nexus-footer-4' => __( 'Footer column 2: Brands', 'nexus-beauty' ),
+				'nexus-footer-2' => __( 'Footer column 3: Help', 'nexus-beauty' ),
+				'nexus-footer-3' => __( 'Footer column 4: Company', 'nexus-beauty' ),
 			)
 		);
 	},
@@ -39,10 +38,10 @@ add_action(
 				'name'          => __( 'Shop filters (extra)', 'nexus-beauty' ),
 				'id'            => 'nexus-shop-filters',
 				'description'   => __( 'Optional extra filters shown under the built-in shop filters, e.g. "Filter products by attribute".', 'nexus-beauty' ),
-				'before_widget' => '<div id="%1$s" class="nx-fgroup widget %2$s">',
+				'before_widget' => '<div id="%1$s" class="fgroup widget %2$s">',
 				'after_widget'  => '</div>',
-				'before_title'  => '<h3 class="nx-fgroup__title">',
-				'after_title'   => '</h3>',
+				'before_title'  => '<p>',
+				'after_title'   => '</p>',
 			)
 		);
 	}
@@ -74,3 +73,6 @@ add_filter(
 		return is_front_page() ? false : $show;
 	}
 );
+
+// Our templates print their own titles.
+add_filter( 'generate_show_title', '__return_false', 20 );

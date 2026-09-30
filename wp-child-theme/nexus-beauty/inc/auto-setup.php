@@ -16,7 +16,7 @@
 
 defined( 'ABSPATH' ) || exit;
 
-const NEXUS_SETUP_VERSION = '1';
+const NEXUS_SETUP_VERSION = '2';
 
 // Flag the setup to run on the next admin page load after activation.
 add_action(
@@ -32,7 +32,8 @@ add_action(
 		if ( ! current_user_can( 'manage_options' ) || wp_doing_ajax() ) {
 			return;
 		}
-		if ( get_option( 'nexus_setup_pending' ) ) {
+		if ( get_option( 'nexus_setup_pending' ) || NEXUS_SETUP_VERSION !== get_option( 'nexus_setup_version' ) ) {
+			// First activation, or the theme was updated to a version with new setup steps.
 			delete_option( 'nexus_setup_pending' );
 			nexus_run_setup();
 		} elseif ( class_exists( 'WooCommerce' ) && get_option( 'nexus_setup_woo_pending' ) ) {
@@ -173,7 +174,7 @@ function nexus_setup_reading( $pages, &$log ) {
 	if ( ! empty( $pages['home'] ) ) {
 		update_option( 'show_on_front', 'page' );
 		update_option( 'page_on_front', $pages['home'] );
-		$log[] = __( 'Set the Nexus home page as your front page.', 'nexus-beauty' );
+		$log[] = __( 'Set the home page (the store design) as your front page.', 'nexus-beauty' );
 	}
 	if ( ! empty( $pages['journal'] ) && ! get_option( 'page_for_posts' ) ) {
 		update_option( 'page_for_posts', $pages['journal'] );
@@ -197,7 +198,7 @@ function nexus_setup_menus( $pages, &$log ) {
 	$locations = get_theme_mod( 'nav_menu_locations', array() );
 	$made      = array();
 
-	$page_item = function ( $menu, $slug, $parent = 0, $classes = '' ) use ( $pages ) {
+	$page_item = function ( $menu, $slug, $parent = 0, $classes = '', $title = '' ) use ( $pages ) {
 		if ( empty( $pages[ $slug ] ) ) {
 			return 0;
 		}
@@ -205,6 +206,7 @@ function nexus_setup_menus( $pages, &$log ) {
 			$menu,
 			0,
 			array(
+				'menu-item-title'     => $title,
 				'menu-item-object'    => 'page',
 				'menu-item-object-id' => $pages[ $slug ],
 				'menu-item-type'      => 'post_type',
@@ -215,24 +217,7 @@ function nexus_setup_menus( $pages, &$log ) {
 		);
 	};
 	$cat_items = function ( $menu, $parent, $limit ) {
-		if ( ! taxonomy_exists( 'product_cat' ) ) {
-			return;
-		}
-		$cats = get_terms(
-			array(
-				'taxonomy'   => 'product_cat',
-				'parent'     => 0,
-				'hide_empty' => true,
-				'number'     => $limit,
-				'exclude'    => array( (int) get_option( 'default_product_cat' ) ),
-				'orderby'    => 'count',
-				'order'      => 'DESC',
-			)
-		);
-		if ( is_wp_error( $cats ) ) {
-			return;
-		}
-		foreach ( $cats as $c ) {
+		foreach ( nexus_sorted_cats( $limit ) as $c ) {
 			wp_update_nav_menu_item(
 				$menu,
 				0,
@@ -255,33 +240,29 @@ function nexus_setup_menus( $pages, &$log ) {
 		return is_wp_error( $id ) ? 0 : $id;
 	};
 
-	if ( empty( $locations['primary'] ) ) {
+	// The main menu from the design: categories, Brands and Offers. A menu this theme built in
+	// an earlier version is rebuilt; a menu you made yourself is never touched.
+	$current = ! empty( $locations['primary'] ) ? wp_get_nav_menu_object( $locations['primary'] ) : null;
+	if ( ! $current || 'Nexus main menu' === $current->name ) {
 		$m = $new_menu( 'Nexus main menu' );
 		if ( $m ) {
-			$shop = 0;
-			if ( function_exists( 'wc_get_page_id' ) && wc_get_page_id( 'shop' ) > 0 ) {
-				$shop = wp_update_nav_menu_item(
-					$m,
-					0,
-					array(
-						'menu-item-title'     => __( 'Shop', 'nexus-beauty' ),
-						'menu-item-object'    => 'page',
-						'menu-item-object-id' => wc_get_page_id( 'shop' ),
-						'menu-item-type'      => 'post_type',
-						'menu-item-status'    => 'publish',
-						'menu-item-classes'   => 'mega',
-					)
-				);
-				$cat_items( $m, $shop, 12 );
-				$page_item( $m, 'collections', $shop );
-			}
-			$page_item( $m, 'routines' );
-			$page_item( $m, 'brands' );
-			$page_item( $m, 'offers' );
-			$page_item( $m, 'journal' );
-			$page_item( $m, 'about-us' );
+			$cat_items( $m, 0, 8 );
+			$page_item( $m, 'brands', 0, '', __( 'Brands', 'nexus-beauty' ) );
+			$page_item( $m, 'offers', 0, 'is-sale' );
 			$locations['primary'] = $m;
 			$made[]               = __( 'main menu', 'nexus-beauty' );
+		}
+	}
+	if ( empty( $locations['nexus-footer-4'] ) && taxonomy_exists( 'product_brand' ) ) {
+		$m = $new_menu( __( 'Brands', 'nexus-beauty' ) );
+		if ( $m ) {
+			$brands = get_terms( array( 'taxonomy' => 'product_brand', 'hide_empty' => true, 'number' => 4, 'orderby' => 'count', 'order' => 'DESC' ) );
+			foreach ( is_wp_error( $brands ) ? array() : $brands as $b ) {
+				wp_update_nav_menu_item( $m, 0, array( 'menu-item-object' => 'product_brand', 'menu-item-object-id' => $b->term_id, 'menu-item-type' => 'taxonomy', 'menu-item-status' => 'publish' ) );
+			}
+			$page_item( $m, 'brands' );
+			$locations['nexus-footer-4'] = $m;
+			$made[]                      = __( 'footer brands menu', 'nexus-beauty' );
 		}
 	}
 	if ( empty( $locations['nexus-footer-1'] ) && taxonomy_exists( 'product_cat' ) ) {
@@ -354,7 +335,8 @@ function nexus_setup_store( &$log, $import_products = false ) {
 		/* translators: %d: number of products */
 		$log[] = sprintf( __( 'Imported %d starter products. Add photos and check the batch and expiry fields.', 'nexus-beauty' ), $n );
 	} else {
-		$log[] = __( 'Your store already has products, so no starter products were imported. Your products now use the Nexus design everywhere.', 'nexus-beauty' );
+		$log[] = __( 'Your store already has products, so no starter products were imported. Your products now use the design everywhere.', 'nexus-beauty' );
+		nexus_apply_term_design( require NEXUS_DIR . '/sample-data/design.php' );
 	}
 
 	// Classic cart and checkout (needed for the Pakistan checkout features).
@@ -416,15 +398,30 @@ function nexus_setup_store( &$log, $import_products = false ) {
  * @return int Number of products created.
  */
 function nexus_import_products() {
-	$items = require NEXUS_DIR . '/sample-data/products.php';
-	$made  = 0;
-	$cross = array();
+	$items  = require NEXUS_DIR . '/sample-data/products.php';
+	$design = require NEXUS_DIR . '/sample-data/design.php';
+	$store  = get_bloginfo( 'name' );
+	$made   = 0;
+	$cross  = array();
 	foreach ( $items as $it ) {
 		if ( wc_get_product_id_by_sku( $it['sku'] ) ) {
 			continue;
 		}
+		$look    = isset( $design['products'][ $it['sku'] ] ) ? $design['products'][ $it['sku'] ] : array();
+		$details = isset( $design['details'][ $it['sku'] ] ) ? $design['details'][ $it['sku'] ] : array();
+		$brand   = str_replace( 'Nexus Beauty', $store, (string) $it['brand'] );
+		$bmeta   = nexus_design_brand( $design, $brand );
+		$tags    = array_filter( array_map( 'trim', explode( ',', $it['tags'] ) ) );
+		$lower   = array_map( 'strtolower', $tags );
+		if ( $bmeta && 'intl' === $bmeta['origin'] && ! array_intersect( $lower, array( 'korea', 'imported' ) ) ) {
+			$tags[] = 'Imported';
+		}
+		if ( $bmeta && 'local' === $bmeta['origin'] && ! in_array( 'pakistani', $lower, true ) && ! in_array( 'our label', $lower, true ) ) {
+			$tags[] = 'Pakistani';
+		}
+
 		$p = new WC_Product_Simple();
-		$p->set_name( $it['name'] );
+		$p->set_name( str_replace( 'Nexus Beauty', $store, $it['name'] ) );
 		$p->set_sku( $it['sku'] );
 		$p->set_status( 'publish' );
 		$p->set_catalog_visibility( 'visible' );
@@ -434,20 +431,38 @@ function nexus_import_products() {
 			$p->set_sale_price( $it['sale'] );
 		}
 		$p->set_stock_status( 'instock' );
+		$p->set_featured( ! empty( $look['featured'] ) );
 		$p->set_category_ids( array( nexus_term_id( $it['category'], 'product_cat' ) ) );
-		$tags = array_filter( array_map( 'trim', explode( ',', $it['tags'] ) ) );
 		$p->set_tag_ids( array_map( function ( $t ) { return nexus_term_id( $t, 'product_tag' ); }, $tags ) );
+		// Launch dates: the newest four fill "Just arrived"; older ones don't show the "New" badge.
+		$days = isset( $look['days_old'] ) ? (int) $look['days_old'] : 120;
+		$p->set_date_created( time() - $days * DAY_IN_SECONDS - $made * 60 );
 		foreach ( $it['meta'] as $k => $v ) {
 			$p->update_meta_data( $k, $v );
+		}
+		foreach ( array( 'shape', 'tone', 'bg' ) as $k ) {
+			if ( ! empty( $look[ $k ] ) ) {
+				$p->update_meta_data( '_nx_' . $k, $look[ $k ] );
+			}
+		}
+		if ( ! empty( $look['size'] ) && empty( $it['meta']['_nx_size'] ) ) {
+			$p->update_meta_data( '_nx_size', $look['size'] );
+		}
+		foreach ( $details as $k => $v ) {
+			if ( 'description' === $k ) {
+				$p->set_description( $v );
+				continue;
+			}
+			$p->update_meta_data( '_nx_' . $k, $v );
 		}
 		$p->update_meta_data( '_nexus_starter', 1 );
 		$id = $p->save();
 		if ( $id ) {
 			$made++;
-			if ( $it['brand'] && taxonomy_exists( 'product_brand' ) ) {
-				wp_set_object_terms( $id, array( nexus_term_id( $it['brand'], 'product_brand' ) ), 'product_brand' );
-			} elseif ( $it['brand'] ) {
-				$p->update_meta_data( '_nx_brand', $it['brand'] );
+			if ( $brand && taxonomy_exists( 'product_brand' ) ) {
+				wp_set_object_terms( $id, array( nexus_term_id( $brand, 'product_brand' ) ), 'product_brand' );
+			} elseif ( $brand ) {
+				$p->update_meta_data( '_nx_brand', $brand );
 				$p->save();
 			}
 			if ( $it['cross'] ) {
@@ -455,6 +470,7 @@ function nexus_import_products() {
 			}
 		}
 	}
+	nexus_apply_term_design( $design );
 	// Cross-sells power "Frequently bought together".
 	foreach ( $cross as $id => $skus ) {
 		$ids = array_filter( array_map( function ( $s ) { return (int) wc_get_product_id_by_sku( trim( $s ) ); }, explode( ',', $skus ) ) );
@@ -464,6 +480,7 @@ function nexus_import_products() {
 			$p->save();
 		}
 	}
+	delete_transient( 'nexus_price_bounds' );
 	if ( function_exists( 'wc_delete_product_transients' ) ) {
 		wc_delete_product_transients();
 	}
@@ -532,3 +549,60 @@ add_action(
 		echo '</ul><p><a class="button button-primary" href="' . esc_url( home_url( '/' ) ) . '">' . esc_html__( 'View your store', 'nexus-beauty' ) . '</a> <a class="button" href="' . esc_url( admin_url( 'themes.php?page=nexus-setup' ) ) . '">' . esc_html__( 'Setup checklist', 'nexus-beauty' ) . '</a></p></div>';
 	}
 );
+
+/**
+ * Design settings for a brand by name (the own label matches by its first words).
+ *
+ * @param array  $design Design data.
+ * @param string $brand  Brand name.
+ * @return array|null
+ */
+function nexus_design_brand( $design, $brand ) {
+	foreach ( $design['brands'] as $name => $meta ) {
+		if ( 0 === strcasecmp( $name, $brand ) || ( 'Koh-e-Noor' === $name && 0 === stripos( $brand, 'Koh-e-Noor' ) ) ) {
+			return $meta;
+		}
+	}
+	return null;
+}
+
+/**
+ * Give categories and brands the design's colours, order, notes and origin.
+ * Only fills settings that are still empty, so your own changes are kept.
+ *
+ * @param array $design Design data.
+ */
+function nexus_apply_term_design( $design ) {
+	foreach ( $design['categories'] as $name => $meta ) {
+		$term = get_term_by( 'name', $name, 'product_cat' );
+		if ( ! $term ) {
+			continue;
+		}
+		foreach ( array( 'shape', 'tone', 'tile', 'short', 'note' ) as $k ) {
+			if ( '' === (string) get_term_meta( $term->term_id, 'nx_' . $k, true ) ) {
+				update_term_meta( $term->term_id, 'nx_' . $k, $meta[ $k ] );
+			}
+		}
+		if ( ! get_term_meta( $term->term_id, 'order', true ) ) {
+			update_term_meta( $term->term_id, 'order', (int) $meta['order'] );
+		}
+	}
+	if ( ! taxonomy_exists( 'product_brand' ) ) {
+		return;
+	}
+	$brands = get_terms( array( 'taxonomy' => 'product_brand', 'hide_empty' => false ) );
+	foreach ( is_wp_error( $brands ) ? array() : $brands as $term ) {
+		$meta = nexus_design_brand( $design, $term->name );
+		if ( ! $meta ) {
+			continue;
+		}
+		foreach ( array( 'origin', 'note', 'derm' ) as $k ) {
+			if ( isset( $meta[ $k ] ) && '' === (string) get_term_meta( $term->term_id, 'nx_' . $k, true ) ) {
+				update_term_meta( $term->term_id, 'nx_' . $k, $meta[ $k ] );
+			}
+		}
+		if ( ! empty( $meta['desc'] ) && '' === $term->description ) {
+			wp_update_term( $term->term_id, 'product_brand', array( 'description' => $meta['desc'] ) );
+		}
+	}
+}

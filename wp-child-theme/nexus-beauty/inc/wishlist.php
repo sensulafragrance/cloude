@@ -11,31 +11,6 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Heart button for a product.
- *
- * @param int $id Product ID.
- */
-function nexus_wish_button( $id ) {
-	printf(
-		'<button class="nx-wish" type="button" data-nx-wish="%1$d" aria-pressed="false" aria-label="%2$s">%3$s</button>',
-		(int) $id,
-		/* translators: %s: product name */
-		esc_attr( sprintf( __( 'Save %s to wishlist', 'nexus-beauty' ), get_the_title( $id ) ) ),
-		nexus_icon( 'heart' ) // phpcs:ignore WordPress.Security.EscapeOutput
-	);
-}
-
-// Heart on the product page, next to the title.
-add_action(
-	'woocommerce_single_product_summary',
-	function () {
-		global $product;
-		nexus_wish_button( $product->get_id() );
-	},
-	4
-);
-
-/**
  * Wishlist IDs for the current visitor.
  *
  * @return int[]
@@ -88,7 +63,7 @@ add_shortcode(
 	function () {
 		$ids = nexus_wishlist_ids();
 		if ( ! $ids ) {
-			return '<div class="nx-empty" data-nx-wish-empty><p><b>' . esc_html__( 'Your wishlist is empty.', 'nexus-beauty' ) . '</b></p><p>' . esc_html__( 'Tap the heart on any product to save it here.', 'nexus-beauty' ) . '</p><a class="nx-btn nx-btn--primary" href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">' . esc_html__( 'Browse products', 'nexus-beauty' ) . '</a></div>';
+			return '<div class="empty" data-nx-wish-empty><p><b>' . esc_html__( 'Your wishlist is empty.', 'nexus-beauty' ) . '</b></p><p>' . esc_html__( 'Tap the heart on any product to save it here.', 'nexus-beauty' ) . '</p><p style="margin-top:14px"><a class="btn btn--primary" href="' . esc_url( wc_get_page_permalink( 'shop' ) ) . '">' . esc_html__( 'Browse products', 'nexus-beauty' ) . '</a></p></div>';
 		}
 		return '<div class="nx-wishlist" data-nx-wishlist>' . do_shortcode( '[products ids="' . esc_attr( implode( ',', $ids ) ) . '" orderby="post__in" limit="100" columns="4" cache="false"]' ) . '</div>';
 	}

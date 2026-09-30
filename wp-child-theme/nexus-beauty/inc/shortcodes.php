@@ -15,30 +15,12 @@
 
 defined( 'ABSPATH' ) || exit;
 
-/**
- * Split a "a|b|c" attribute.
- *
- * @param string $s Attribute.
- * @return array
- */
-function nexus_pipe( $s ) {
-	return array_values( array_filter( array_map( 'trim', explode( '|', (string) $s ) ), 'strlen' ) );
-}
-
 add_shortcode(
 	'nexus_trust',
 	function () {
-		$items = array(
-			array( 'shield', __( 'Batch & expiry shown', 'nexus-beauty' ), __( 'On every order', 'nexus-beauty' ) ),
-			array( 'cash', __( 'Cash on delivery', 'nexus-beauty' ), __( 'Anywhere in Pakistan', 'nexus-beauty' ) ),
-			array( 'truck', __( 'Free delivery', 'nexus-beauty' ), sprintf( /* translators: %s: amount */ __( 'Over %s', 'nexus-beauty' ), nexus_price_text( nexus_opt( 'free_shipping' ) ) ) ),
-			array( 'chat', __( 'Free skin advice', 'nexus-beauty' ), __( 'On WhatsApp', 'nexus-beauty' ) ),
-		);
-		$out = '<ul class="nx-trust">';
-		foreach ( $items as $i ) {
-			$out .= '<li>' . nexus_icon( $i[0] ) . '<span><b>' . esc_html( $i[1] ) . '</b>' . esc_html( $i[2] ) . '</span></li>';
-		}
-		return $out . '</ul>';
+		ob_start();
+		nexus_trust_strip( '' );
+		return ob_get_clean();
 	}
 );
 
@@ -62,13 +44,13 @@ add_shortcode(
 			return '';
 		}
 		$uid = wp_unique_id( 'nx-tabs-' );
-		$out = '<div class="nx-ptabs" data-nx-tabs><div class="nx-tabs" role="tablist">';
+		$out = '<div class="ptabs" data-nx-tabs><div class="tabs" role="tablist">';
 		foreach ( $tabs as $i => $t ) {
-			$out .= sprintf( '<button class="nx-chip" type="button" role="tab" id="%1$s-t%2$d" aria-controls="%1$s-p%2$d" aria-selected="%3$s">%4$s</button>', esc_attr( $uid ), $i, $i ? 'false' : 'true', esc_html( $define[ $t ][0] ) );
+			$out .= sprintf( '<button class="chip" type="button" role="tab" id="%1$s-t%2$d" aria-controls="%1$s-p%2$d" aria-selected="%3$s" aria-pressed="%3$s">%4$s</button>', esc_attr( $uid ), $i, $i ? 'false' : 'true', esc_html( $define[ $t ][0] ) );
 		}
 		$out .= '</div>';
 		foreach ( $tabs as $i => $t ) {
-			$out .= sprintf( '<div class="nx-tabpanel" role="tabpanel" id="%1$s-p%2$d" aria-labelledby="%1$s-t%2$d"%3$s>', esc_attr( $uid ), $i, $i ? ' hidden' : '' );
+			$out .= sprintf( '<div role="tabpanel" id="%1$s-p%2$d" aria-labelledby="%1$s-t%2$d"%3$s>', esc_attr( $uid ), $i, $i ? ' hidden' : '' );
 			$out .= do_shortcode( sprintf( '[products limit="%d" columns="%d" %s]', $limit, $cols, $define[ $t ][1] ) );
 			$out .= '</div>';
 		}
@@ -100,13 +82,7 @@ add_shortcode(
 		if ( ! $terms || is_wp_error( $terms ) ) {
 			return '';
 		}
-		$out = '<div class="nx-cats">';
-		foreach ( $terms as $t ) {
-			$thumb = (int) get_term_meta( $t->term_id, 'thumbnail_id', true );
-			$img   = $thumb ? wp_get_attachment_image( $thumb, 'woocommerce_thumbnail', false, array( 'alt' => '' ) ) : '<span class="nx-cats__ph" aria-hidden="true">' . esc_html( mb_substr( $t->name, 0, 1 ) ) . '</span>';
-			$out  .= sprintf( '<a class="nx-cats__item" href="%s"><span class="nx-cats__img">%s</span><span class="nx-cats__name">%s</span></a>', esc_url( get_term_link( $t ) ), $img, esc_html( $t->name ) );
-		}
-		return $out . '</div>';
+		return nexus_cat_tiles( $terms );
 	}
 );
 
@@ -116,19 +92,10 @@ add_shortcode(
 		if ( ! taxonomy_exists( 'product_brand' ) ) {
 			return current_user_can( 'edit_posts' ) ? '<p class="nx-note">' . esc_html__( 'Brands need WooCommerce 9.6 or newer (Products > Brands).', 'nexus-beauty' ) . '</p>' : '';
 		}
-		$a     = shortcode_atts( array( 'limit' => 24 ), $atts, 'nexus_brands' );
-		$terms = get_terms( array( 'taxonomy' => 'product_brand', 'hide_empty' => true, 'number' => (int) $a['limit'] ) );
-		if ( ! $terms || is_wp_error( $terms ) ) {
-			return '';
-		}
-		$out = '<div class="nx-brands">';
-		foreach ( $terms as $t ) {
-			$thumb = (int) get_term_meta( $t->term_id, 'thumbnail_id', true );
-			$mark  = $thumb ? wp_get_attachment_image( $thumb, 'thumbnail', false, array( 'alt' => '' ) ) : '<span class="nx-brands__mark" aria-hidden="true">' . esc_html( mb_strtoupper( mb_substr( $t->name, 0, 2 ) ) ) . '</span>';
-			$desc  = $t->description ? wp_trim_words( wp_strip_all_tags( $t->description ), 6, '…' ) : sprintf( /* translators: %d: product count */ _n( '%d product', '%d products', $t->count, 'nexus-beauty' ), $t->count );
-			$out  .= sprintf( '<a class="nx-brands__item" href="%s">%s<b>%s</b><span>%s</span></a>', esc_url( get_term_link( $t ) ), $mark, esc_html( $t->name ), esc_html( $desc ) );
-		}
-		return $out . '</div>';
+		$a = shortcode_atts( array( 'limit' => 300 ), $atts, 'nexus_brands' );
+		ob_start();
+		nexus_brand_tiles( (int) $a['limit'], false );
+		return ob_get_clean();
 	}
 );
 
@@ -168,7 +135,8 @@ add_shortcode(
 					'stock_status' => 'instock',
 					'tag'          => array_map( 'sanitize_title', explode( ',', $a['tag'] ) ),
 					'limit'        => max( 2, min( 8, (int) $a['limit'] ) ),
-					'orderby'      => 'popularity',
+					'meta_key'     => 'total_sales', // phpcs:ignore WordPress.DB.SlowDBQuery
+					'orderby'      => 'meta_value_num',
 					'order'        => 'DESC',
 				)
 			);
@@ -179,28 +147,33 @@ add_shortcode(
 		if ( count( $rows ) < 2 ) {
 			return current_user_can( 'edit_posts' ) ? '<p class="nx-note">' . esc_html__( 'Kit: no matching products yet. Add product IDs or SKUs, or tag at least two in-stock products with the kit\'s tag.', 'nexus-beauty' ) . '</p>' : '';
 		}
-		$title   = $a['title'] ? $a['title'] : __( 'Complete kit', 'nexus-beauty' );
-		$heading = '<div class="nx-sec-head"><p class="nx-eyebrow">' . esc_html( sprintf( /* translators: %d: products */ __( '%d-product routine', 'nexus-beauty' ), count( $rows ) ) ) . '</p><h3 class="nx-h2">' . esc_html( $title ) . '</h3>' . ( $a['who'] ? '<p class="nx-lede">' . esc_html( $a['who'] ) . '</p>' : '' ) . '</div>';
-		$guide   = '';
+		$title  = $a['title'] ? $a['title'] : __( 'Complete kit', 'nexus-beauty' );
+		$bundle = nexus_bundle_html( wp_list_pluck( $rows, 0 ), $title );
+		if ( ! $bundle ) {
+			return '';
+		}
+		/* translators: %d: products */
+		$out  = '<section class="kit"><div class="sec-head"><div><p class="eyebrow">' . esc_html( sprintf( __( '%d-product routine', 'nexus-beauty' ), count( $rows ) ) ) . '</p><h2 class="h2">' . esc_html( $title ) . '</h2>' . ( $a['who'] ? '<p class="lede">' . esc_html( $a['who'] ) . '</p>' : '' ) . '</div></div>';
+		$steps = '';
+		foreach ( $rows as $r ) {
+			if ( $r[1] || $r[2] ) {
+				list( $brand ) = nexus_brand( $r[0] );
+				$steps        .= '<li><span>' . ( $r[1] ? '<b>' . esc_html( $r[1] ) . ':</b> ' : '' ) . esc_html( $r[0]->get_name() ) . ( $r[2] ? '. ' . esc_html( $r[2] ) : '' ) . '</span></li>';
+			}
+		}
+		$out .= $steps ? '<ol class="kit-steps">' . $steps . '</ol>' : '';
+		$out .= $bundle;
 		if ( $a['tips'] || $a['avoid'] ) {
-			$guide = '<div class="nx-kit__guide">';
+			$out .= '<div class="kit-guide">';
 			if ( $a['tips'] ) {
-				$guide .= '<div><h4>' . esc_html__( 'Get the best results', 'nexus-beauty' ) . '</h4><ol>';
-				foreach ( nexus_pipe( $a['tips'] ) as $t ) {
-					$guide .= '<li>' . esc_html( $t ) . '</li>';
-				}
-				$guide .= '</ol></div>';
+				$out .= '<div><h4>' . esc_html__( 'Get the best results', 'nexus-beauty' ) . '</h4><ol>' . implode( '', array_map( fn( $t ) => '<li>' . esc_html( $t ) . '</li>', nexus_pipe( $a['tips'] ) ) ) . '</ol></div>';
 			}
 			if ( $a['avoid'] ) {
-				$guide .= '<div class="nx-kit__avoid"><h4>' . esc_html__( 'Avoid', 'nexus-beauty' ) . '</h4><ul>';
-				foreach ( nexus_pipe( $a['avoid'] ) as $t ) {
-					$guide .= '<li>' . esc_html( $t ) . '</li>';
-				}
-				$guide .= '</ul></div>';
+				$out .= '<div><h4>' . esc_html__( 'Avoid', 'nexus-beauty' ) . '</h4><ul>' . implode( '', array_map( fn( $t ) => '<li>' . esc_html( $t ) . '</li>', nexus_pipe( $a['avoid'] ) ) ) . '</ul></div>';
 			}
-			$guide .= '</div>';
+			$out .= '</div>';
 		}
-		return '<section class="nx-kit">' . nexus_bundle_html( $rows, $title, $heading ) . $guide . '</section>';
+		return $out . '</section>';
 	}
 );
 
@@ -218,10 +191,10 @@ add_shortcode(
 			$title = isset( $titles[ $i ] ) ? trim( $titles[ $i ] ) : '';
 			$embed = nexus_video_embed( $url, $title );
 			if ( $embed ) {
-				$out .= '<figure class="nx-videos__item">' . $embed . ( $title ? '<figcaption>' . esc_html( $title ) . '</figcaption>' : '' ) . '</figure>';
+				$out .= '<figure>' . $embed . ( $title ? '<figcaption>' . esc_html( $title ) . '</figcaption>' : '' ) . '</figure>';
 			}
 		}
-		return $out ? '<div class="nx-videos">' . $out . '</div>' : '';
+		return $out ? '<div class="videos">' . $out . '</div>' : '';
 	}
 );
 
@@ -283,7 +256,7 @@ add_shortcode(
 				<?php endforeach; ?>
 			</select></p>
 			<p><label for="nx-cmsg"><?php esc_html_e( 'Message', 'nexus-beauty' ); ?></label><textarea id="nx-cmsg" name="cmsg" rows="5" required minlength="10"></textarea></p>
-			<p><button class="nx-btn nx-btn--primary" type="submit"><?php esc_html_e( 'Send message', 'nexus-beauty' ); ?></button></p>
+			<p><button class="btn btn--primary" type="submit"><?php esc_html_e( 'Send message', 'nexus-beauty' ); ?></button></p>
 		</form>
 		<?php
 		return ob_get_clean();

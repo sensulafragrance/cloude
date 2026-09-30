@@ -1,0 +1,7 @@
+/* Block editor: the design's fonts and colours so pages look like the storefront while editing. */
+.editor-styles-wrapper { font-family: "Figtree", "Segoe UI", system-ui, sans-serif; color: #5c4d5e; }
+.editor-styles-wrapper h1, .editor-styles-wrapper h2, .editor-styles-wrapper h3, .editor-styles-wrapper h4 { font-family: "Plus Jakarta Sans", "Figtree", system-ui, sans-serif; font-weight: 700; letter-spacing: -.02em; color: #241826; }
+.editor-styles-wrapper a { color: #8c2350; }
+.editor-styles-wrapper .wp-block-button__link { background: #8c2350; color: #fff; border-radius: 999px; padding: 13px 26px; font-weight: 600; }
+.editor-styles-wrapper .nx-section--tint { background: #f8f1f2; }
+.editor-styles-wrapper .nx-eyebrow { font-size: 12px; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; color: #8c2350; }

@@ -1,6 +1,7 @@
 <?php
 /**
- * Side cart (drawer), live quantity changes, free delivery progress and bundle discounts.
+ * Side bag (the design's .drawer), live quantities, add to bag without reloading,
+ * free delivery progress and bundle discounts.
  *
  * @package NexusBeauty
  */
@@ -8,7 +9,7 @@
 defined( 'ABSPATH' ) || exit;
 
 /**
- * Free delivery progress bar.
+ * Free delivery progress bar (design: .ship-bar). Refreshed as a cart fragment.
  *
  * @return string
  */
@@ -19,36 +20,75 @@ function nexus_free_ship_bar() {
 	}
 	$total = (float) WC()->cart->get_displayed_subtotal();
 	$left  = max( 0, $goal - $total );
-	$pct   = min( 100, $goal ? ( $total / $goal ) * 100 : 0 );
-	$text  = $left > 0
+	$pct   = min( 100, ( $total / $goal ) * 100 );
+	if ( $total <= 0 ) {
+		/* translators: %s: amount */
+		$text = sprintf( esc_html__( 'Free delivery over %s', 'nexus-beauty' ), esc_html( nexus_money( $goal ) ) );
+	} elseif ( $left > 0 ) {
 		/* translators: %s: amount left */
-		? sprintf( __( 'You\'re %s away from free delivery', 'nexus-beauty' ), '<b>' . wp_strip_all_tags( wc_price( $left ) ) . '</b>' )
-		: '<b>' . esc_html__( 'You\'ve unlocked free delivery.', 'nexus-beauty' ) . '</b>';
-	return '<div class="nx-ship"><p>' . wp_kses( $text, array( 'b' => array() ) ) . '</p><div class="nx-ship__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' . esc_attr( round( $pct ) ) . '" aria-label="' . esc_attr__( 'Progress to free delivery', 'nexus-beauty' ) . '"><span style="width:' . esc_attr( round( $pct, 1 ) ) . '%"></span></div></div>';
+		$text = sprintf( __( 'You\'re %s away from <b>free delivery</b>', 'nexus-beauty' ), '<b>' . esc_html( nexus_money( $left ) ) . '</b>' );
+	} else {
+		$text = '<b>' . esc_html__( 'You\'ve unlocked free delivery.', 'nexus-beauty' ) . '</b>';
+	}
+	return '<div class="ship-bar" data-nx-ship><span data-ship-text>' . wp_kses( $text, array( 'b' => array() ) ) . '</span><div class="ship-bar__track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="' . esc_attr( round( $pct ) ) . '" aria-label="' . esc_attr__( 'Progress to free delivery', 'nexus-beauty' ) . '"><div class="ship-bar__fill" style="width:' . esc_attr( round( $pct, 1 ) ) . '%"></div></div></div>';
 }
 
 /**
- * Drawer body: free delivery bar + WooCommerce mini cart. Also used as a cart fragment.
+ * Drawer contents: delivery bar, lines and footer. Also used as a cart fragment.
  */
 function nexus_drawer_body() {
-	echo '<div class="nx-drawer-body">';
-	if ( WC()->cart ) {
-		echo nexus_free_ship_bar(); // phpcs:ignore WordPress.Security.EscapeOutput
-		echo '<div class="widget_shopping_cart_content">';
-		woocommerce_mini_cart();
-		echo '</div>';
+	$cart = WC()->cart;
+	echo '<div class="drawer__body">';
+	$bar = $cart ? nexus_free_ship_bar() : '';
+	echo $bar ? $bar : '<div></div>'; // phpcs:ignore WordPress.Security.EscapeOutput -- escaped in nexus_free_ship_bar().
+	echo '<div class="drawer__items">';
+	if ( ! $cart || $cart->is_empty() ) {
+		echo '<div class="drawer__empty"><p>' . esc_html__( 'Your bag is empty.', 'nexus-beauty' ) . '</p><a class="btn btn--dark" href="' . esc_url( nexus_shop_url() ) . '">' . esc_html__( 'Shop bestsellers', 'nexus-beauty' ) . '</a></div>';
+	} else {
+		foreach ( $cart->get_cart() as $key => $item ) {
+			$product = apply_filters( 'woocommerce_cart_item_product', $item['data'], $item, $key );
+			if ( ! $product || ! $product->exists() || $item['quantity'] <= 0 || ! apply_filters( 'woocommerce_widget_cart_item_visible', true, $item, $key ) ) {
+				continue;
+			}
+			$look  = nexus_product_look( $product );
+			$size  = nexus_meta( $product, '_nx_size' );
+			$max   = $product->get_max_purchase_quantity();
+			$link  = $product->is_visible() ? $product->get_permalink( $item ) : '';
+			$data  = wc_get_formatted_cart_item_data( $item, true );
+			$name  = apply_filters( 'woocommerce_cart_item_name', $product->get_name(), $item, $key );
+			?>
+			<div class="line" data-key="<?php echo esc_attr( $key ); ?>">
+				<div class="line__img" style="<?php echo esc_attr( nexus_look_style( $look ) ); ?>"><?php echo nexus_product_visual( $product, 'woocommerce_gallery_thumbnail', array( 'loading' => 'lazy' ) ); // phpcs:ignore ?></div>
+				<div>
+					<b><?php echo $link ? '<a href="' . esc_url( $link ) . '">' . wp_kses_post( $name ) . '</a>' : wp_kses_post( $name ); ?></b>
+					<?php if ( $size && ! $product->is_type( 'variation' ) ) : ?><small><?php echo esc_html( $size ); ?></small><?php endif; ?>
+					<?php if ( $data ) : ?><small class="nx-meta"><?php echo wp_kses_post( str_replace( "\n", ' · ', trim( $data ) ) ); ?></small><?php endif; ?>
+					<div class="line__qty">
+						<button type="button" data-nx-qty="-1" aria-label="<?php esc_attr_e( 'Decrease quantity', 'nexus-beauty' ); ?>">−</button><span><?php echo (int) $item['quantity']; ?></span><button type="button" data-nx-qty="1" aria-label="<?php esc_attr_e( 'Increase quantity', 'nexus-beauty' ); ?>"<?php disabled( $max > 0 && $item['quantity'] >= $max ); ?>>+</button>
+						<a class="line__remove" href="<?php echo esc_url( wc_get_cart_remove_url( $key ) ); ?>" data-nx-remove><?php esc_html_e( 'Remove', 'nexus-beauty' ); ?></a>
+					</div>
+				</div>
+				<span class="line__price"><?php echo wp_kses_post( $cart->get_product_subtotal( $product, $item['quantity'] ) ); ?></span>
+			</div>
+			<?php
+		}
 	}
 	echo '</div>';
-}
-
-/**
- * Header count badge. Also used as a cart fragment.
- *
- * @return string
- */
-function nexus_count_html() {
-	$n = WC()->cart ? WC()->cart->get_cart_contents_count() : 0;
-	return '<span class="nx-count nx-cart-count"' . ( $n ? '' : ' hidden' ) . '>' . esc_html( $n ) . '</span>';
+	if ( $cart && ! $cart->is_empty() ) {
+		$total = (float) $cart->get_displayed_subtotal();
+		echo '<div class="drawer__foot">';
+		foreach ( $cart->get_fees() as $fee ) {
+			$total += (float) $fee->total;
+			echo '<div class="drawer__fee"><span>' . esc_html( $fee->name ) . '</span><span>' . esc_html( nexus_money( $fee->total ) ) . '</span></div>';
+		}
+		echo '<div class="drawer__total"><span>' . esc_html__( 'Subtotal', 'nexus-beauty' ) . '</span><span data-cart-total>' . esc_html( nexus_money( $total ) ) . '</span></div>';
+		echo '<a class="btn btn--primary btn--lg btn--block" href="' . esc_url( wc_get_checkout_url() ) . '">' . esc_html__( 'Checkout securely', 'nexus-beauty' ) . '</a>';
+		echo '<small>' . esc_html__( 'Cash on delivery, cards, JazzCash and Easypaisa accepted.', 'nexus-beauty' ) . ' <a href="' . esc_url( wc_get_cart_url() ) . '" style="text-decoration:underline">' . esc_html__( 'View bag', 'nexus-beauty' ) . '</a></small>';
+		echo '</div>';
+	} else {
+		echo '<div></div>';
+	}
+	echo '</div>';
 }
 
 add_filter(
@@ -56,35 +96,18 @@ add_filter(
 	function ( $fragments ) {
 		ob_start();
 		nexus_drawer_body();
-		$fragments['div.nx-drawer-body']  = ob_get_clean();
-		$fragments['span.nx-cart-count'] = nexus_count_html();
+		$fragments['div.drawer__body']                  = ob_get_clean();
+		$fragments['span.badge-count[data-cart-count]'] = nexus_count_badge( WC()->cart ? WC()->cart->get_cart_contents_count() : 0 );
+		$bar                                            = nexus_free_ship_bar();
+		if ( $bar ) {
+			$fragments['.buybox div.ship-bar[data-nx-ship], .page-body div.ship-bar[data-nx-ship]'] = $bar;
+		}
 		return $fragments;
 	}
 );
 
-// Quantity buttons inside the mini cart.
-add_filter(
-	'woocommerce_widget_cart_item_quantity',
-	function ( $html, $cart_item, $cart_item_key ) {
-		$product = $cart_item['data'];
-		$max     = $product->get_max_purchase_quantity();
-		$price   = WC()->cart->get_product_price( $product );
-		return sprintf(
-			'<span class="nx-mq" data-key="%1$s"><button type="button" data-nx-qty="-1" aria-label="%2$s">−</button><span class="nx-mq__n">%3$d</span><button type="button" data-nx-qty="1" aria-label="%4$s"%5$s>+</button><span class="nx-mq__price">%6$s</span></span>',
-			esc_attr( $cart_item_key ),
-			esc_attr__( 'One less', 'nexus-beauty' ),
-			(int) $cart_item['quantity'],
-			esc_attr__( 'One more', 'nexus-beauty' ),
-			( $max > 0 && $cart_item['quantity'] >= $max ) ? ' disabled' : '',
-			wp_kses_post( $price )
-		);
-	},
-	10,
-	3
-);
-
 /**
- * AJAX: change a cart line quantity, then return fresh fragments.
+ * AJAX: change a line's quantity, then return fresh fragments.
  */
 function nexus_ajax_update_qty() {
 	check_ajax_referer( 'nexus', 'nonce' );
@@ -103,11 +126,45 @@ add_action( 'wp_ajax_nexus_update_qty', 'nexus_ajax_update_qty' );
 add_action( 'wp_ajax_nopriv_nexus_update_qty', 'nexus_ajax_update_qty' );
 
 /**
+ * AJAX: add to bag from the product page form (simple and variable products), without reloading.
+ */
+function nexus_ajax_add_to_cart() {
+	check_ajax_referer( 'nexus', 'nonce' );
+	// phpcs:disable WordPress.Security.ValidatedSanitizedInput.InputNotSanitized
+	$product_id   = isset( $_POST['product_id'] ) ? absint( $_POST['product_id'] ) : 0;
+	$quantity     = isset( $_POST['quantity'] ) ? wc_stock_amount( wp_unslash( $_POST['quantity'] ) ) : 1;
+	$variation_id = isset( $_POST['variation_id'] ) ? absint( $_POST['variation_id'] ) : 0;
+	$variation    = array();
+	foreach ( $_POST as $k => $v ) {
+		if ( 0 === strpos( (string) $k, 'attribute_' ) ) {
+			$variation[ sanitize_title( wp_unslash( $k ) ) ] = wc_clean( wp_unslash( $v ) );
+		}
+	}
+	// phpcs:enable
+	$product = wc_get_product( $variation_id ? $variation_id : $product_id );
+	if ( ! $product || $quantity <= 0 ) {
+		wp_send_json_error( array( 'message' => __( 'Please choose an option first.', 'nexus-beauty' ) ), 400 );
+	}
+	$passed = apply_filters( 'woocommerce_add_to_cart_validation', true, $product_id, $quantity, $variation_id, $variation );
+	if ( $passed && false !== WC()->cart->add_to_cart( $product_id, $quantity, $variation_id, $variation ) ) {
+		do_action( 'woocommerce_ajax_added_to_cart', $product_id );
+		wc_clear_notices();
+		WC_AJAX::get_refreshed_fragments();
+	}
+	$errors = wc_get_notices( 'error' );
+	wc_clear_notices();
+	$message = $errors ? wp_strip_all_tags( is_array( $errors[0] ) ? $errors[0]['notice'] : $errors[0] ) : __( 'This product could not be added. Please try again.', 'nexus-beauty' );
+	wp_send_json_error( array( 'message' => $message ), 400 );
+}
+add_action( 'wp_ajax_nexus_add_to_cart', 'nexus_ajax_add_to_cart' );
+add_action( 'wp_ajax_nopriv_nexus_add_to_cart', 'nexus_ajax_add_to_cart' );
+
+/**
  * AJAX: add several products at once as a bundle (frequently bought together, kits).
  */
 function nexus_ajax_add_bundle() {
 	check_ajax_referer( 'nexus', 'nonce' );
-	$ids  = isset( $_POST['ids'] ) ? array_slice( array_filter( array_map( 'absint', (array) wp_unslash( $_POST['ids'] ) ) ), 0, 12 ) : array();
+	$ids  = isset( $_POST['ids'] ) ? array_slice( array_filter( array_map( 'absint', explode( ',', sanitize_text_field( wp_unslash( $_POST['ids'] ) ) ) ) ), 0, 12 ) : array();
 	$name = isset( $_POST['name'] ) ? sanitize_text_field( wp_unslash( $_POST['name'] ) ) : '';
 	if ( ! $ids ) {
 		wp_send_json_error( array( 'message' => __( 'Choose at least one product.', 'nexus-beauty' ) ), 400 );
@@ -124,11 +181,10 @@ function nexus_ajax_add_bundle() {
 			$added++;
 		}
 	}
+	wc_clear_notices();
 	if ( ! $added ) {
-		wc_clear_notices();
 		wp_send_json_error( array( 'message' => __( 'These products are not available right now.', 'nexus-beauty' ) ), 400 );
 	}
-	wc_clear_notices();
 	WC_AJAX::get_refreshed_fragments();
 }
 add_action( 'wp_ajax_nexus_add_bundle', 'nexus_ajax_add_bundle' );
@@ -209,7 +265,7 @@ add_action(
 	'woocommerce_after_cart',
 	function () {
 		if ( function_exists( 'nexus_recent_block' ) ) {
-			echo nexus_recent_block( 8 ); // phpcs:ignore WordPress.Security.EscapeOutput
+			echo nexus_recent_block( 4 ); // phpcs:ignore WordPress.Security.EscapeOutput
 		}
 	}
 );

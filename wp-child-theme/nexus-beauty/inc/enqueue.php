@@ -25,24 +25,30 @@ add_action(
 		$ver = NEXUS_VERSION;
 
 		if ( nexus_opt( 'load_fonts' ) ) {
-			wp_enqueue_style( 'nexus-fonts', 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700;800&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap', array(), null );
+			wp_enqueue_style( 'nexus-fonts', 'https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,500;0,600;0,700;0,800;1,600;1,700&family=Figtree:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap', array(), null );
 		}
 
-		// Load after the parent theme so our styles win without !important.
-		$deps = wp_style_is( 'generate-style', 'registered' ) ? array( 'generate-style' ) : array();
-		wp_enqueue_style( 'nexus-main', nexus_asset( 'css/main.css' ), $deps, $ver );
+		// The design's stylesheet is the only one the storefront needs.
+		wp_enqueue_style( 'nexus-main', nexus_asset( 'css/main.css' ), array(), $ver );
 
-		$css = sprintf(
-			':root{--nx-accent:%1$s;--nx-ink:%2$s}',
-			sanitize_hex_color( nexus_opt( 'accent' ) ) ?: '#8c2350',
-			sanitize_hex_color( nexus_opt( 'ink' ) ) ?: '#241826'
-		);
-		wp_add_inline_style( 'nexus-main', $css );
+		$accent = sanitize_hex_color( nexus_opt( 'accent' ) );
+		$ink    = sanitize_hex_color( nexus_opt( 'ink' ) );
+		$css    = '';
+		if ( $accent && '#8c2350' !== strtolower( $accent ) ) {
+			$css .= '--berry:' . $accent . ';--berry-dk:color-mix(in srgb,' . $accent . ' 78%,#000);--berry-lt:color-mix(in srgb,' . $accent . ' 12%,#fff);';
+		}
+		if ( $ink && '#241826' !== strtolower( $ink ) ) {
+			$css .= '--ink:' . $ink . ';';
+		}
+		if ( $css ) {
+			wp_add_inline_style( 'nexus-main', ':root{' . $css . '}' );
+		}
 
 		$deps = array();
 		if ( class_exists( 'WooCommerce' ) ) {
 			// Cart fragments keep the bag count and side cart correct on cached pages.
 			wp_enqueue_script( 'wc-cart-fragments' );
+			wp_enqueue_script( 'wc-add-to-cart' );
 			$deps[] = 'jquery';
 		}
 		wp_enqueue_script( 'nexus-main', nexus_asset( 'js/main.js' ), $deps, $ver, array( 'in_footer' => true, 'strategy' => 'defer' ) );
@@ -52,7 +58,7 @@ add_action(
 			'nonce'       => wp_create_nonce( 'nexus' ),
 			'loggedIn'    => is_user_logged_in(),
 			'storeApi'    => esc_url_raw( rest_url( 'wc/store/v1/products' ) ),
-			'shopUrl'     => function_exists( 'wc_get_page_permalink' ) ? wc_get_page_permalink( 'shop' ) : home_url( '/' ),
+			'shopUrl'     => nexus_shop_url(),
 			'home'        => home_url( '/' ),
 			'cities'      => nexus_cities(),
 			'defaultDays' => nexus_opt( 'default_days' ),
@@ -61,10 +67,12 @@ add_action(
 			'tzOffset'    => (float) get_option( 'gmt_offset', 5 ),
 			'freeShip'    => (float) nexus_opt( 'free_shipping' ),
 			'currency'    => function_exists( 'get_woocommerce_currency_symbol' ) ? html_entity_decode( get_woocommerce_currency_symbol() ) : 'Rs',
+			'decimals'    => function_exists( 'wc_get_price_decimals' ) ? wc_get_price_decimals() : 0,
 			'bundlePct'   => (int) nexus_opt( 'bundle_percent' ),
 			'bundleMin'   => (int) nexus_opt( 'bundle_min' ),
 			'i18n'        => array(
 				'added'      => __( 'Added to your bag', 'nexus-beauty' ),
+				'bundle'     => __( 'Bundle added to your bag', 'nexus-beauty' ),
 				'saved'      => __( 'Saved to your wishlist', 'nexus-beauty' ),
 				'removed'    => __( 'Removed from your wishlist', 'nexus-beauty' ),
 				'noResults'  => __( 'No products found. Try another word.', 'nexus-beauty' ),
@@ -72,9 +80,10 @@ add_action(
 				'arrives'    => __( 'Arrives', 'nexus-beauty' ),
 				'orderIn'    => __( 'Order in the next %s for same-day dispatch.', 'nexus-beauty' ),
 				'leavesOn'   => __( 'Orders placed now leave our warehouse on %s.', 'nexus-beauty' ),
-				'chooseMore' => __( 'Choose %d more to get %d%% off.', 'nexus-beauty' ),
-				'applied'    => __( '%d%% bundle discount applied.', 'nexus-beauty' ),
-				'addN'       => __( 'Add %d to bag', 'nexus-beauty' ),
+				'addToBag'   => __( 'Add to bag', 'nexus-beauty' ),
+				'save'       => __( 'Save %d%%', 'nexus-beauty' ),
+				'upTo'       => __( 'Up to', 'nexus-beauty' ),
+				'choose'     => __( 'Choose an option', 'nexus-beauty' ),
 				'error'      => __( 'Something went wrong. Please try again.', 'nexus-beauty' ),
 			),
 		);
@@ -82,6 +91,18 @@ add_action(
 	},
 	20
 );
+
+// Remove the parent theme's and WooCommerce's default styles: the design stylesheet covers everything.
+add_action(
+	'wp_enqueue_scripts',
+	function () {
+		foreach ( array( 'generate-style', 'generate-main', 'generate-widget-areas', 'generate-child', 'generate-font-icons', 'generate-mobile-style', 'generate-navigation-branding', 'generate-offside', 'generate-woocommerce', 'generate-woocommerce-mobile' ) as $h ) {
+			wp_dequeue_style( $h );
+		}
+	},
+	99
+);
+add_filter( 'woocommerce_enqueue_styles', '__return_empty_array' );
 
 // Preconnect to Google Fonts.
 add_filter(
@@ -100,7 +121,7 @@ add_filter(
 add_action(
 	'enqueue_block_editor_assets',
 	function () {
-		wp_enqueue_style( 'nexus-editor', nexus_asset( 'css/main.css' ), array(), NEXUS_VERSION );
+		wp_enqueue_style( 'nexus-editor', nexus_asset( 'css/editor.css' ), array(), NEXUS_VERSION );
 	}
 );
 
@@ -132,14 +153,10 @@ add_action(
 	100
 );
 
-// Lazy-load every product image except the first row on archives, and prioritise the main product image.
+// Decode images off the main thread. (The product page's main image is marked high priority in its template.)
 add_filter(
 	'wp_get_attachment_image_attributes',
 	function ( $attr ) {
-		if ( isset( $attr['class'] ) && false !== strpos( $attr['class'], 'wp-post-image' ) && function_exists( 'is_product' ) && is_product() && ! did_action( 'woocommerce_after_single_product_summary' ) ) {
-			$attr['fetchpriority'] = 'high';
-			$attr['loading']       = 'eager';
-		}
 		if ( empty( $attr['decoding'] ) ) {
 			$attr['decoding'] = 'async';
 		}
