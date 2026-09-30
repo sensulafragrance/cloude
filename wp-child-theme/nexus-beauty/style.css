@@ -1,0 +1,19 @@
+/*
+Theme Name:        Nexus Beauty
+Theme URI:         https://nexusbeauty.pk/
+Description:       A fast WooCommerce child theme for GeneratePress, built for Nexus Beauty. Side cart, wishlist, live product search, shop filters without plugins, batch and expiry tracking, delivery estimates for Pakistan, routine kits with bundle discounts, frequently bought together, sticky add to bag and block patterns.
+Author:            Nexus Beauty
+Template:          generatepress
+Version:           1.0.0
+Requires at least: 6.4
+Tested up to:      6.8
+Requires PHP:      7.4
+WC requires at least: 8.5
+License:           GNU General Public License v2 or later
+License URI:       https://www.gnu.org/licenses/gpl-2.0.html
+Text Domain:       nexus-beauty
+Domain Path:       /languages
+Tags:              e-commerce, woocommerce, custom-menu, custom-logo, translation-ready, block-patterns
+*/
+
+/* All styles live in assets/css/main.css so they can be minified and cached. */
